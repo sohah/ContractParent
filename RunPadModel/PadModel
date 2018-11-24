@@ -1,0 +1,55 @@
+
+type signal = enum{START_SIG, LAUNCH_SIG, EMPTY_SIG};
+
+
+node start_bt_val(sig: signal; start_bt:bool; launch_bt:bool) returns (start_bt_out: bool);
+	let
+		start_bt_out = false -> if(not(pre(start_bt)) and (not pre(launch_bt))) then
+																(sig = START_SIG)
+												else if(pre(start_bt) and sig = LAUNCH_SIG) then
+																false
+														 else
+														 		pre(start_bt); 
+	tel;
+
+
+(*launch_bt is ensured to be true for a single time step, afterwards it switches off.
+during this single time step, ignition should be on and the rocket is launched.*)
+node launch_bt_val(sig: signal; start_bt:bool; launch_bt:bool) returns (launch_bt_out: bool);
+	let
+		launch_bt_out = false -> if(pre(start_bt) and (not (pre(launch_bt)))) then
+														(sig = LAUNCH_SIG)
+												else if(pre(launch_bt)) then -- this basically ignores the incomming signal
+																false
+														 else
+														 		pre(start_bt); -- which is basically false
+	tel;
+
+
+	-- the Y operator for yesterday which is the dual of the X operator:
+	node Y(in: bool) returns (out: bool); let out = false -> pre in; tel;
+
+	-- the Z operator which is the same as Y except for being true at initial step:
+	node Z(in: bool) returns (out: bool); let out = true -> pre in; tel;
+
+	-- the H operator for history which is the dual of the G operator:
+	node G(in: bool) returns (out: bool); let out = in -> (in and pre out); tel;
+
+	-- the O operator for once which is the dual of the F operator:
+	node P(in: bool) returns (out: bool);
+	let out = in -> (in or pre out); tel;
+
+	-- the S operator for since which is the dual of the U operator:
+	node S(p, q: bool) returns (out: bool);
+	let out = q or (false -> (p and pre out)); tel;
+
+
+node main(sig: signal) returns (ignition: bool);
+var
+	start_bt: bool;
+	launch_bt: bool;
+let
+	start_bt = start_bt_val(sig, start_bt, launch_bt);
+	launch_bt = launch_bt_val(sig, start_bt, launch_bt);
+  ignition = false -> pre(launch_bt);
+tel;
