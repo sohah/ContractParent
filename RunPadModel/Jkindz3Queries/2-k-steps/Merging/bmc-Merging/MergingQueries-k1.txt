@@ -192,7 +192,7 @@
 ;(declare-fun act1 () Bool)
 ;(assert (=> act1 (not (=> true $p1$0))))
 
-; K = 2
+; K = 1
 (declare-fun $sig$1 () Int)
 (declare-fun $ignition$1 () Bool)
 (declare-fun $reset_flag$1 () Bool)
