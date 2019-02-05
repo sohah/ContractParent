@@ -185,7 +185,7 @@
   $start_bt_val~0.start_bt$0 $start_bt_val~0.launch_bt$0 $start_bt_val~0.reset_flag$0 $start_bt_val~0.start_bt_out$0
   $launch_bt_val~0.start_bt$0 $launch_bt_val~0.launch_bt$0 $launch_bt_val~0.reset_flag$0 $launch_bt_val~0.launch_bt_out$0))
 
-; ---------- joining Input begins here -------------
+; ---------- joining contract begins here -------------
 (declare-fun contract_match () bool)
 
 (assert(= contract_match
@@ -229,29 +229,10 @@
             (= $start_bt_val~0.start_bt_out$1 (not (= r347.startBtn.1.11.4 1)))
             (= $launch_bt_val~0.launch_bt_out$1 (not (= r347.launchBtn.1.13.4 1)))))
 
-            (=> (and input_match~1 output_match~1) (and input_match$1 output_not_match$1))
+            (=> (and input_match~1 output_match~1 input_match$1) (output_not_match$1))
   ))
-; ---------- joining Input ends here -------------
-
-; ---------- joining output begins here -------------
-(declare-fun out1 () Bool)
-(declare-fun out2 () Bool)
-(declare-fun out3 () Bool)
-
-(assert (=> out1
-    (= $ignition$0 (not (= r347.ignition.1.5.4 1)))))
-
-(assert (=> out2
-    (= $start_bt_val~0.start_bt_out$0 (not (= r347.startBtn.1.11.4 1)))))
-
-(assert (=> out3
-    (= $launch_bt_val~0.launch_bt_out$0 (not (= r347.launchBtn.1.13.4 1)))))
-
-; ---------- joining output ends here -------------
-(check-sat out1)
-;(check-sat out2)
-;(check-sat out3)
-
+; ---------- joining contract ends here -------------
+(check-sat contract_match)
 (get-model)
 (get-unsat-core)
 (exit)

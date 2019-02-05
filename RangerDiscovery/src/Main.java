@@ -3,9 +3,9 @@ public class Main {
     public static void main(String[] args) {
 
         String folderName;
-        folderName = "../../VeriTransformations/VeritestingTransformations/SolverQueriesVeritesting/";
-        String disfileName = folderName + "runPadStep1.txt";
-        String expfileName = folderName + "expected.runPad.txt";
+        folderName = "../RunPadModel/";
+        String disfileName = folderName + "UnbeliveablySimplePad.runPadSteps(IZZZZ)V#21_0.txt";
+        String expfileName = folderName + "PadModelReset.k-induction.smt2";
 
         RangerQueryDiscovery rangerDiscovery = new RangerQueryDiscovery();
         rangerDiscovery.discoverContract(disfileName, expfileName);

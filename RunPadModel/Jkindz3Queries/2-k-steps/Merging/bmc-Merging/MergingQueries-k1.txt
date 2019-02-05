@@ -210,7 +210,6 @@
 
 ; ---------- joining Input begins here -------------
 (assert(and
-  (= $sig$0 signal)
   (= $sig$1 signal)
   (= $ignition$0 (= ignition 1))
   (= $start_bt_val~0.start_bt$0 (= startBtn 1))

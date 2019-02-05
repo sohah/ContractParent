@@ -250,7 +250,7 @@
 
   ; ---------- joining Input begins here -------------
   (assert(and
-    (= $sig$1 signal)
+    ;(= $sig$1 signal)
     (= $sig$2 signal)
     (= $ignition$1 (= ignition 1))
     (= $start_bt_val~0.start_bt$1 (= startBtn 1))
@@ -284,8 +284,8 @@
 (get-model)
 
 (check-sat out2)
-(get-unsat-core)
-;(get-model)
+;(get-unsat-core)
+(get-model)
 
 (check-sat out3)
 (get-unsat-core)
