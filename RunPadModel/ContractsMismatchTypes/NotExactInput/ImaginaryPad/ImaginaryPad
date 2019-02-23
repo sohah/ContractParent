@@ -1,3 +1,11 @@
+-- this pad has the following requirements for states:
+-- 1. if current launch_bt is true then it must be the case that the start_bt is on now and also in the previous step.
+-- 2. if ignition is true for only one step after launch_bt is true. That is ignition is true only if the previous
+--	 step launch was on and it wasn't the case that in the previous step that iginition was on nore was the reset.
+-- 3. there will be one state where start_bt, launch_bt, ignition are on, followed by a step where
+-- 	start_bt, launch_bt and reset_btn are on, while the ignition is off. The following step would be
+--	reseting everything, that is all buttons are false.
+
 type signal = enum{START_SIG, LAUNCH_SIG, EMPTY_SIG};
 
 	-- the Y operator for yesterday which is the dual of the X operator:
@@ -23,7 +31,7 @@ var
 	p1: bool;
 
 let
-	start_bt = false -> if(reset_flag) then
+	start_bt = false -> if(pre reset_flag) then
 															false
 													else if(not(pre start_bt) and (not (pre launch_bt))) and (sig = START_SIG) then
 																true
@@ -31,7 +39,7 @@ let
 																pre start_bt;
 
 
-	launch_bt = false -> if(reset_flag) then
+	launch_bt = false -> if(pre reset_flag) then
 														false
 													else if((pre start_bt) and (not (pre launch_bt ))) and (sig = LAUNCH_SIG) then
 																true
@@ -39,11 +47,11 @@ let
 															 pre launch_bt;
 
 
-  ignition = false -> pre (launch_bt) and (not (reset_flag));
+  ignition = false -> ((pre launch_bt) and (not (pre ignition) and (not pre reset_flag)));
 
-  reset_flag = false -> pre ignition;
+  reset_flag = false -> ( (pre ignition) and not (pre reset_flag));
 
-	p1 = ignition => (pre launch_bt) and (pre start_bt);
+	p1 = H(reset_flag => Y(ignition));
 
 	--%PROPERTY p1;
 
