@@ -5,7 +5,7 @@ import ast.visitors.AstVisitor;
 public class IntVar extends Var {
 
     public IntVar(String name) {
-        super(name, Operator.TypeEnum.INT);
+        super(name, "Int");
     }
 
     @Override
@@ -33,7 +33,6 @@ public class IntVar extends Var {
 
     @Override
     public String declare_fun() {
-        String myType = (type == Operator.TypeEnum.BOOL) ? " Bool " : "  Int ";
-        return "(declare-fun " + name + " () " + myType + ")";
+        return "(declare-fun " + name + " () " + type +")";
     }
 }

@@ -1,12 +1,12 @@
 package ast.def;
 
-public abstract class Var implements Cloneable, Ast {
+public abstract class Var implements Cloneable, Exp {
 
     final String name;
 
-    final Operator.TypeEnum type;
+    final String type;
 
-    protected Var(String name, Operator.TypeEnum type) {
+    protected Var(String name, String type) {
         this.name = name;
         this.type = type;
     }

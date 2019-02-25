@@ -1,11 +1,21 @@
 package ast.visitors;
 
-import ast.def.IntVar;
-import ast.def.Operator;
+import ast.def.*;
 
 public interface AstVisitor<T> {
 
-    T visit(IntVar numExp);
+    T visit(IntConst numExp);
 
     T visit(Operator operation);
+
+    T visit(IntVar intVar);
+
+    T visit(Hole hole);
+
+    T visit(BinaryExp binaryExp);
+
+    T visit(UnaryExp unaryExp);
+
+    T visit(IfThenElseExp ifThenElseExp);
 }
+

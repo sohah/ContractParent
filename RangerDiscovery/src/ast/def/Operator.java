@@ -9,41 +9,41 @@ public class Operator implements Ast {
         return visitor.visit(this);
     }
 
-    public static enum TypeEnum {
-        NUM, FLOAT;
+    public static enum OperatorType {
+        NUM, BOOL;
     }
 
-    public static enum OperatorEnum {
+    public static enum OperatorKind {
         EQ, NOT, AND, OR, IFTHENELSE, ASSIGN, ADD, SUB
     }
 
-    public final OperatorEnum opName;
-    public final TypeEnum type;
+    public final OperatorKind opName;
+    public final OperatorType type;
     public final int arity;
 
-    public Operator(OperatorEnum opName) {
+    public Operator(OperatorKind opName) {
         this.opName = opName;
 
         switch (opName) {
             case NOT:
                 arity = 1;
-                type = TypeEnum.BOOL;
+                type = OperatorType.BOOL;
                 break;
             case EQ:
             case AND:
             case OR:
                 arity = 2;
-                type = TypeEnum.BOOL;
+                type = OperatorType.BOOL;
                 break;
             case ASSIGN:
             case ADD:
             case SUB:
                 arity = 2;
-                type = TypeEnum.NUM;
+                type = OperatorType.NUM;
                 break;
             case IFTHENELSE:
                 arity = 3;
-                type = TypeEnum.BOOL;
+                type = OperatorType.BOOL;
                 break;
             default:
                 arity = -1;
