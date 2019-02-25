@@ -1,11 +1,10 @@
+package ref;
+
 import com.microsoft.z3.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import javafx.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class RangerQueryDiscovery {

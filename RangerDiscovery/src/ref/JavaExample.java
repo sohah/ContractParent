@@ -1,4 +1,4 @@
-/*++
+package ref;/*++
  Copyright (c) 2012 Microsoft Corporation
 
 Module Name:
