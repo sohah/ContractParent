@@ -23,8 +23,18 @@ public class ToAstPass {
         return toAstPass.recoverAst(toAstPass.transitionBody);
     }
 
+    /**
+     * This method recovers the ast for a given constraint.
+     * An input invariant to this method is that the first char and the last char is open and close brackets.
+     * @param body
+     * @return
+     */
     private Exp recoverAst(String body) {
         assert (body.length() > 0);
+        if(Character.isWhitespace(body.charAt(0))) //removing possible white space in the beginning
+            body = body.substring(1, body.length());
+
+        assert ((body.charAt(0)=='(') && (body.charAt(body.length()-1)==')'));
 
         String constraints = new String();
         /*removing the outer solve*/
