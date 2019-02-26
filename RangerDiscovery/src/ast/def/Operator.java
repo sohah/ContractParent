@@ -14,7 +14,7 @@ public class Operator implements Ast {
     }
 
     public static enum OperatorKind {
-        EQ, NOT, AND, OR, IFTHENELSE, ASSIGN, ADD, SUB
+        EQ, NOT, AND, OR, IMPLIES, IFTHENELSE, ASSIGN, ADD, SUB
     }
 
     public final OperatorKind opName;
@@ -32,6 +32,7 @@ public class Operator implements Ast {
             case EQ:
             case AND:
             case OR:
+            case IMPLIES:
                 arity = 2;
                 type = OperatorType.BOOL;
                 break;
@@ -56,10 +57,14 @@ public class Operator implements Ast {
             case ASSIGN:
             case EQ:
                 return " = ";
+            case NOT:
+                return " not ";
             case AND:
                 return " and ";
             case OR:
                 return " or ";
+            case IMPLIES:
+                return " => ";
             case IFTHENELSE:
                 return " ite ";
             case ADD:

@@ -17,5 +17,9 @@ public interface AstVisitor<T> {
     T visit(UnaryExp unaryExp);
 
     T visit(IfThenElseExp ifThenElseExp);
+
+    T visit(BoolConst boolConst);
+
+
 }
 

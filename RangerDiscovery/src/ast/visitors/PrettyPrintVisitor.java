@@ -37,4 +37,9 @@ public class PrettyPrintVisitor implements AstVisitor{
     public Object visit(IfThenElseExp ifThenElseExp) {
         return null;
     }
+
+    @Override
+    public Object visit(BoolConst boolConst) {
+        return null;
+    }
 }

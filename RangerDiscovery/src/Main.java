@@ -1,3 +1,4 @@
+import ast.Passes.ToAstPass;
 
 public class Main {
     public static void main(String[] args) {
@@ -7,6 +8,7 @@ public class Main {
         String disfileName = folderName + "UnbeliveablySimplePad.runPadSteps(IZZZZ)V#21_0.txt";
         String expfileName = folderName + "ImaginaryPad0.k-inductiontest.smt2";
 
+        ToAstPass.execute(expfileName);
         /*ref.RangerQueryDiscovery rangerDiscovery = new ref.RangerQueryDiscovery();
         rangerDiscovery.discoverContract(disfileName, expfileName);
 
