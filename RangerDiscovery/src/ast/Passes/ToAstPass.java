@@ -1,8 +1,18 @@
 package ast.Passes;
 
 import ast.def.*;
+import ast.parser.SMTLIBv2Lexer;
+import ast.parser.SMTLIBv2Parser;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
 import ref.Pair;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+
+import static org.antlr.v4.runtime.misc.Utils.readFile;
 import static ref.Utility.*;
 
 public class ToAstPass {
@@ -14,7 +24,7 @@ public class ToAstPass {
         transition = getTransitionT(jkindFile);
     }
 
-    public static Exp execute(String jkindFile){
+    public static Exp execute(String jkindFile) {
         ToAstPass toAstPass = new ToAstPass(jkindFile);
         Pair<String, String> headAndBody = splitHeaderBody(toAstPass.transition);
         toAstPass.transitionHeader =  headAndBody.getFirst()+ " Bool \n";
@@ -30,34 +40,12 @@ public class ToAstPass {
      * @return
      */
     private Exp recoverAst(String body) {
-        assert (body.length() > 0);
-        if(Character.isWhitespace(body.charAt(0))) //removing possible white space in the beginning
-            body = body.substring(1, body.length());
+        CharStream stream = CharStreams.fromString(body);
+        SMTLIBv2Lexer lexer = new SMTLIBv2Lexer(stream);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        SMTLIBv2Parser parser = new SMTLIBv2Parser(tokens);
 
-        assert ((body.charAt(0)=='(') && (body.charAt(body.length()-1)==')'));
-
-        String constraints = new String();
-        /*removing the outer solve*/
-        body = body.substring(8, body.length() - 1);
-
-        int startingIndex = 0;
-        int endingIndex = body.length();
-        while (startingIndex < endingIndex) {
-            Pair startEndIndecies = findAssertion(body, startingIndex);
-
-            startingIndex = (int) startEndIndecies.getFirst();
-            int assertionEndIndex = (int) startEndIndecies.getSecond();
-
-            String assertion = body.substring(startingIndex, assertionEndIndex + 1); //+1 because substring is not inclusive for the endIndex.
-          /*  if(assertion.startsWith("and")){
-                Exp lhs =
-            }
-*/
-
-            startingIndex = assertionEndIndex + 1;
-        }
         return null;
-
     }
 
 }
