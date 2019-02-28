@@ -1,12 +1,14 @@
 package ast.Passes;
 
 import ast.def.*;
+import ast.parser.SMTLIBv2BaseListener;
 import ast.parser.SMTLIBv2Lexer;
 import ast.parser.SMTLIBv2Parser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import ref.Pair;
 
 import java.io.IOException;
@@ -30,7 +32,7 @@ public class ToAstPass {
         toAstPass.transitionHeader =  headAndBody.getFirst()+ " Bool \n";
         toAstPass.transitionBody = headAndBody.getSecond();
 
-        return toAstPass.recoverAst(toAstPass.transitionBody);
+        return toAstPass.recoverAst(toAstPass.transition);
     }
 
     /**
@@ -44,6 +46,9 @@ public class ToAstPass {
         SMTLIBv2Lexer lexer = new SMTLIBv2Lexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         SMTLIBv2Parser parser = new SMTLIBv2Parser(tokens);
+        SMTLIBv2Parser.CommandContext something = parser.command();
+        ParseTreeWalker walker = new ParseTreeWalker();
+        walker.walk(new SMTLIBv2BaseListener(), something);
 
         return null;
     }
