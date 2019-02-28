@@ -2,6 +2,7 @@ package ast.Passes;
 
 import ast.def.*;
 import ast.parser.SMTLIBv2BaseListener;
+import ast.parser.SMTLIBv2BaseVisitor;
 import ast.parser.SMTLIBv2Lexer;
 import ast.parser.SMTLIBv2Parser;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -47,9 +48,16 @@ public class ToAstPass {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         SMTLIBv2Parser parser = new SMTLIBv2Parser(tokens);
         SMTLIBv2Parser.CommandContext something = parser.command();
-        ParseTreeWalker walker = new ParseTreeWalker();
-        walker.walk(new SMTLIBv2BaseListener(), something);
 
+        ContextRecovery contextRecoveryVisitor = new ContextRecovery();
+        contextRecoveryVisitor.visit(something);
+
+        AstRecovery visitor = new AstRecovery();
+        Ast value = visitor.visit(something);
+
+        /*ParseTreeWalker walker = new ParseTreeWalker();
+        walker.walk(new SMTLIBv2BaseListener(), something);
+*/
         return null;
     }
 

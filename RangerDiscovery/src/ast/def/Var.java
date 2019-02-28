@@ -4,9 +4,9 @@ public abstract class Var implements Cloneable, Exp {
 
     final String name;
 
-    final String type;
+    final VarType type;
 
-    protected Var(String name, String type) {
+    protected Var(String name, VarType type) {
         this.name = name;
         this.type = type;
     }
