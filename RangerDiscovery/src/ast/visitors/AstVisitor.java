@@ -21,5 +21,8 @@ public interface AstVisitor<T> {
     T visit(BoolConst boolConst);
 
 
+    T visit(BoolVar boolVar);
+
+    T visit(Var var);
 }
 

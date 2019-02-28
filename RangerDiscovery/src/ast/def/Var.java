@@ -1,5 +1,7 @@
 package ast.def;
 
+import ast.visitors.AstVisitor;
+
 public abstract class Var implements Cloneable, Exp {
 
     final String name;
@@ -15,7 +17,9 @@ public abstract class Var implements Cloneable, Exp {
     public abstract Var clone();
 
     @Override
-    public abstract int hashCode();
+    public int hashCode() {
+        return name.hashCode();
+    }
 
     @Override
     public abstract boolean equals(Object obj);
@@ -24,5 +28,13 @@ public abstract class Var implements Cloneable, Exp {
      * Returns the declare-fun for the variable
      * @return
      */
-    public abstract String declare_fun();
+    public String declare_fun() {
+        return "(declare-fun " + name + " () " + type +")";
+    }
+
+    @Override
+    public <T> T accept(AstVisitor<T> visitor) {
+        return visitor.visit(this);
+    }
+
 }

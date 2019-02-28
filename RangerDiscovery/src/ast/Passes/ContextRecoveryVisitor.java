@@ -10,7 +10,7 @@ import java.util.HashSet;
 import static ast.def.Operator.OperatorKind.EQ;
 
 
-public class ContextRecovery extends SMTLIBv2BaseVisitor {
+public class ContextRecoveryVisitor extends SMTLIBv2BaseVisitor {
     public static HashSet<Var> functionContext = new HashSet<>();
 
 
@@ -19,20 +19,13 @@ public class ContextRecovery extends SMTLIBv2BaseVisitor {
         assert (ctx.getChildCount() == 4);
         String varName = ctx.getChild(1).getText();
         String typeName = ctx.getChild(2).getText();
-        Exp.VarType varType;
-
 
         if(typeName.equals("Bool"))
-            varType = Exp.VarType.BOOL;
+            functionContext.add(new IntVar(varName));
         else if (typeName.equals("int"))
-            varType = Exp.VarType.INT;
+            functionContext.add(new IntVar(varName));
         else if (typeName.equals("float"))
-            varType = Exp.VarType.FLOAT;
-        else
-            varType = null;
-        ;
-
-        functionContext.add(new IntVar(varName));
+            functionContext.add(new IntVar(varName));
 
         return null;
     }

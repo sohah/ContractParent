@@ -1,19 +1,12 @@
 package ast.Passes;
 
 import ast.def.*;
-import ast.parser.SMTLIBv2BaseListener;
-import ast.parser.SMTLIBv2BaseVisitor;
 import ast.parser.SMTLIBv2Lexer;
 import ast.parser.SMTLIBv2Parser;
-import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import ref.Pair;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
 
 import static org.antlr.v4.runtime.misc.Utils.readFile;
 import static ref.Utility.*;
@@ -49,7 +42,7 @@ public class ToAstPass {
         SMTLIBv2Parser parser = new SMTLIBv2Parser(tokens);
         SMTLIBv2Parser.CommandContext something = parser.command();
 
-        ContextRecovery contextRecoveryVisitor = new ContextRecovery();
+        ContextRecoveryVisitor contextRecoveryVisitor = new ContextRecoveryVisitor();
         contextRecoveryVisitor.visit(something);
 
         AstRecovery visitor = new AstRecovery();
