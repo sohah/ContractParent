@@ -1,9 +1,6 @@
 package ast.Passes;
 
-import ast.def.Ast;
-import ast.def.Exp;
-import ast.def.Operator;
-import ast.def.Var;
+import ast.def.*;
 import ast.parser.SMTLIBv2BaseVisitor;
 import ast.parser.SMTLIBv2Parser;
 
@@ -19,9 +16,9 @@ public class ContextRecovery extends SMTLIBv2BaseVisitor {
 
     @Override
     public Object visitSorted_var(SMTLIBv2Parser.Sorted_varContext ctx) {
-        assert (ctx.getChildCount() == 2);
-        String varName = ctx.getChild(0).getText();
-        String typeName = ctx.getChild(1).getText();
+        assert (ctx.getChildCount() == 4);
+        String varName = ctx.getChild(1).getText();
+        String typeName = ctx.getChild(2).getText();
         Exp.VarType varType;
 
 
@@ -35,7 +32,7 @@ public class ContextRecovery extends SMTLIBv2BaseVisitor {
             varType = null;
         ;
 
-        functionContext.add(new Var(varName, varType));
+        functionContext.add(new IntVar(varName));
 
         return null;
     }

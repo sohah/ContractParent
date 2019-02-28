@@ -14,7 +14,32 @@ public class Operator implements Ast {
     }
 
     public static enum OperatorKind {
-        EQ, NOT, AND, OR, IMPLIES, IFTHENELSE, ASSIGN, ADD, SUB
+        EQ, NOT, AND, OR, IMPLIES, IFTHENELSE, ASSIGN, ADD, SUB;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case ASSIGN:
+                case EQ:
+                    return " = ";
+                case NOT:
+                    return " not ";
+                case AND:
+                    return " and ";
+                case OR:
+                    return " or ";
+                case IMPLIES:
+                    return " => ";
+                case IFTHENELSE:
+                    return " ite ";
+                case ADD:
+                    return " add ";
+                case SUB:
+                    return " sub ";
+                default:
+                    return null;
+            }
+        }
     }
 
     public final OperatorKind opName;
@@ -52,33 +77,10 @@ public class Operator implements Ast {
         }
     }
 
-    public String toString() {
-        switch (opName) {
-            case ASSIGN:
-            case EQ:
-                return " = ";
-            case NOT:
-                return " not ";
-            case AND:
-                return " and ";
-            case OR:
-                return " or ";
-            case IMPLIES:
-                return " => ";
-            case IFTHENELSE:
-                return " ite ";
-            case ADD:
-                return " add ";
-            case SUB:
-                return " sub ";
-            default:
-                return null;
-        }
-    }
 
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof Operator))
+        if (!(obj instanceof Operator))
             return false;
         else return (this.toString().equals(obj.toString()));
     }

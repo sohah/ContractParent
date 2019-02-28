@@ -5,7 +5,7 @@ import ast.visitors.AstVisitor;
 public class IntVar extends Var {
 
     public IntVar(String name) {
-        super(name, "Int");
+        super(name, VarType.INT);
     }
 
     @Override
