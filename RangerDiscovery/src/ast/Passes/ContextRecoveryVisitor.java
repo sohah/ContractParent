@@ -5,9 +5,6 @@ import ast.parser.SMTLIBv2BaseVisitor;
 import ast.parser.SMTLIBv2Parser;
 
 import java.util.HashMap;
-import java.util.HashSet;
-
-import static ast.def.Operator.OperatorKind.EQ;
 
 
 public class ContextRecoveryVisitor extends SMTLIBv2BaseVisitor {

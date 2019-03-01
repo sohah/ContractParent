@@ -20,21 +20,21 @@ public class Operator implements Ast {
         public String toString() {
             switch (this) {
                 case EQ:
-                    return " = ";
+                    return "=";
                 case NOT:
-                    return " not ";
+                    return "not";
                 case AND:
-                    return " and ";
+                    return "and";
                 case OR:
-                    return " or ";
+                    return "or";
                 case IMPLIES:
-                    return " => ";
+                    return "=>";
                 case IFTHENELSE:
-                    return " ite ";
+                    return "ite";
                 case ADD:
-                    return " add ";
+                    return "add";
                 case SUB:
-                    return " sub ";
+                    return "sub";
                 default:
                     return null;
             }
@@ -135,5 +135,10 @@ public class Operator implements Ast {
         if (!(obj instanceof Operator))
             return false;
         else return (this.toString().equals(obj.toString()));
+    }
+
+    @Override
+    public String toString(){
+        return opName.toString();
     }
 }

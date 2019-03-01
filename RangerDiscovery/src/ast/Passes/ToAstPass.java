@@ -6,6 +6,7 @@ import ast.parser.SMTLIBv2Parser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.HashMap;
 
@@ -24,6 +25,7 @@ public class ToAstPass {
         transitionT.tContext = toAstPass.recoverFunContext(toAstPass.transition);
 
         transitionT.tBody = toAstPass.recoverFunBody(toAstPass.transition);
+        System.out.println(transitionT.tBody);
         return;
     }
 
@@ -48,7 +50,14 @@ public class ToAstPass {
         SMTLIBv2Parser.CommandContext something = parser.command();
 
         BodyRecoveryVisitor bodyRecoveryVisitor = new BodyRecoveryVisitor();
-        return bodyRecoveryVisitor.visit(something);
+        SMTLIBv2Parser.BodyContext body = null;
+
+
+        for(int i=0; i<something.getChild(2).getChildCount(); i++) //trying to isolate the body for the body visitor  pass
+            if(something.getChild(2).getChild(i) instanceof SMTLIBv2Parser.BodyContext)
+                body = (SMTLIBv2Parser.BodyContext) something.getChild(2).getChild(i);
+
+        return bodyRecoveryVisitor.visit(body);
     }
 
 

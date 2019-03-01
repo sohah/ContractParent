@@ -9,52 +9,70 @@ import java.util.ArrayList;
 import static Transition.TransitionT.transitionT;
 import static ast.def.BoolConst.FALSE;
 import static ast.def.BoolConst.TRUE;
-import static ast.def.Operator.OperatorKind.EQ;
 
 
 public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Exp> {
 
     @Override
     public Exp visitTerm(SMTLIBv2Parser.TermContext ctx) {
-        Operator operator;
-        try {
-            operator = new Operator(ctx.getChild(1).getText());
-        } catch (DiscoveryException e) {
-            System.out.println("problem translating to ast: " + e.getMessage());
-            return null;
-        }
-        ArrayList<Exp> operands = new ArrayList<>();
-        for (int i = 2; i < ctx.getChildCount() - 1; i++) { //to exclude opening and begining brackets as well as
-            operands.add(ctx.getChild(i).accept(this));
-        }
+        if (ctx.getChildCount() >= 4) { // 4 because at least not operator will require the term to have 4 children
+            Operator operator;
+            try {
+                operator = new Operator(ctx.getChild(1).getText());
+            } catch (DiscoveryException e) {
+                System.out.println("problem translating to ast: " + e.getMessage());
+                assert false;
+                return null;
+            }
+            ArrayList<Exp> operands = new ArrayList<>();
+            for (int i = 2; i < ctx.getChildCount() - 1; i++) { //to exclude opening and begining brackets as well as
+                operands.add(ctx.getChild(i).accept(this));
+            }
 
-
-        return new NExp(operator, operands);
-
+            return new NExp(operator, operands);
+        } else
+            return super.visitTerm(ctx);
     }
 
     @Override
     public Exp visitSimpleSymbol(SMTLIBv2Parser.SimpleSymbolContext ctx) {
-        Var var = transitionT.tContext.get(ctx.getText());
-        if (var == null) {
-            System.out.println("cannot find variable in context!");
-            return null;
+        if (ctx.getChild(0) instanceof SMTLIBv2Parser.PredefSymbolContext)
+            return super.visitSimpleSymbol(ctx);
+        else {
+            Var var = transitionT.tContext.get(ctx.getText());
+            if ((var == null) && !(ctx.getText().equals("T")) & (!aTypeOrOp(ctx.getText()))) {
+                System.out.println("cannot find variable in context!");
+                return null;
+            }
+            return var;
         }
-        return var;
+    }
+
+    private boolean aTypeOrOp(String text) {
+        if (text.equals("Bool"))
+            return true;
+        else if (text.equals("Int"))
+            return true;
+        else if (text.equals("Float"))
+            return true;
+        return false;
     }
 
     @Override
     public Exp visitPredefSymbol(SMTLIBv2Parser.PredefSymbolContext ctx) {
-        if(ctx.getText().equals("true"))
+        if (ctx.getText().equals("true"))
             return TRUE;
-        else if(ctx.getText().equals("false"))
+        else if (ctx.getText().equals("false"))
             return FALSE;
         else
             System.out.println("unexpected predefined symbol");
-            return null;
+
+        assert (false);
+        return null;
     }
 
     @Override
     public Exp visitNumeral(SMTLIBv2Parser.NumeralContext ctx) {
-        return new IntConst(Integer.parseInt(ctx.getChild(0).getText())); }
+        return new IntConst(Integer.parseInt(ctx.getChild(0).getText()));
+    }
 }

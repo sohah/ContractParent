@@ -27,7 +27,7 @@ public class NExp implements Exp {
         for(Exp exp: operands)
             myString.append(exp.toString());
 
-        myString.append(" ) ");
+        myString.append(")");
         return myString.toString();
     }
 

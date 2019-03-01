@@ -21,4 +21,9 @@ public class IntVar extends Var {
             return (this.name.equals(((IntVar) obj).name) && (this.type.toString().equals(((IntVar) obj).type.toString())));
     }
 
+    @Override
+    public String toString(){
+        return " "+ name ;
+    }
+
 }

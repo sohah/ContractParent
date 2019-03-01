@@ -778,7 +778,11 @@ function_dec
     ;
 
 function_def
-    : symbol ParOpen sorted_var* ParClose sort term
+    : symbol ParOpen sorted_var* ParClose sort body
+    ;
+
+body
+    : term
     ;
 
 prop_literal
