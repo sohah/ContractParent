@@ -42,4 +42,19 @@ public class PrettyPrintVisitor implements AstVisitor{
     public Object visit(BoolConst boolConst) {
         return null;
     }
+
+    @Override
+    public Object visit(BoolVar boolVar) {
+        return null;
+    }
+
+    @Override
+    public Object visit(Var var) {
+        return null;
+    }
+
+    @Override
+    public Object visit(NExp nExp) {
+        return null;
+    }
 }

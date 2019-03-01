@@ -1,6 +1,5 @@
+import Transition.TransitionT;
 import ast.Passes.ToAstPass;
-
-import java.io.IOException;
 
 public class Main {
     public static TransitionT transitionT = new TransitionT();

@@ -11,7 +11,7 @@ import static ast.def.Operator.OperatorKind.EQ;
 
 
 public class ContextRecoveryVisitor extends SMTLIBv2BaseVisitor {
-    public static HashSet<Var> functionContext = new HashSet<>();
+    public HashSet<Var> functionContext = new HashSet<>();
 
 
     @Override

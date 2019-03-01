@@ -1,29 +1,34 @@
 package ast.Passes;
 
-import ast.def.Ast;
-import ast.def.Exp;
-import ast.def.Operator;
+import ast.def.*;
 import ast.parser.SMTLIBv2BaseVisitor;
 import ast.parser.SMTLIBv2Parser;
 
+import java.util.ArrayList;
+
+import static Transition.TransitionT.transitionT;
 import static ast.def.Operator.OperatorKind.EQ;
 
 
-public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Ast> {
+public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Exp> {
 
     @Override
-    public Ast visitQual_identifer(SMTLIBv2Parser.Qual_identiferContext ctx) {
-        return new Operator(EQ);
-    }
+    public Exp visitTerm(SMTLIBv2Parser.TermContext ctx) {
+        Operator operator;
+        try {
+            operator = new Operator(ctx.getChild(1).getText());
+        } catch (DiscoveryException e) {
+            System.out.println("problem translating to ast: "+ e.getMessage());
+            return null;
+        }
+        ArrayList<Exp> operands = new ArrayList<>();
+        for (int i = 2; i < ctx.getChildCount() - 1; i++) { //to exclude opening and begining brackets as well as
+            operands.add(ctx.getChild(i).accept(this));
+        }
 
-    @Override
-    public Ast visitSimpleSymbol(SMTLIBv2Parser.SimpleSymbolContext ctx) {
-        return visitChildren(ctx);
-    }
 
+        return new NExp(operator, operands);
 
-    @Override
-    public Ast visitTerm(SMTLIBv2Parser.TermContext ctx) {
-        return visitChildren(ctx);
     }
+    
 }

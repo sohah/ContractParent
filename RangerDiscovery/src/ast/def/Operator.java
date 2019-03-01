@@ -14,12 +14,11 @@ public class Operator implements Ast {
     }
 
     public static enum OperatorKind {
-        EQ, NOT, AND, OR, IMPLIES, IFTHENELSE, ASSIGN, ADD, SUB;
+        EQ, NOT, AND, OR, IMPLIES, IFTHENELSE, ADD, SUB;
 
         @Override
         public String toString() {
             switch (this) {
-                case ASSIGN:
                 case EQ:
                     return " = ";
                 case NOT:
@@ -55,13 +54,66 @@ public class Operator implements Ast {
                 type = OperatorType.BOOL;
                 break;
             case EQ:
+            case IMPLIES:
+                arity = 2;
+                type = OperatorType.BOOL;
+                break;
+            case ADD:
+            case SUB:
+                arity = 2;
+                type = OperatorType.NUM;
+                break;
+            case IFTHENELSE:
+                arity = 3;
+                type = OperatorType.BOOL;
+                break;
+            case AND:
+            case OR:
+                arity = 100;
+                type = OperatorType.BOOL;
+                break;
+            default:
+                arity = -1;
+                type = null;
+        }
+    }
+
+    public Operator(String opName) throws DiscoveryException {
+
+        OperatorKind opNameKind;
+
+        if (opName.equals(OperatorKind.EQ.toString()))
+            opNameKind = OperatorKind.EQ;
+        else if (opName.equals(OperatorKind.NOT.toString()))
+            opNameKind = OperatorKind.NOT;
+        else if (opName.equals(OperatorKind.AND.toString()))
+            opNameKind = OperatorKind.AND;
+        else if (opName.equals(OperatorKind.OR.toString()))
+            opNameKind = OperatorKind.OR;
+        else if (opName.equals(OperatorKind.IMPLIES.toString()))
+            opNameKind = OperatorKind.IMPLIES;
+        else if (opName.equals(OperatorKind.ADD.toString()))
+            opNameKind = OperatorKind.ADD;
+        else if (opName.equals(OperatorKind.SUB.toString()))
+            opNameKind = OperatorKind.SUB;
+        else if (opName.equals(OperatorKind.IFTHENELSE.toString()))
+            opNameKind = OperatorKind.IFTHENELSE;
+        else throw new DiscoveryException("unkown operator");
+
+        this.opName = opNameKind;
+
+        switch (opNameKind) {
+            case NOT:
+                arity = 1;
+                type = OperatorType.BOOL;
+                break;
+            case EQ:
             case AND:
             case OR:
             case IMPLIES:
                 arity = 2;
                 type = OperatorType.BOOL;
                 break;
-            case ASSIGN:
             case ADD:
             case SUB:
                 arity = 2;
