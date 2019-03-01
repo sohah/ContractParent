@@ -3,11 +3,12 @@ package Transition;
 import ast.def.Exp;
 import ast.def.Var;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class TransitionT {
-    public HashSet<Var>  tContext = new HashSet<>();
-    public HashSet<Var>  tPrimeContext = new HashSet<>();
+    public HashMap<String, Var> tContext = new HashMap<>();
+    public HashMap<String, Var> tPrimeContext = new HashMap<>();
 
     public Exp tBody;
     public Exp tPrimeBody;

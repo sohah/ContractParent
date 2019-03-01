@@ -11,7 +11,7 @@ import static ast.def.Operator.OperatorKind.EQ;
 
 
 public class ContextRecoveryVisitor extends SMTLIBv2BaseVisitor {
-    public HashSet<Var> functionContext = new HashSet<>();
+    public HashMap<String, Var> functionContext = new HashMap<>();
 
 
     @Override
@@ -21,11 +21,11 @@ public class ContextRecoveryVisitor extends SMTLIBv2BaseVisitor {
         String typeName = ctx.getChild(2).getText();
 
         if(typeName.equals("Bool"))
-            functionContext.add(new IntVar(varName));
+            functionContext.put(typeName, new IntVar(varName));
         else if (typeName.equals("Int"))
-            functionContext.add(new IntVar(varName));
+            functionContext.put(typeName, new IntVar(varName));
         else if (typeName.equals("Float"))
-            functionContext.add(new IntVar(varName));
+            functionContext.put(typeName, new IntVar(varName));
         return null;
     }
 

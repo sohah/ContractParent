@@ -1,6 +1,5 @@
 package ast.Passes;
 
-import Transition.TransitionT;
 import ast.def.*;
 import ast.parser.SMTLIBv2Lexer;
 import ast.parser.SMTLIBv2Parser;
@@ -8,7 +7,7 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import java.util.HashSet;
+import java.util.HashMap;
 
 import static Transition.TransitionT.transitionT;
 import static ref.Utility.*;
@@ -28,7 +27,7 @@ public class ToAstPass {
         return;
     }
 
-    private HashSet<Var> recoverFunContext(String transition) {
+    private HashMap<String, Var> recoverFunContext(String transition) {
         CharStream stream = CharStreams.fromString(transition);
         SMTLIBv2Lexer lexer = new SMTLIBv2Lexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
