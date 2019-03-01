@@ -22,11 +22,10 @@ public class ContextRecoveryVisitor extends SMTLIBv2BaseVisitor {
 
         if(typeName.equals("Bool"))
             functionContext.add(new IntVar(varName));
-        else if (typeName.equals("int"))
+        else if (typeName.equals("Int"))
             functionContext.add(new IntVar(varName));
-        else if (typeName.equals("float"))
+        else if (typeName.equals("Float"))
             functionContext.add(new IntVar(varName));
-
         return null;
     }
 

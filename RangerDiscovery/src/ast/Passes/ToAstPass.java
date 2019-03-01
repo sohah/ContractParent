@@ -45,7 +45,7 @@ public class ToAstPass {
         ContextRecoveryVisitor contextRecoveryVisitor = new ContextRecoveryVisitor();
         contextRecoveryVisitor.visit(something);
 
-        AstRecovery visitor = new AstRecovery();
+        BodyRecoveryVisitor visitor = new BodyRecoveryVisitor();
         Ast value = visitor.visit(something);
 
         /*ParseTreeWalker walker = new ParseTreeWalker();
