@@ -21,11 +21,11 @@ public class ContextRecoveryVisitor extends SMTLIBv2BaseVisitor {
         String typeName = ctx.getChild(2).getText();
 
         if(typeName.equals("Bool"))
-            functionContext.put(typeName, new IntVar(varName));
+            functionContext.put(varName, new IntVar(varName));
         else if (typeName.equals("Int"))
-            functionContext.put(typeName, new IntVar(varName));
+            functionContext.put(varName, new IntVar(varName));
         else if (typeName.equals("Float"))
-            functionContext.put(typeName, new IntVar(varName));
+            functionContext.put(varName, new IntVar(varName));
         return null;
     }
 

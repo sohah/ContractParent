@@ -35,7 +35,7 @@ public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Exp> {
 
     @Override
     public Exp visitSimpleSymbol(SMTLIBv2Parser.SimpleSymbolContext ctx) {
-        Var var = transitionT.tContext.get(ctx.getChild(0).getText());
+        Var var = transitionT.tContext.get(ctx.getText());
         if (var == null) {
             System.out.println("cannot find variable in context!");
             return null;
@@ -45,9 +45,9 @@ public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Exp> {
 
     @Override
     public Exp visitPredefSymbol(SMTLIBv2Parser.PredefSymbolContext ctx) {
-        if(ctx.getChild(0).getText().equals("true"))
+        if(ctx.getText().equals("true"))
             return TRUE;
-        else if(ctx.getChild(0).getText().equals("false"))
+        else if(ctx.getText().equals("false"))
             return FALSE;
         else
             System.out.println("unexpected predefined symbol");
