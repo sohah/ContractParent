@@ -24,21 +24,6 @@ public class PrettyPrintVisitor implements AstVisitor{
     }
 
     @Override
-    public Object visit(BinaryExp binaryExp) {
-        return null;
-    }
-
-    @Override
-    public Object visit(UnaryExp unaryExp) {
-        return null;
-    }
-
-    @Override
-    public Object visit(IfThenElseExp ifThenElseExp) {
-        return null;
-    }
-
-    @Override
     public Object visit(BoolConst boolConst) {
         return null;
     }

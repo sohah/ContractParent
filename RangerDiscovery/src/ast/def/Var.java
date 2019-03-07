@@ -4,9 +4,9 @@ import ast.visitors.AstVisitor;
 
 public abstract class Var implements Cloneable, Exp {
 
-    final String name;
+    public final String name;
 
-    final VarType type;
+    public final VarType type;
 
     protected Var(String name, VarType type) {
         this.name = name;
@@ -33,7 +33,7 @@ public abstract class Var implements Cloneable, Exp {
     }
 
     @Override
-    public <T> T accept(AstVisitor<T> visitor) {
+    public <T> T accept(AstVisitor<T> visitor) throws DiscoveryException {
         return visitor.visit(this);
     }
 

@@ -12,18 +12,12 @@ public interface AstVisitor<T> {
 
     T visit(Hole hole);
 
-    T visit(BinaryExp binaryExp);
-
-    T visit(UnaryExp unaryExp);
-
-    T visit(IfThenElseExp ifThenElseExp);
-
     T visit(BoolConst boolConst);
 
 
     T visit(BoolVar boolVar);
 
-    T visit(Var var);
+    T visit(Var var) throws DiscoveryException;
 
     T visit(NExp nExp);
 }

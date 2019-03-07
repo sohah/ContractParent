@@ -6,7 +6,7 @@ public class BoolConst implements Exp {
 
     private String name;
 
-    private BoolConst(String name) {
+    public BoolConst(String name) {
         this.name = name;
     }
 
