@@ -2,12 +2,18 @@ package ast.Passes;
 
 import ast.def.*;
 import ast.visitors.AstVisitor;
+import ref.Pair;
+
+import java.util.HashMap;
 
 public class ToConstantHoleVisitor implements AstVisitor<Ast>{
+    public HashMap<String, Var> tPrimeContext = new HashMap<>();
+
     @Override
     public Exp visit(IntConst numExp) {
         Hole hole = HoleGenerator.generateConstantHole(numExp);
-
+        assert(hole.holeAst instanceof IntVar);
+        tPrimeContext.put(((IntVar) hole.holeAst).name, (IntVar) hole.holeAst);
         return hole;
     }
 
@@ -31,6 +37,8 @@ public class ToConstantHoleVisitor implements AstVisitor<Ast>{
     @Override
     public Ast visit(BoolConst boolConst) {
         Hole hole = HoleGenerator.generateConstantHole(boolConst);
+        assert(hole.holeAst instanceof BoolVar);
+        tPrimeContext.put(((BoolVar) hole.holeAst).name, (Var) hole.holeAst);
         return hole;
     }
 
@@ -49,5 +57,11 @@ public class ToConstantHoleVisitor implements AstVisitor<Ast>{
     @Override
     public Ast visit(NExp nExp) {
         return new NExp(nExp.operator, nExp.operands);
+    }
+
+    public static Pair<HashMap<String, Var>, Ast> execute(Ast t) throws DiscoveryException {
+        ToConstantHoleVisitor toConstantHoleVisitor = new ToConstantHoleVisitor();
+        Ast tPrime = t.accept(toConstantHoleVisitor);
+        return new Pair(toConstantHoleVisitor.tPrimeContext, tPrime);
     }
 }

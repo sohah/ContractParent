@@ -2,12 +2,18 @@ package ast.Passes;
 
 import ast.def.*;
 import ast.visitors.AstVisitor;
+import ref.Pair;
 
 import java.util.HashMap;
 
 public class RemoveHolesVisitor  implements AstVisitor<Ast>{
 
-    public static HashMap<Hole, Ast> instantiatedHoles = new HashMap<>();
+    public HashMap<Hole, Ast> instantiatedHoles = new HashMap<>();
+
+    public RemoveHolesVisitor(HashMap<Hole, Ast> instantiatedHoles){
+        this.instantiatedHoles = instantiatedHoles;
+
+    }
 
     @Override
     public Ast visit(IntConst numExp) {
@@ -50,4 +56,12 @@ public class RemoveHolesVisitor  implements AstVisitor<Ast>{
     public Ast visit(NExp nExp) {
         return new NExp(nExp.operator,nExp.operands);
     }
+
+
+    public static Ast execute(HashMap<Hole, Ast> instantiatedHolesMap, Ast t) throws DiscoveryException {
+        RemoveHolesVisitor removeHolesVisitor = new RemoveHolesVisitor(instantiatedHolesMap);
+        Ast instantiatedTPrime = t.accept(removeHolesVisitor);
+        return instantiatedTPrime;
+    }
+
 }
