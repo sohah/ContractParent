@@ -17,13 +17,13 @@ public class NExp implements Exp {
     }
 
     @Override
-    public <T> T accept(AstVisitor<T> visitor) {
+    public <T> T accept(AstVisitor<T> visitor) throws DiscoveryException {
         return visitor.visit(this);
     }
 
     @Override
     public String toString() {
-        StringBuilder myString = new StringBuilder("(" + operator);
+        StringBuilder myString = new StringBuilder("(" + operator.toString());
         for(Exp exp: operands)
             myString.append(exp.toString());
 

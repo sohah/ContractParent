@@ -37,11 +37,13 @@ public class CounterExampleFeedBack {
         Pair<LinkedHashMap<String, Var>, Ast> contextAndBody = ToAstPass.execute(transitionT.extractTransitionT(expfileName));
 
         transitionT.tContext.putAll(contextAndBody.getFirst());
+        transitionTprime.tContext.putAll(contextAndBody.getFirst()); //Tprime at least until now will have the same context
+
         transitionT.tBody = (Exp) contextAndBody.getSecond();
 
         HashMap<Hole, Ast> instantiatedHoles;
 
-        boolean sat = true;
+        boolean sat = true; // I need to added here the check for the first time
         boolean done = false;
 
         while (sat && !done) {
@@ -51,17 +53,28 @@ public class CounterExampleFeedBack {
             holeTransitionT.tContext.putAll(contextAndBody.getFirst());
             holeTransitionT.tBody = (Exp) contextAndBody.getSecond();
 
+            System.out.println("**************** Checking SAT for holeContract:\n" + holeTransitionT.declare_Hole_Constants() + holeTransitionT.define_fun_T());
             boolean instantiationSat = checkSat(holeTransitionT, true);
             if (!instantiationSat) {
                 System.out.println("problem happened during finding instantiation!");
                 return;
             }
+            else
+                System.out.println("SAT");
 
             instantiatedHoles = getModelForHoles();
             transitionTprime.tBody = (Exp) RemoveHolesVisitor.execute(instantiatedHoles, holeTransitionT.tBody);
-            sat = checkSat(transitionTprime, false);
 
-            done = true; // we want to stop after one  time change of constant.
+            System.out.println("*************** Checking SAT for the repaired Contract T': \n" + transitionTprime.define_fun_T());
+            sat = checkSat(transitionTprime, false);
+            if(sat)
+                System.out.println("SAT");
+            else {
+                System.out.println("UNSAT ---- repair is found ^-^");
+                sat = false;
+            }
+
+            done = true; // we want to stop after trying changing all possible constants, we have to maintain the set of constants that we need to change along the way.
         }
 
         if (sat)
@@ -80,17 +93,19 @@ public class CounterExampleFeedBack {
 
         for (FuncDecl decl : constDecl) {
             Var var = holeTransitionT.tContext.get(decl.getName().toString());
-            Expr interpetation = model.getConstInterp(decl);
-            if (interpetation.isInt())
-                instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
-                        new IntConst(Integer.valueOf(interpetation.toString())));
-            else if (interpetation.isTrue())
-                instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
-                        TRUE);
-            else if (interpetation.isFalse())
-                instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
-                        FALSE);
-            else throw new DiscoveryException("unexpected interpetation");
+            if (var != null && var.toString().contains("Hole")) {
+                Expr interpetation = model.getConstInterp(decl);
+                if (interpetation.isInt())
+                    instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
+                            new IntConst(Integer.valueOf(interpetation.toString())));
+                else if (interpetation.isTrue())
+                    instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
+                            TRUE);
+                else if (interpetation.isFalse())
+                    instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
+                            FALSE);
+                else throw new DiscoveryException("unexpected interpetation");
+            }
         }
 
         return instantiatedHolesMap;
@@ -99,10 +114,10 @@ public class CounterExampleFeedBack {
     private boolean checkSat(TransitionT atransitionT, boolean isHoleT) {
         StringBuilder newTransitionT;
         if (isHoleT) {
-            newTransitionT = new StringBuilder(transitionT.declare_Hole_Constants());
-            newTransitionT.append(transitionT.declare_fun_T());
+            newTransitionT = new StringBuilder(atransitionT.declare_Hole_Constants());
+            newTransitionT.append(atransitionT.define_fun_T());
         } else
-            newTransitionT = new StringBuilder(transitionT.declare_fun_T());
+            newTransitionT = new StringBuilder(atransitionT.define_fun_T());
 
         String newMergedContract = transitionT.mergedContract.getFirst();
         StringBuilder stringBuilder = new StringBuilder(newMergedContract);

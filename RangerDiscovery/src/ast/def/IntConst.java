@@ -25,6 +25,6 @@ public class IntConst implements Exp {
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+        return " " + String.valueOf(value);
     }
 }

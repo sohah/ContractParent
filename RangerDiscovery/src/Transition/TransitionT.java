@@ -23,7 +23,7 @@ public class TransitionT {
     public static TransitionT transitionTprime = new TransitionT();
 
 
-    public String extractTransitionT(String path){
+    public String extractTransitionT(String path) {
         String extractedT = null;
         try {
             extractedT = new String(Files.readAllBytes(Paths.get(path)), "UTF-8");
@@ -38,31 +38,35 @@ public class TransitionT {
         return extractedT;
     }
 
-    public String declare_fun_T(){
+    public String define_fun_T() {
         StringBuilder t = new StringBuilder();
 
-        t.append("\ndeclare-fun T(");
-        for(Map.Entry entry: this.tContext.entrySet()){ //reconstructing the parameter list for T
-            t.append("(");
-            t.append(((Var)entry.getValue()).toString());
-            t.append(" ");
-            t.append(((Var)entry.getValue()).type.toString());
-            t.append(")");
+        t.append("\n(define-fun T (");
+        for (Map.Entry entry : this.tContext.entrySet()) { //reconstructing the parameter list for T
+            if (!entry.getValue().toString().contains("Hole")) {
+                t.append("(");
+                t.append(((Var) entry.getValue()).toString());
+                t.append(" ");
+                t.append(((Var) entry.getValue()).type.toString());
+                t.append(")");
+            }
         }
-        t.append(")\n");
+        t.append(") Bool\n");
 
         t.append(this.tBody);
+        t.append(")\n");
         return t.toString();
     }
 
-    public String declare_Hole_Constants(){
+    public String declare_Hole_Constants() {
         StringBuilder t = new StringBuilder();
 
-        for(Map.Entry<String, Var> entry: this.tContext.entrySet()){
-          if(entry.getKey().contains("hole"))
-              t.append(entry.getValue().declare_fun());
+        for (Map.Entry<String, Var> entry : this.tContext.entrySet()) {
+            if (entry.getKey().contains("Hole")) {
+                t.append(entry.getValue().declare_fun());
+                t.append("\n");
+            }
         }
-
         return t.toString();
     }
 }

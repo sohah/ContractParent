@@ -3,13 +3,14 @@ package ast.Passes;
 import ast.def.*;
 import ast.visitors.AstVisitor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RemoveHolesVisitor  implements AstVisitor<Ast>{
+public class RemoveHolesVisitor implements AstVisitor<Ast> {
 
     public HashMap<Hole, Ast> instantiatedHoles = new HashMap<>();
 
-    public RemoveHolesVisitor(HashMap<Hole, Ast> instantiatedHoles){
+    public RemoveHolesVisitor(HashMap<Hole, Ast> instantiatedHoles) {
         this.instantiatedHoles = instantiatedHoles;
 
     }
@@ -31,7 +32,12 @@ public class RemoveHolesVisitor  implements AstVisitor<Ast>{
 
     @Override
     public Ast visit(Hole hole) {
-        return instantiatedHoles.get(hole);
+        Ast value = instantiatedHoles.get(hole);
+
+        if (value == null)
+            return hole.orignalAst;
+        else
+            return value;
     }
 
     @Override
@@ -52,8 +58,15 @@ public class RemoveHolesVisitor  implements AstVisitor<Ast>{
     }
 
     @Override
-    public Ast visit(NExp nExp) {
-        return new NExp(nExp.operator,nExp.operands);
+    public Ast visit(NExp nExp) throws DiscoveryException {
+
+        Ast newOperator = nExp.operator.accept(this);
+        ArrayList<Exp> newOperands = new ArrayList<>();
+
+        for (Ast operand : nExp.operands) {
+            newOperands.add((Exp) operand.accept(this));
+        }
+        return new NExp((Operator) newOperator, newOperands);
     }
 
 

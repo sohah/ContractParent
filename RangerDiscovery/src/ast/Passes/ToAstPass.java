@@ -34,14 +34,14 @@ public class ToAstPass {
         return contextRecoveryVisitor.functionContext;
     }
 
-    private Exp recoverFunBody(String transition) {
+    private Exp recoverFunBody(String transition, LinkedHashMap<String, Var> tContext) {
         CharStream stream = CharStreams.fromString(transition);
         SMTLIBv2Lexer lexer = new SMTLIBv2Lexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         SMTLIBv2Parser parser = new SMTLIBv2Parser(tokens);
         SMTLIBv2Parser.CommandContext something = parser.command();
 
-        BodyRecoveryVisitor bodyRecoveryVisitor = new BodyRecoveryVisitor();
+        BodyRecoveryVisitor bodyRecoveryVisitor = new BodyRecoveryVisitor(tContext);
         SMTLIBv2Parser.BodyContext body = null;
 
 
@@ -56,8 +56,8 @@ public class ToAstPass {
         ToAstPass toAstPass = new ToAstPass(jkindFile);
         LinkedHashMap<String, Var> tContext = toAstPass.recoverFunContext(toAstPass.transition);
 
-        Ast tBody = toAstPass.recoverFunBody(toAstPass.transition);
-        System.out.println(transitionT.tBody);
+        Ast tBody = toAstPass.recoverFunBody(toAstPass.transition, tContext);
+        System.out.println(tBody);
         return new Pair(tContext, tBody);
     }
 

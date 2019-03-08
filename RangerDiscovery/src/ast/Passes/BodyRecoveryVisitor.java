@@ -5,6 +5,7 @@ import ast.parser.SMTLIBv2BaseVisitor;
 import ast.parser.SMTLIBv2Parser;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import static Transition.TransitionT.transitionT;
 import static ast.def.BoolConst.FALSE;
@@ -12,6 +13,14 @@ import static ast.def.BoolConst.TRUE;
 
 
 public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Exp> {
+
+
+    private final LinkedHashMap<String, Var> tContext;
+
+    public BodyRecoveryVisitor(LinkedHashMap<String, Var> tContext) {
+        super();
+        this.tContext = tContext;
+    }
 
     @Override
     public Exp visitTerm(SMTLIBv2Parser.TermContext ctx) {
@@ -39,7 +48,7 @@ public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Exp> {
         if (ctx.getChild(0) instanceof SMTLIBv2Parser.PredefSymbolContext)
             return super.visitSimpleSymbol(ctx);
         else {
-            Var var = transitionT.tContext.get(ctx.getText());
+            Var var = tContext.get(ctx.getText());
             if ((var == null) && !(ctx.getText().equals("T")) & (!aTypeOrOp(ctx.getText()))) {
                 System.out.println("cannot find variable in context!");
                 return null;

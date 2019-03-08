@@ -19,6 +19,6 @@ public interface AstVisitor<T> {
 
     T visit(Var var) throws DiscoveryException;
 
-    T visit(NExp nExp);
+    T visit(NExp nExp) throws DiscoveryException;
 }
 

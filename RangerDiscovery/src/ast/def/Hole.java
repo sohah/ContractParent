@@ -31,4 +31,9 @@ public class Hole implements Exp {
     public int hashCode() {
         return holeAst.hashCode();
     }
+
+    @Override
+    public String toString(){
+        return " "+ holeAst.toString() + " ";
+    }
 }

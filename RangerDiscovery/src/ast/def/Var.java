@@ -37,4 +37,8 @@ public abstract class Var implements Cloneable, Exp {
         return visitor.visit(this);
     }
 
+    @Override
+    public String toString(){
+        return " "+ name ;
+    }
 }

@@ -20,4 +20,14 @@ public class BoolVar extends Var {
         else
             return (this.name.equals(((BoolVar) obj).name) && (this.type.toString().equals(((BoolVar) obj).type.toString())));
     }
+
+    @Override
+    public <T> T accept(AstVisitor<T> visitor) throws DiscoveryException {
+        return visitor.visit(this);
+    }
+
+    @Override
+    public String toString(){
+        return " "+ name ;
+    }
 }

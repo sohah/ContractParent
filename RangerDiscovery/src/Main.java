@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) throws DiscoveryException {
 
         String folderName;
-        folderName = "../RunPadModel/Contracts/matchingContracts/jointContract/";
+        folderName = "../RunPadModel/Contracts/matchingContracts/CEFLP/Pad/";
         String expfileName = folderName + "SimplePadReset.runPadSteps(IZZZZZ)V#27_0.txt";
 
         counterExampleFeedBack.executeConstantCEFL(expfileName);
