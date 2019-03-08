@@ -16,8 +16,8 @@ import static ref.Utility.*;
 public class ToAstPass {
     String transition;
 
-    public ToAstPass(String jkindFile){
-        transition = getTransitionT(jkindFile);
+    public ToAstPass(String transition){
+        this.transition = transition;
     }
 
 
