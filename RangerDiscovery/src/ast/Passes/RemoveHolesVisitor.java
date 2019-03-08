@@ -2,7 +2,6 @@ package ast.Passes;
 
 import ast.def.*;
 import ast.visitors.AstVisitor;
-import ref.Pair;
 
 import java.util.HashMap;
 

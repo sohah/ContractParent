@@ -2,7 +2,11 @@ package Transition;
 
 import ast.def.Exp;
 import ast.def.Var;
+import ref.Pair;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,36 +16,28 @@ public class TransitionT {
     public LinkedHashMap<String, Var> tContext = new LinkedHashMap<>();
 
     public Exp tBody;
+    public Pair<String, Pair<Integer, Integer>> mergedContract; //a pair of mergedContract String with to and from indecies of transitionT
 
     public static TransitionT transitionT = new TransitionT();
     public static TransitionT holeTransitionT = new TransitionT();
     public static TransitionT transitionTprime = new TransitionT();
 
-    /*public void createTwithHoles(LinkedHashMap<String, Var> holeContext, Exp holeBody){
-        this.tHoleContext.putAll(tContext);
-        this.tHoleContext.putAll(holeContext);
-        tHoleBody = holeBody;
-    }
-*/
-/*
-    */
-/**
-     * creates a string for the transitionT with Holes, including the added context
-     * @return
-     *//*
 
-    public String tHoleToString(){
-        StringBuilder tPrime = new StringBuilder();
-        for(Map.Entry entry: this.tHoleContext.entrySet()) //adding the hole vars into the declarations
-            tPrime.append(((Var)entry.getValue()).declare_fun());
+    public String extractTransitionT(String path){
+        String extractedT = null;
+        try {
+            extractedT = new String(Files.readAllBytes(Paths.get(path)), "UTF-8");
 
-        tPrime.append(declare_fun_T());
-
-        tPrime.append(this.tHoleBody.toString());
-        return tPrime.toString();
+        } catch (IOException e) {
+            System.out.println("Problem reading file. " + e.getMessage());
+        }
+        int startT = extractedT.indexOf("(define-fun T");
+        int endT = extractedT.indexOf("(declare-fun %init () Bool)");
+        mergedContract = new Pair<String, Pair<Integer, Integer>>(extractedT, new Pair<>(startT, endT));
+        extractedT = extractedT.substring(startT, endT - 1);
+        return extractedT;
     }
 
-*/
     /**
      * creates the transition
      * @return
@@ -55,18 +51,7 @@ public class TransitionT {
         return tPrime.toString();
     }
 
-    /*public String tPrimeToString(){
-        StringBuilder tPrime = new StringBuilder();
-        for(Map.Entry entry: this.tPrimeContext.entrySet()) //adding the hole vars into the declarations
-            tPrime.append(((Var)entry.getValue()).declare_fun());
 
-        tPrime.append(declare_fun_T());
-
-
-        tPrime.append(this.tPrimeBody.toString());
-        return tPrime.toString();
-    }
-*/
     public String declare_fun_T(){
         StringBuilder t = new StringBuilder();
 

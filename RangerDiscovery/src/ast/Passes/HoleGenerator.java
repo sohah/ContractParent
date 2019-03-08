@@ -9,7 +9,7 @@ public class HoleGenerator {
     private static int uniquePostfix = 1;
     private final static String constantHoleName = "constHole_";
 
-    public static HashMap<Hole, Ast> instantiatedHoles = new HashMap<>();
+    public static HashMap<Var, Hole> varHoleHashMap = new HashMap<>();
 
     public static Hole generateConstantHole(Ast originalAst){
         String holeName = constantHoleName + Integer.toString(uniquePostfix);
@@ -22,8 +22,10 @@ public class HoleGenerator {
             var = new IntVar(holeName);
         else
             assert false;
+        Hole hole = new Hole(var, originalAst);
 
-        return new Hole(var, originalAst);
+        varHoleHashMap.put(var, hole);
+        return hole;
     }
 
 
