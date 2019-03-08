@@ -5,32 +5,36 @@ import ast.Passes.ToAstPass;
 import ast.Passes.ToConstantHoleVisitor;
 import ast.def.*;
 import com.microsoft.z3.Context;
+import com.microsoft.z3.Expr;
+import com.microsoft.z3.Model;
 import com.microsoft.z3.Solver;
 import ref.Pair;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import static Transition.TransitionT.holeTransitionT;
 import static Transition.TransitionT.transitionT;
+import static Transition.TransitionT.transitionTprime;
 
 
 public class CounterExampleFeedBack {
 
-    public HashMap<String, String> cfg = new HashMap<String, String>();
+    static HashMap<String, String> cfg = new HashMap<String, String>();
 
-    Solver solver;
-    Context ctx;
+    static Solver solver;
+    static Context ctx;
 
     public CounterExampleFeedBack(){
         ctx = new Context(cfg);
         cfg.put("proof", "true");
-
-
     }
+
+
     public static void executeConstantCEFL(String expfileName) throws DiscoveryException {
         Pair<LinkedHashMap<String, Var>, Ast> contextAndBody = ToAstPass.execute(expfileName);
 
-        transitionT.tContext = contextAndBody.getFirst();
+        transitionT.tContext.putAll(contextAndBody.getFirst());
         transitionT.tBody = (Exp) contextAndBody.getSecond();
 
         HashMap<Hole, Ast> instantiatedHoles;
@@ -41,13 +45,14 @@ public class CounterExampleFeedBack {
         while (sat && !done) {
 
             contextAndBody = ToConstantHoleVisitor.execute(transitionT.tBody);
-            transitionT.tHoleContext = contextAndBody.getFirst();
-            transitionT.tHoleBody = (Exp) contextAndBody.getSecond();
+            holeTransitionT.tContext.putAll(transitionT.tContext);
+            holeTransitionT.tContext.putAll(contextAndBody.getFirst());
+            holeTransitionT.tBody = (Exp) contextAndBody.getSecond();
 
-            checkTholeSat();
+            checkSat(holeTransitionT);
             instantiatedHoles = getModelForHoles();
-            transitionT.tPrimeBody = (Exp) RemoveHolesVisitor.execute(instantiatedHoles, transitionT.tHoleBody);
-            sat = checkTprimeSat();
+            transitionTprime.tBody = (Exp) RemoveHolesVisitor.execute(instantiatedHoles, holeTransitionT.tBody);
+            sat = checkSat(transitionTprime);
 
             done = true; // we want to stop after one  time change of constant.
         }
@@ -55,18 +60,21 @@ public class CounterExampleFeedBack {
         if(sat)
             System.out.println("No repair was found");
         else
-            System.out.println("Successful repair was completed, repaired contract is:\n" + transitionT.tPrimeToString());
+            System.out.println("Successful repair was completed, repaired contract is:\n" + transitionT.toString());
 
     }
 
     private static HashMap<Hole,Ast> getModelForHoles() {
 
+        Model model = solver.getModel();
+        for(String var: holeTransitionT.tContext.keySet())
+
+
     }
 
-    private static boolean checkTprimeSat() {
+    private static boolean checkSat(TransitionT transitionT) {
+
         return false;
     }
 
-    private static void checkTholeSat() {
-    }
 }
