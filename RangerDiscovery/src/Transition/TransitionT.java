@@ -1,12 +1,14 @@
 package Transition;
 
 import ast.def.Exp;
+import ast.def.NExp;
 import ast.def.Var;
 import ref.Pair;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,6 +19,8 @@ public class TransitionT {
 
     public Exp tBody;
     public Pair<String, Pair<Integer, Integer>> mergedContract; //a pair of mergedContract String with to and from indexes of transitionT
+
+    public static ArrayList<NExp> counterExampleAssertions = new ArrayList<>();
 
     public static TransitionT transitionT = new TransitionT();
     public static TransitionT holeTransitionT = new TransitionT();

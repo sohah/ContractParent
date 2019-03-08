@@ -33,8 +33,17 @@ public class CounterExampleFeedBack {
     public static CounterExampleFeedBack counterExampleFeedBack = new CounterExampleFeedBack();
 
     public void executeConstantCEFL(String expfileName) throws DiscoveryException {
+        String transitionTstring = transitionT.extractTransitionT(expfileName);
+        /*solver = ctx.mkSolver();
+        solver.fromString(transitionTstring.toString());
+        Status status = solver.check();
+        if (status == Status.SATISFIABLE)
+            System.out.println("sat");
+        else
+            System.out.println("unsat");
+*/
 
-        Pair<LinkedHashMap<String, Var>, Ast> contextAndBody = ToAstPass.execute(transitionT.extractTransitionT(expfileName));
+        Pair<LinkedHashMap<String, Var>, Ast> contextAndBody = ToAstPass.execute(transitionTstring);
 
         transitionT.tContext.putAll(contextAndBody.getFirst());
         transitionTprime.tContext.putAll(contextAndBody.getFirst()); //Tprime at least until now will have the same context
@@ -43,7 +52,15 @@ public class CounterExampleFeedBack {
 
         HashMap<Hole, Ast> instantiatedHoles;
 
-        boolean sat = true; // I need to added here the check for the first time
+        boolean sat = checkSat(transitionT, false);
+        if (!sat) {
+            System.out.println("Contract and Implementation already match, no repair is needed. Aborting.");
+            return;
+        } else {// I need to collect counter example
+            System.out.println("Contract and Implementation not matching, collecting counter example and repairing");
+            collectCounterExample();
+        }
+
         boolean done = false;
 
         while (sat && !done) {
@@ -56,10 +73,9 @@ public class CounterExampleFeedBack {
             System.out.println("**************** Checking SAT for holeContract:\n" + holeTransitionT.declare_Hole_Constants() + holeTransitionT.define_fun_T());
             boolean instantiationSat = checkSat(holeTransitionT, true);
             if (!instantiationSat) {
-                System.out.println("problem happened during finding instantiation!");
+                System.out.println("Cannot find a repair!");
                 return;
-            }
-            else
+            } else
                 System.out.println("SAT");
 
             instantiatedHoles = getModelForHoles();
@@ -67,13 +83,13 @@ public class CounterExampleFeedBack {
 
             System.out.println("*************** Checking SAT for the repaired Contract T': \n" + transitionTprime.define_fun_T());
             sat = checkSat(transitionTprime, false);
-            if(sat)
-                System.out.println("SAT");
-            else {
+            if (sat) {
+                System.out.println("SAT: repair is no good, collecting counter example");
+                collectCounterExample();
+            } else {
                 System.out.println("UNSAT ---- repair is found ^-^");
                 sat = false;
             }
-
             done = true; // we want to stop after trying changing all possible constants, we have to maintain the set of constants that we need to change along the way.
         }
 
@@ -81,6 +97,10 @@ public class CounterExampleFeedBack {
             System.out.println("No repair was found");
         else
             System.out.println("Successful repair was completed, repaired contract is:\n" + transitionT.toString());
+
+    }
+
+    private void collectCounterExample() {
 
     }
 
@@ -104,7 +124,7 @@ public class CounterExampleFeedBack {
                 else if (interpetation.isFalse())
                     instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
                             FALSE);
-                else throw new DiscoveryException("unexpected interpetation");
+                else throw new DiscoveryException("unexpected interpretation");
             }
         }
 
@@ -132,6 +152,7 @@ public class CounterExampleFeedBack {
             return true;
         else
             return false;
+
     }
 
 }
