@@ -4,10 +4,10 @@ import ast.def.*;
 import ast.visitors.AstVisitor;
 import ref.Pair;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class ToConstantHoleVisitor implements AstVisitor<Ast>{
-    public HashMap<String, Var> tPrimeContext = new HashMap<>();
+    public LinkedHashMap<String, Var> tPrimeContext = new LinkedHashMap<>();
 
     @Override
     public Exp visit(IntConst numExp) {
@@ -59,9 +59,9 @@ public class ToConstantHoleVisitor implements AstVisitor<Ast>{
         return new NExp(nExp.operator, nExp.operands);
     }
 
-    public static Pair<HashMap<String, Var>, Ast> execute(Ast t) throws DiscoveryException {
+    public static Pair<LinkedHashMap<String, Var>, Ast> execute(Ast t) throws DiscoveryException {
         ToConstantHoleVisitor toConstantHoleVisitor = new ToConstantHoleVisitor();
-        Ast tPrime = t.accept(toConstantHoleVisitor);
-        return new Pair(toConstantHoleVisitor.tPrimeContext, tPrime);
+        Ast tPrimeWithHoles = t.accept(toConstantHoleVisitor);
+        return new Pair(toConstantHoleVisitor.tPrimeContext, tPrimeWithHoles);
     }
 }

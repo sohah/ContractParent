@@ -6,14 +6,14 @@ import java.util.HashMap;
 
 public class HoleGenerator {
 
-    private static int uniquePosfix = 1;
+    private static int uniquePostfix = 1;
     private final static String constantHoleName = "constHole_";
 
     public static HashMap<Hole, Ast> instantiatedHoles = new HashMap<>();
 
     public static Hole generateConstantHole(Ast originalAst){
-        String holeName = constantHoleName + Integer.toString(uniquePosfix);
-        ++uniquePosfix;
+        String holeName = constantHoleName + Integer.toString(uniquePostfix);
+        ++uniquePostfix;
 
         Var var = null;
         if(originalAst instanceof BoolConst)

@@ -6,9 +6,9 @@ import ast.parser.SMTLIBv2Parser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import ref.Pair;
 
 import static Transition.TransitionT.transitionT;
 import static ref.Utility.*;
@@ -20,16 +20,8 @@ public class ToAstPass {
         transition = getTransitionT(jkindFile);
     }
 
-    public static void execute(String jkindFile) {
-        ToAstPass toAstPass = new ToAstPass(jkindFile);
-        transitionT.tContext = toAstPass.recoverFunContext(toAstPass.transition);
 
-        transitionT.tBody = toAstPass.recoverFunBody(toAstPass.transition);
-        System.out.println(transitionT.tBody);
-        return;
-    }
-
-    private HashMap<String, Var> recoverFunContext(String transition) {
+    private LinkedHashMap<String, Var> recoverFunContext(String transition) {
         CharStream stream = CharStreams.fromString(transition);
         SMTLIBv2Lexer lexer = new SMTLIBv2Lexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -60,5 +52,13 @@ public class ToAstPass {
         return bodyRecoveryVisitor.visit(body);
     }
 
+    public static Pair<LinkedHashMap<String, Var>, Ast> execute(String jkindFile) {
+        ToAstPass toAstPass = new ToAstPass(jkindFile);
+        LinkedHashMap<String, Var> tContext = toAstPass.recoverFunContext(toAstPass.transition);
+
+        Ast tBody = toAstPass.recoverFunBody(toAstPass.transition);
+        System.out.println(transitionT.tBody);
+        return new Pair(tContext, tBody);
+    }
 
 }

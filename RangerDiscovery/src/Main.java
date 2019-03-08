@@ -1,3 +1,4 @@
+import Transition.CounterExampleFeedBack;
 import Transition.TransitionT;
 import ast.Passes.ToAstPass;
 
@@ -11,7 +12,7 @@ public class Main {
         String disfileName = folderName + "UnbeliveablySimplePad.runPadSteps(IZZZZ)V#21_0.txt";
         String expfileName = folderName + "ImaginaryPad0.k-inductiontest.smt2";
 
-        ToAstPass.execute(expfileName);
+        CounterExampleFeedBack.execute(expfileName);
         /*ref.RangerQueryDiscovery rangerDiscovery = new ref.RangerQueryDiscovery();
         rangerDiscovery.discoverContract(disfileName, expfileName);
 

@@ -5,10 +5,11 @@ import ast.parser.SMTLIBv2BaseVisitor;
 import ast.parser.SMTLIBv2Parser;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 
 public class ContextRecoveryVisitor extends SMTLIBv2BaseVisitor {
-    public HashMap<String, Var> functionContext = new HashMap<>();
+    public LinkedHashMap<String, Var> functionContext = new LinkedHashMap<>();
 
 
     @Override
