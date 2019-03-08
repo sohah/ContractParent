@@ -22,16 +22,17 @@ public class CounterExampleFeedBack {
 
     static HashMap<String, String> cfg = new HashMap<String, String>();
 
-    static Solver solver;
-    static Context ctx;
+    Solver solver;
+    Context ctx;
 
     public CounterExampleFeedBack() {
         ctx = new Context(cfg);
         cfg.put("proof", "true");
     }
 
+    public static CounterExampleFeedBack counterExampleFeedBack = new CounterExampleFeedBack();
 
-    public static void executeConstantCEFL(String expfileName) throws DiscoveryException {
+    public void executeConstantCEFL(String expfileName) throws DiscoveryException {
 
         Pair<LinkedHashMap<String, Var>, Ast> contextAndBody = ToAstPass.execute(transitionT.extractTransitionT(expfileName));
 
@@ -50,10 +51,15 @@ public class CounterExampleFeedBack {
             holeTransitionT.tContext.putAll(contextAndBody.getFirst());
             holeTransitionT.tBody = (Exp) contextAndBody.getSecond();
 
-            checkSat(holeTransitionT);
+            boolean instantiationSat = checkSat(holeTransitionT, true);
+            if (!instantiationSat) {
+                System.out.println("problem happened during finding instantiation!");
+                return;
+            }
+
             instantiatedHoles = getModelForHoles();
             transitionTprime.tBody = (Exp) RemoveHolesVisitor.execute(instantiatedHoles, holeTransitionT.tBody);
-            sat = checkSat(transitionTprime);
+            sat = checkSat(transitionTprime, false);
 
             done = true; // we want to stop after one  time change of constant.
         }
@@ -65,7 +71,7 @@ public class CounterExampleFeedBack {
 
     }
 
-    private static HashMap<Hole, Ast> getModelForHoles() throws DiscoveryException {
+    private HashMap<Hole, Ast> getModelForHoles() throws DiscoveryException {
 
         HashMap<Hole, Ast> instantiatedHolesMap = new HashMap<>();
 
@@ -90,13 +96,19 @@ public class CounterExampleFeedBack {
         return instantiatedHolesMap;
     }
 
-    private static boolean checkSat(TransitionT atransitionT) {
-        String newTransitionT = transitionT.toString();
+    private boolean checkSat(TransitionT atransitionT, boolean isHoleT) {
+        StringBuilder newTransitionT;
+        if (isHoleT) {
+            newTransitionT = new StringBuilder(transitionT.declare_Hole_Constants());
+            newTransitionT.append(transitionT.declare_fun_T());
+        } else
+            newTransitionT = new StringBuilder(transitionT.declare_fun_T());
+
         String newMergedContract = transitionT.mergedContract.getFirst();
         StringBuilder stringBuilder = new StringBuilder(newMergedContract);
         stringBuilder.replace(transitionT.mergedContract.getSecond().getFirst(),
                 transitionT.mergedContract.getSecond().getSecond(),
-                newTransitionT);
+                newTransitionT.toString());
 
         solver = ctx.mkSolver();
         solver.fromString(stringBuilder.toString());

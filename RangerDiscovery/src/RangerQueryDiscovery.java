@@ -2,7 +2,7 @@ import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Context;
 import com.microsoft.z3.Solver;
 import com.microsoft.z3.Status;
-import javafx.util.Pair;
+import ref.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -93,7 +93,7 @@ public class RangerQueryDiscovery {
 
         //disSolver.push();
         //disSolver.add(expAssertions.getValue());
-        Status result = disSolver.check(expAssertions.getValue()); //this should check with assumptions
+        Status result = disSolver.check(expAssertions.getSecond()); //this should check with assumptions
         //disSolver.pop();
         return result == Status.SATISFIABLE;
     }

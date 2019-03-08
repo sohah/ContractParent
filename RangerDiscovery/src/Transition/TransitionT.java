@@ -16,7 +16,7 @@ public class TransitionT {
     public LinkedHashMap<String, Var> tContext = new LinkedHashMap<>();
 
     public Exp tBody;
-    public Pair<String, Pair<Integer, Integer>> mergedContract; //a pair of mergedContract String with to and from indecies of transitionT
+    public Pair<String, Pair<Integer, Integer>> mergedContract; //a pair of mergedContract String with to and from indexes of transitionT
 
     public static TransitionT transitionT = new TransitionT();
     public static TransitionT holeTransitionT = new TransitionT();
@@ -38,20 +38,6 @@ public class TransitionT {
         return extractedT;
     }
 
-    /**
-     * creates the transition
-     * @return
-     */
-    public String ToString(){
-        StringBuilder tPrime = new StringBuilder();
-
-        tPrime.append(declare_fun_T());
-
-        tPrime.append(this.tBody.toString());
-        return tPrime.toString();
-    }
-
-
     public String declare_fun_T(){
         StringBuilder t = new StringBuilder();
 
@@ -64,6 +50,18 @@ public class TransitionT {
             t.append(")");
         }
         t.append(")\n");
+
+        t.append(this.tBody);
+        return t.toString();
+    }
+
+    public String declare_Hole_Constants(){
+        StringBuilder t = new StringBuilder();
+
+        for(Map.Entry<String, Var> entry: this.tContext.entrySet()){
+          if(entry.getKey().contains("hole"))
+              t.append(entry.getValue().declare_fun());
+        }
 
         return t.toString();
     }

@@ -29,7 +29,7 @@ public class ToConstantHoleVisitor implements AstVisitor<Ast>{
 
     @Override
     public Ast visit(Hole hole) {
-        System.out.println("visting hole in ToConstantHoleVisitor, that shouldnt' happent!");
+        System.out.println("visting hole in ToConstantHoleVisitor, that shouldn't happen!");
         assert false;
         return null;
     }
