@@ -81,7 +81,7 @@ public class TransitionT {
      * @param model
      */
     public void collectCounterExample(ContractInput contractInput, Model model) throws IOException, DiscoveryException {
-        counterExampleAssertions.addAll(counterExampleGenerator.generateCounterExample(contractInput, model));
+        counterExampleAssertions.add(counterExampleGenerator.generateCounterExample(contractInput, model));
     }
 
     public String counterExampleAssertionsToString() {

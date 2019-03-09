@@ -32,7 +32,7 @@ public class CounterExampleGenerator {
     private ContractInput contractInput;
     private Model model;
 
-    public ArrayList<Exp> generateCounterExample(ContractInput contractInput, Model model) throws IOException, DiscoveryException {
+    public Exp generateCounterExample(ContractInput contractInput, Model model) throws IOException, DiscoveryException {
         this.contractInput = contractInput;
         this.model = model;
 
@@ -48,15 +48,12 @@ public class CounterExampleGenerator {
             populateMapKeys();
         }
 
-        collectTestCaseValues();
+        populateMapValues();
 
-        ArrayList<Exp> counterExampleAssertions = new ArrayList<>();
-        counterExampleAssertions.add(createCounterExampleAssertions());
-
-        return counterExampleAssertions;
+        return createCounterExampleAssertion();
     }
 
-    private Exp createCounterExampleAssertions() {
+    private Exp createCounterExampleAssertion() {
         ArrayList<Exp> antecedent = generatTestValues(inputModelMapBase);
         antecedent.addAll(generatTestValues(outputModelMapBase));
         antecedent.addAll(generatTestValues(inputModelMapKStep));
@@ -67,23 +64,23 @@ public class CounterExampleGenerator {
 
         Exp consequentExp = new NExp(new Operator(AND), consequent);
 
-        ArrayList<Exp> implicationPair = new ArrayList<Exp>();
-        implicationPair.add(antecedentExp);
-        implicationPair.add(consequentExp);
+        ArrayList<Exp> implicationOperands = new ArrayList<Exp>();
+        implicationOperands.add(antecedentExp);
+        implicationOperands.add(consequentExp);
 
-        return new NExp(new Operator(IMPLIES), implicationPair);
+        return new NExp(new Operator(IMPLIES), implicationOperands);
     }
 
     private ArrayList<Exp> generatTestValues(HashMap<Var, Ast> modelMap) {
         ArrayList<Exp> assertions = new ArrayList<>();
         for(Map.Entry<Var, Ast> entry: modelMap.entrySet()){
-            ArrayList<Exp> constValue = new ArrayList();
-            constValue.add(entry.getKey());
+            ArrayList<Exp> operands = new ArrayList();
+            operands.add(entry.getKey());
 
             assert(entry.getValue() instanceof Exp);
 
-            constValue.add((Exp) entry.getValue());
-            assertions.add(new NExp(new Operator(EQ), constValue));
+            operands.add((Exp) entry.getValue());
+            assertions.add(new NExp(new Operator(EQ), operands));
         }
         return assertions;
     }
@@ -91,7 +88,7 @@ public class CounterExampleGenerator {
     /**
      * has the side effect of populating values to the 4 maps in this class with the right test case values.
      */
-    private void collectTestCaseValues() throws DiscoveryException {
+    private void populateMapValues() throws DiscoveryException {
         FuncDecl[] constDecl = model.getConstDecls();
 
 
