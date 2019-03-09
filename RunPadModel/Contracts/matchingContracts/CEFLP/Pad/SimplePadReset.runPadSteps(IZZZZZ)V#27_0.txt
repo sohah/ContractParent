@@ -426,5 +426,3 @@
 )))
  (check-sat contract_match$)
 ; ---------- joining contract ends here -------------
-
-(get-model)

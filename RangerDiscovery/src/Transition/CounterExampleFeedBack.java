@@ -8,6 +8,7 @@ import ast.def.*;
 import com.microsoft.z3.*;
 import ref.Pair;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -20,28 +21,22 @@ import static ast.def.BoolConst.TRUE;
 
 public class CounterExampleFeedBack {
 
-    static HashMap<String, String> cfg = new HashMap<String, String>();
+    ContractInput contractInput;
+    HashMap<String, String> cfg;
 
     Solver solver;
     Context ctx;
 
     public CounterExampleFeedBack() {
-        ctx = new Context(cfg);
-        cfg.put("proof", "true");
+       clearSolverContext();
     }
 
     public static CounterExampleFeedBack counterExampleFeedBack = new CounterExampleFeedBack();
 
-    public void executeConstantCEFL(String expfileName) throws DiscoveryException {
-        String transitionTstring = transitionT.extractTransitionT(expfileName);
-        /*solver = ctx.mkSolver();
-        solver.fromString(transitionTstring.toString());
-        Status status = solver.check();
-        if (status == Status.SATISFIABLE)
-            System.out.println("sat");
-        else
-            System.out.println("unsat");
-*/
+    public void executeConstantCEFL(ContractInput contractInput) throws DiscoveryException, IOException {
+        this.contractInput = contractInput;
+
+        String transitionTstring = transitionT.extractTransitionT(contractInput.mergedFileName);
 
         Pair<LinkedHashMap<String, Var>, Ast> contextAndBody = ToAstPass.execute(transitionTstring);
 
@@ -54,30 +49,29 @@ public class CounterExampleFeedBack {
 
         boolean sat = checkSat(transitionT, false);
         if (!sat) {
-            System.out.println("Contract and Implementation already match, no repair is needed. Aborting.");
+            System.out.println("Contract and Implementation already match, no repair is needed, aborting.");
             return;
-        } else {// I need to collect counter example
+        } else {// collect counter example
             System.out.println("Contract and Implementation not matching, collecting counter example and repairing");
-            collectCounterExample();
+            holeTransitionT.collectCounterExample(contractInput, solver.getModel());
         }
 
-        boolean done = false;
-
-        while (sat && !done) {
-
+        while (sat) {
+            /*********************** synthesis step ******************************/
             contextAndBody = ToConstantHoleVisitor.execute(transitionT.tBody);
             holeTransitionT.tContext.putAll(transitionT.tContext);
             holeTransitionT.tContext.putAll(contextAndBody.getFirst());
             holeTransitionT.tBody = (Exp) contextAndBody.getSecond();
 
             System.out.println("**************** Checking SAT for holeContract:\n" + holeTransitionT.declare_Hole_Constants() + holeTransitionT.define_fun_T());
-            boolean instantiationSat = checkSat(holeTransitionT, true);
-            if (!instantiationSat) {
+            boolean synthesisSat = checkSat(holeTransitionT, true);
+            if (!synthesisSat) {
                 System.out.println("Cannot find a repair!");
                 return;
             } else
-                System.out.println("SAT");
+                System.out.println("SAT: synthesis for a possible repair is found");
 
+            /********************* checking candidate repair step *********************************/
             instantiatedHoles = getModelForHoles();
             transitionTprime.tBody = (Exp) RemoveHolesVisitor.execute(instantiatedHoles, holeTransitionT.tBody);
 
@@ -85,24 +79,14 @@ public class CounterExampleFeedBack {
             sat = checkSat(transitionTprime, false);
             if (sat) {
                 System.out.println("SAT: repair is no good, collecting counter example");
-                collectCounterExample();
+                holeTransitionT.collectCounterExample(contractInput, solver.getModel());
             } else {
-                System.out.println("UNSAT ---- repair is found ^-^");
-                sat = false;
+                System.out.println("UNSAT ---- repair is found ^-^ , printing repaired tPrime");
+                System.out.println(transitionTprime.define_fun_T());
             }
-            done = true; // we want to stop after trying changing all possible constants, we have to maintain the set of constants that we need to change along the way.
         }
-
-        if (sat)
-            System.out.println("No repair was found");
-        else
-            System.out.println("Successful repair was completed, repaired contract is:\n" + transitionT.toString());
-
     }
 
-    private void collectCounterExample() {
-
-    }
 
     private HashMap<Hole, Ast> getModelForHoles() throws DiscoveryException {
 
@@ -127,7 +111,6 @@ public class CounterExampleFeedBack {
                 else throw new DiscoveryException("unexpected interpretation");
             }
         }
-
         return instantiatedHolesMap;
     }
 
@@ -145,6 +128,10 @@ public class CounterExampleFeedBack {
                 transitionT.mergedContract.getSecond().getSecond(),
                 newTransitionT.toString());
 
+        if(isHoleT)
+            stringBuilder.append(atransitionT.counterExampleAssertionsToString());
+
+        clearSolverContext();
         solver = ctx.mkSolver();
         solver.fromString(stringBuilder.toString());
         Status status = solver.check();
@@ -152,7 +139,12 @@ public class CounterExampleFeedBack {
             return true;
         else
             return false;
-
     }
 
+    private void clearSolverContext(){
+        this.cfg = new HashMap<String, String>();
+        cfg.put("model", "true");
+        ctx = new Context(cfg);
+
+    }
 }

@@ -1,17 +1,18 @@
 package Transition;
 
+import ast.def.DiscoveryException;
 import ast.def.Exp;
 import ast.def.NExp;
 import ast.def.Var;
+import com.microsoft.z3.Model;
 import ref.Pair;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
+
+import static Transition.CounterExampleGenerator.counterExampleGenerator;
 
 public class TransitionT {
 
@@ -20,7 +21,7 @@ public class TransitionT {
     public Exp tBody;
     public Pair<String, Pair<Integer, Integer>> mergedContract; //a pair of mergedContract String with to and from indexes of transitionT
 
-    public static ArrayList<NExp> counterExampleAssertions = new ArrayList<>();
+    public static ArrayList<Exp> counterExampleAssertions = new ArrayList<Exp>();
 
     public static TransitionT transitionT = new TransitionT();
     public static TransitionT holeTransitionT = new TransitionT();
@@ -72,5 +73,26 @@ public class TransitionT {
             }
         }
         return t.toString();
+    }
+
+    /**
+     * This method is used for the static transition with hole to accumulate counter examples.
+     * @param contractInput
+     * @param model
+     */
+    public void collectCounterExample(ContractInput contractInput, Model model) throws IOException, DiscoveryException {
+        counterExampleAssertions.addAll(counterExampleGenerator.generateCounterExample(contractInput, model));
+    }
+
+    public String counterExampleAssertionsToString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(Exp counterExample: counterExampleAssertions){
+            stringBuilder.append("(assert ");
+            stringBuilder.append(counterExample.toString());
+            stringBuilder.append(")");
+        }
+        return stringBuilder.toString();
+
     }
 }
