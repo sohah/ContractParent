@@ -35,17 +35,16 @@ public class CounterExampleGenerator {
         this.model = model;
 
         if (inputModelMapBase.size() > 0) { //reset of the map synthesis from previous step
-            assert ( inputModelMapKStep.size() > 0
+            assert (inputModelMapKStep.size() > 0
                     && outputModelMapKStep.size() > 0);
             clearModelMapValues();
         } else {
-            assert ( inputModelMapKStep.size() == 0
+            assert (inputModelMapKStep.size() == 0
                     && outputModelMapKStep.size() == 0);
             populateMapKeys();
         }
 
         populateMapValues();
-
         return createCounterExampleAssertion();
     }
 
@@ -69,13 +68,15 @@ public class CounterExampleGenerator {
     private ArrayList<Exp> generatTestValues(HashMap<Var, Ast> modelMap) {
         ArrayList<Exp> assertions = new ArrayList<>();
         for (Map.Entry<Var, Ast> entry : modelMap.entrySet()) {
-            ArrayList<Exp> operands = new ArrayList();
-            operands.add(entry.getKey());
+            if (entry.getValue() != null) {
+                ArrayList<Exp> operands = new ArrayList();
+                operands.add(entry.getKey());
 
-            assert (entry.getValue() instanceof Exp);
+                assert (entry.getValue() instanceof Exp);
 
-            operands.add((Exp) entry.getValue());
-            assertions.add(new NExp(new Operator(EQ), operands));
+                operands.add((Exp) entry.getValue());
+                assertions.add(new NExp(new Operator(EQ), operands));
+            }
         }
         return assertions;
     }
@@ -86,17 +87,14 @@ public class CounterExampleGenerator {
     private void populateMapValues() throws DiscoveryException {
         FuncDecl[] constDecl = model.getConstDecls();
 
-
         for (FuncDecl decl : constDecl) {
             Exp expValue;
             Expr interpretation = model.getConstInterp(decl);
             expValue = translateToAst(interpretation);
 
-            boolean update1 = updateMap(inputModelMapBase, decl.getName().toString(), expValue);
-            boolean update3 = updateMap(inputModelMapKStep, decl.getName().toString(), expValue);
-            boolean update4 = updateMap(outputModelMapKStep, decl.getName().toString(), expValue);
-
-            assert (update1 ^ update3 ^ update4);
+            updateMap(inputModelMapBase, decl.getName().toString(), expValue);
+            updateMap(inputModelMapKStep, decl.getName().toString(), expValue);
+            updateMap(outputModelMapKStep, decl.getName().toString(), expValue);
         }
     }
 
@@ -115,15 +113,14 @@ public class CounterExampleGenerator {
     }
 
     private boolean updateMap(HashMap<Var, Ast> map, String varName, Exp expValue) {
-        boolean updateOccured = false;
 
         for (Map.Entry<Var, Ast> entry : map.entrySet()) {
-            if (entry.getKey().toString().equals(varName)) {
+            if (entry.getKey().name.equals(varName)) {
                 entry.setValue(expValue);
-                updateOccured = true;
+                return true;
             }
         }
-        return updateOccured;
+        return false;
     }
 
     /**
@@ -136,9 +133,9 @@ public class CounterExampleGenerator {
         try (BufferedReader br = new BufferedReader(new FileReader(contractInput.freeInVarFileName))) {
             for (String line; (line = br.readLine()) != null; ) {
                 // process the line.
-                Var var = findInModel(line + "$r0");
+                Var var = findInModel(line.replaceAll(" ","") + "$r0");
                 inputModelMapBase.put(var, null);
-                var = findInModel(line + "$r1");
+                var = findInModel(line.replaceAll(" ","") + "$r1");
                 inputModelMapKStep.put(var, null);
             }
         }
