@@ -1,9 +1,7 @@
 package Transition;
 
 import ast.def.*;
-import com.microsoft.z3.Expr;
-import com.microsoft.z3.FuncDecl;
-import com.microsoft.z3.Model;
+import com.microsoft.z3.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -24,7 +22,7 @@ public class CounterExampleGenerator {
     public static CounterExampleGenerator counterExampleGenerator = new CounterExampleGenerator();
 
     private HashMap<Var, Ast> inputModelMapBase = new HashMap<>();
-    private HashMap<Var, Ast> outputModelMapBase = new HashMap<>();
+    //private HashMap<Var, Ast> outputModelMapBase = new HashMap<>(); // i am commenting this out since it is a subset of the input that is passed to the kstep
 
     private HashMap<Var, Ast> inputModelMapKStep = new HashMap<>();
     private HashMap<Var, Ast> outputModelMapKStep = new HashMap<>();
@@ -37,13 +35,11 @@ public class CounterExampleGenerator {
         this.model = model;
 
         if (inputModelMapBase.size() > 0) { //reset of the map synthesis from previous step
-            assert (outputModelMapBase.size() > 0
-                    && inputModelMapKStep.size() > 0
+            assert ( inputModelMapKStep.size() > 0
                     && outputModelMapKStep.size() > 0);
             clearModelMapValues();
         } else {
-            assert (outputModelMapBase.size() == 0
-                    && inputModelMapKStep.size() == 0
+            assert ( inputModelMapKStep.size() == 0
                     && outputModelMapKStep.size() == 0);
             populateMapKeys();
         }
@@ -55,7 +51,6 @@ public class CounterExampleGenerator {
 
     private Exp createCounterExampleAssertion() {
         ArrayList<Exp> antecedent = generatTestValues(inputModelMapBase);
-        antecedent.addAll(generatTestValues(outputModelMapBase));
         antecedent.addAll(generatTestValues(inputModelMapKStep));
 
         Exp antecedentExp = new NExp(new Operator(AND), antecedent);
@@ -73,11 +68,11 @@ public class CounterExampleGenerator {
 
     private ArrayList<Exp> generatTestValues(HashMap<Var, Ast> modelMap) {
         ArrayList<Exp> assertions = new ArrayList<>();
-        for(Map.Entry<Var, Ast> entry: modelMap.entrySet()){
+        for (Map.Entry<Var, Ast> entry : modelMap.entrySet()) {
             ArrayList<Exp> operands = new ArrayList();
             operands.add(entry.getKey());
 
-            assert(entry.getValue() instanceof Exp);
+            assert (entry.getValue() instanceof Exp);
 
             operands.add((Exp) entry.getValue());
             assertions.add(new NExp(new Operator(EQ), operands));
@@ -95,28 +90,35 @@ public class CounterExampleGenerator {
         for (FuncDecl decl : constDecl) {
             Exp expValue;
             Expr interpretation = model.getConstInterp(decl);
-            if (interpretation.isInt())
-                expValue = new IntConst(Integer.valueOf(interpretation.toString()));
-                else if (interpretation.isTrue())
-                expValue = TRUE;
-            else if (interpretation.isFalse())
-                expValue = FALSE;
-            else throw new DiscoveryException("unexpected interpretation");
+            expValue = translateToAst(interpretation);
 
             boolean update1 = updateMap(inputModelMapBase, decl.getName().toString(), expValue);
-            boolean update2 = updateMap(outputModelMapBase, decl.getName().toString(), expValue);
             boolean update3 = updateMap(inputModelMapKStep, decl.getName().toString(), expValue);
-            boolean update4 = updateMap(outputModelMapBase, decl.getName().toString(), expValue);
+            boolean update4 = updateMap(outputModelMapKStep, decl.getName().toString(), expValue);
 
-            assert(update1 ^ update2 ^ update3 ^ update4);
+            assert (update1 ^ update3 ^ update4);
         }
+    }
+
+    private Exp translateToAst(Expr interpretation) throws DiscoveryException {
+        Exp expValue;
+
+        if (interpretation.isInt())
+            expValue = new IntConst(Integer.valueOf(interpretation.toString()));
+        else if (interpretation.isTrue())
+            expValue = TRUE;
+        else if (interpretation.isFalse())
+            expValue = FALSE;
+        else throw new DiscoveryException("unexpected interpretation");
+
+        return expValue;
     }
 
     private boolean updateMap(HashMap<Var, Ast> map, String varName, Exp expValue) {
         boolean updateOccured = false;
 
-        for(Map.Entry<Var, Ast> entry: map.entrySet()){
-            if(entry.getKey().toString().equals(varName)){
+        for (Map.Entry<Var, Ast> entry : map.entrySet()) {
+            if (entry.getKey().toString().equals(varName)) {
                 entry.setValue(expValue);
                 updateOccured = true;
             }
@@ -127,23 +129,25 @@ public class CounterExampleGenerator {
     /**
      * has the side effect of populating inputModelMap and outputModelMap.
      */
-    private void populateMapKeys() throws IOException {
+    private void populateMapKeys() throws IOException, DiscoveryException {
 
         /****** populating input ******/
         /**** free Input ********/
         try (BufferedReader br = new BufferedReader(new FileReader(contractInput.freeInVarFileName))) {
             for (String line; (line = br.readLine()) != null; ) {
                 // process the line.
-                inputModelMapBase.put(transitionT.tContext.get(line + "$r0"), null);
-                inputModelMapKStep.put(transitionT.tContext.get(line + "$r1"), null);
+                Var var = findInModel(line + "$r0");
+                inputModelMapBase.put(var, null);
+                var = findInModel(line + "$r1");
+                inputModelMapKStep.put(var, null);
             }
         }
         /**** state Input ******/
         try (BufferedReader br = new BufferedReader(new FileReader(contractInput.stateInVarFileName))) {
             for (String line; (line = br.readLine()) != null; ) {
                 // process the line.
-                inputModelMapBase.put(transitionT.tContext.get(line + "$r0"), null);
-                inputModelMapKStep.put(transitionT.tContext.get(line + "$r0"), null);
+                Var var = findInModel(line + "$r0");
+                inputModelMapBase.put(var, null);
             }
         }
 
@@ -151,18 +155,43 @@ public class CounterExampleGenerator {
         try (BufferedReader br = new BufferedReader(new FileReader(contractInput.outVarFileName))) {
             for (String line; (line = br.readLine()) != null; ) {
                 // process the line.
-                outputModelMapBase.put(transitionT.tContext.get(line + "$r0"), null);
-                outputModelMapKStep.put(transitionT.tContext.get(line + "$r1"), null);
+                Var var = findInModel(line + "$r0");
+                inputModelMapKStep.put(var, null);
+
+                var = findInModel(line + "$r1");
+                outputModelMapKStep.put(var, null);
             }
         }
+    }
+
+    /**
+     * matches a name of a var to its type in the model and then later translate it to the appropriate type in our AST
+     *
+     * @param s
+     * @return
+     */
+    private Var findInModel(String s) throws DiscoveryException {
+        Var var;
+        FuncDecl[] constDecl = model.getConstDecls();
+        for (FuncDecl funcDecl : constDecl) {
+            if (funcDecl.getName().toString().equals(s)) {
+                if (funcDecl.getRange() instanceof IntSort) {
+                    var = new IntVar(s);
+                    return var;
+                }
+                if (funcDecl.getRange() instanceof BoolSort) {
+                    var = new BoolVar(s);
+                    return var;
+                } else throw new DiscoveryException("unexpected interpretation");
+            }
+        }
+        assert false;
+        return null;
     }
 
 
     private void clearModelMapValues() {
         for (Map.Entry<Var, Ast> entry : inputModelMapBase.entrySet())
-            entry.setValue(null);
-
-        for (Map.Entry<Var, Ast> entry : outputModelMapBase.entrySet())
             entry.setValue(null);
 
         for (Map.Entry<Var, Ast> entry : inputModelMapKStep.entrySet())

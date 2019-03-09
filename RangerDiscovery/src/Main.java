@@ -14,7 +14,7 @@ public class Main {
         folderName = "../RunPadModel/Contracts/matchingContracts/CEFLP/Pad/";
         String expfileName = folderName + "SimplePadReset.runPadSteps(IZZZZZ)V#27_0.txt";
 
-        ContractInput contractInput = new ContractInput(expfileName, expfileName+"FreeIN", expfileName+"OUT", expfileName+"StateIN");
+        ContractInput contractInput = new ContractInput(expfileName, expfileName+"FreeIN", expfileName+"StateIN", expfileName+"OUT");
         counterExampleFeedBack.executeConstantCEFL(contractInput);
     }
 }

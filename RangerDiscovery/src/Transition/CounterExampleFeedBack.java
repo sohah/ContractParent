@@ -25,7 +25,7 @@ public class CounterExampleFeedBack {
     HashMap<String, String> cfg;
 
     Solver solver;
-    Context ctx;
+    public Context ctx;
 
     public CounterExampleFeedBack() {
        clearSolverContext();
@@ -36,9 +36,7 @@ public class CounterExampleFeedBack {
     public void executeConstantCEFL(ContractInput contractInput) throws DiscoveryException, IOException {
         this.contractInput = contractInput;
 
-        String transitionTstring = transitionT.extractTransitionT(contractInput.mergedFileName);
-
-        Pair<LinkedHashMap<String, Var>, Ast> contextAndBody = ToAstPass.execute(transitionTstring);
+        Pair<LinkedHashMap<String, Var>, Ast> contextAndBody = ToAstPass.execute(transitionT.extractTransitionT(contractInput.mergedFileName));
 
         transitionT.tContext.putAll(contextAndBody.getFirst());
         transitionTprime.tContext.putAll(contextAndBody.getFirst()); //Tprime at least until now will have the same context
