@@ -132,12 +132,12 @@ public class CounterExampleFeedBack {
             stringBuilder.append(atransitionT.counterExampleAssertionsToString());
 
         System.out.println("**************** checking SAT for ******************\n"+stringBuilder+toString());
-        saveToSolverFile(stringBuilder.toString());
+        //saveToSolverFile(stringBuilder.toString());
         clearSolverContext();
         solver = ctx.mkSolver();
-        //solver.fromString(stringBuilder.toString());
-        solver.fromFile(this.solverFile);
-        Status status = solver.check();
+        solver.fromString(stringBuilder.toString());
+        //solver.fromFile(this.solverFile);
+        Status status = solver.check(solver.getAssertions()[solver.getNumAssertions()-1].getArgs()[0]);
         if (status == Status.SATISFIABLE)
             return true;
         else
@@ -148,12 +148,12 @@ public class CounterExampleFeedBack {
         this.cfg = new HashMap<String, String>();
         cfg.put("model", "true");
         ctx = new Context(cfg);
-
     }
 
     public void saveToSolverFile(String string) throws IOException {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.solverFile))) {
             bufferedWriter.write(string);
+            bufferedWriter.close();
         }
     }
 
