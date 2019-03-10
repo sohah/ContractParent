@@ -124,20 +124,19 @@ public class CounterExampleFeedBack {
 
         String newMergedContract = transitionT.mergedContract.getFirst();
         StringBuilder stringBuilder = new StringBuilder(newMergedContract);
-        stringBuilder.replace(transitionT.mergedContract.getSecond().getFirst(),
-                transitionT.mergedContract.getSecond().getSecond(),
-                newTransitionT.toString());
+        int startT = stringBuilder.indexOf("(define-fun T");
+        int endT = stringBuilder.indexOf("(declare-fun %init () Bool)");
+        stringBuilder = stringBuilder.replace(startT, endT, newTransitionT.toString());
 
         if(isHoleT)
             stringBuilder.append(atransitionT.counterExampleAssertionsToString());
 
-        System.out.println("**************** checking SAT for ******************\n"+stringBuilder+toString());
-        //saveToSolverFile(stringBuilder.toString());
+        System.out.println("**************** checking SAT for ******************\n"+stringBuilder.toString());
         clearSolverContext();
         solver = ctx.mkSolver();
         solver.fromString(stringBuilder.toString());
         //solver.fromFile(this.solverFile);
-        Status status = solver.check(solver.getAssertions()[solver.getNumAssertions()-1].getArgs()[0]);
+        Status status = solver.check();
         if (status == Status.SATISFIABLE)
             return true;
         else
