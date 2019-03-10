@@ -8,7 +8,7 @@ import ast.def.*;
 import com.microsoft.z3.*;
 import ref.Pair;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -26,6 +26,8 @@ public class CounterExampleFeedBack {
 
     Solver solver;
     public Context ctx;
+
+    public String solverFile = "../RunPadModel/Contracts/matchingContracts/CEFLP/Pad/solverFile.smt";
 
     public CounterExampleFeedBack() {
        clearSolverContext();
@@ -112,7 +114,7 @@ public class CounterExampleFeedBack {
         return instantiatedHolesMap;
     }
 
-    private boolean checkSat(TransitionT atransitionT, boolean isHoleT) {
+    private boolean checkSat(TransitionT atransitionT, boolean isHoleT) throws IOException {
         StringBuilder newTransitionT;
         if (isHoleT) {
             newTransitionT = new StringBuilder(atransitionT.declare_Hole_Constants());
@@ -129,9 +131,12 @@ public class CounterExampleFeedBack {
         if(isHoleT)
             stringBuilder.append(atransitionT.counterExampleAssertionsToString());
 
+        System.out.println("**************** checking SAT for ******************\n"+stringBuilder+toString());
+        saveToSolverFile(stringBuilder.toString());
         clearSolverContext();
         solver = ctx.mkSolver();
-        solver.fromString(stringBuilder.toString());
+        //solver.fromString(stringBuilder.toString());
+        solver.fromFile(this.solverFile);
         Status status = solver.check();
         if (status == Status.SATISFIABLE)
             return true;
@@ -145,4 +150,11 @@ public class CounterExampleFeedBack {
         ctx = new Context(cfg);
 
     }
+
+    public void saveToSolverFile(String string) throws IOException {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.solverFile))) {
+            bufferedWriter.write(string);
+        }
+    }
+
 }
