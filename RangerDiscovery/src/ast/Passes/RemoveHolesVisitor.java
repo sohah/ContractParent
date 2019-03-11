@@ -45,7 +45,7 @@ public class RemoveHolesVisitor implements AstVisitor<Ast> {
         if (value == null)
             return hole.orignalAst;
         else {
-            System.out.println("repair for (hole, original value, new value): " + hole.toString() + " = " + hole.orignalAst.toString() + " = " + value);
+            System.out.println("        (" + hole.toString() + "," + hole.orignalAst.toString() + ")  =  " + value );
             return value;
         }
     }
@@ -81,6 +81,7 @@ public class RemoveHolesVisitor implements AstVisitor<Ast> {
 
 
     public static Ast execute(HashMap<Hole, Ast> instantiatedHolesMap, Ast t) throws DiscoveryException {
+        System.out.println("repair for (hole, original value) = new value:");
         RemoveHolesVisitor removeHolesVisitor = new RemoveHolesVisitor(instantiatedHolesMap);
         Ast instantiatedTPrime = t.accept(removeHolesVisitor);
         return instantiatedTPrime;

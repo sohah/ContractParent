@@ -29,7 +29,8 @@ public class CounterExampleFeedBack {
     Solver solver;
     public Context ctx;
 
-    public String solverFile = "../RunPadModel/Contracts/matchingContracts/CEFLP/Pad/solverFile.smt";
+    public String solverFile = "../RunPadModel/Contracts/matchingContracts/CEFLP/Pad/solverFile";
+    public static int fileSequence = 1;
 
     public CounterExampleFeedBack() {
         clearSolverContext();
@@ -49,7 +50,7 @@ public class CounterExampleFeedBack {
 
         HashMap<Hole, Ast> instantiatedHoles;
 
-        boolean sat = checkSat(transitionT, false);
+        boolean sat = checkSat(transitionT, false, false, "firstTime");
         if (!sat) {
             System.out.println("Contract and Implementation already match, no repair is needed, aborting.");
             return;
@@ -70,7 +71,7 @@ public class CounterExampleFeedBack {
             else
                 System.out.println("**************** Checking SAT for holeContract:\n");
 
-            boolean synthesisSat = checkSat(holeTransitionT, true);
+            boolean synthesisSat = checkSat(holeTransitionT, true, false, ("hole_" + fileSequence));
             if (!synthesisSat) {
                 System.out.println("Cannot find a repair!");
                 return;
@@ -86,7 +87,7 @@ public class CounterExampleFeedBack {
             else
                 System.out.println("*************** Checking SAT for the repaired Contract T': \n");
 
-            sat = checkSat(transitionTprime, false);
+            sat = checkSat(transitionTprime, false, false, ("repair_" + fileSequence++));
             if (sat) {
                 System.out.println("SAT: repair is no good, collecting counter example");
                 holeTransitionT.collectCounterExample(contractInput, solver.getModel());
@@ -103,6 +104,10 @@ public class CounterExampleFeedBack {
         HashMap<Hole, Ast> instantiatedHolesMap = new HashMap<>();
 
         Model model = solver.getModel();
+        System.out.println("printing model for step number : " + fileSequence);
+        System.out.println(model.toString());
+
+
         FuncDecl[] constDecl = model.getConstDecls();
 
         for (FuncDecl decl : constDecl) {
@@ -124,7 +129,7 @@ public class CounterExampleFeedBack {
         return instantiatedHolesMap;
     }
 
-    private boolean checkSat(TransitionT atransitionT, boolean isHoleT) throws IOException {
+    private boolean checkSat(TransitionT atransitionT, boolean isHoleT, boolean printContracts, String extension) throws IOException {
         StringBuilder newTransitionT;
         if (isHoleT) {
             newTransitionT = new StringBuilder(atransitionT.declare_Hole_Constants());
@@ -138,20 +143,31 @@ public class CounterExampleFeedBack {
         int endT = stringBuilder.indexOf("(declare-fun %init () Bool)");
         stringBuilder = stringBuilder.replace(startT, endT, newTransitionT.toString());
 
-        if (isHoleT)
-            stringBuilder.append(atransitionT.counterExampleAssertionsToString());
 
-        stringBuilder.append("\n(assert contract_match$)\n");
-        if (printContracts)
-            System.out.println("|-|-|-|-|-|-|-|- checking SAT for |-|-|-|-|-|-|-|-\n" + stringBuilder.toString());
-        else
+        if (isHoleT) {
+            StringBuilder assertionBuilder = new StringBuilder(atransitionT.counterExampleAssertionsToString());
+            int contactMatchStart = stringBuilder.indexOf("; ---------- joining contract begins here -------------");
+            stringBuilder.insert(contactMatchStart, assertionBuilder);
+            stringBuilder.append("\n( and input_match~1 output_match~1 input_match$1 output_match$1)\n" +
+                    ")))\n" +
+                    "; ---------- joining contract ends here -------------\n(assert contract_match$)\n");
+        } else {
+            stringBuilder.append("\n( and input_match~1 output_match~1 input_match$1 (not output_match$1))\n" +
+                    ")))\n" +
+                    "; ---------- joining contract ends here -------------\n(assert contract_match$)\n");
+        }
+        if (printContracts) {
+            System.out.println("|-|-|-|-|-|-|-|- checking SAT and dumping file for |-|-|-|-|-|-|-|-\n" + stringBuilder.toString());
+        } else
             System.out.println("|-|-|-|-|-|-|-|- checking SAT |-|-|-|-|-|-|-|-\n");
+
+        saveToSolverFile(stringBuilder.toString(), extension);
 
         clearSolverContext();
         solver = ctx.mkSolver();
         solver.fromString(stringBuilder.toString());
         //solver.fromFile(this.solverFile);
-        Status status = solver.check();
+        Status status = solver.check(solver.getAssertions()[solver.getNumAssertions() - 1]);
         if (status == Status.SATISFIABLE)
             return true;
         else
@@ -164,8 +180,8 @@ public class CounterExampleFeedBack {
         ctx = new Context(cfg);
     }
 
-    public void saveToSolverFile(String string) throws IOException {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.solverFile))) {
+    public void saveToSolverFile(String string, String extension) throws IOException {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter((this.solverFile + extension + ".smt")))) {
             bufferedWriter.write(string);
             bufferedWriter.close();
         }

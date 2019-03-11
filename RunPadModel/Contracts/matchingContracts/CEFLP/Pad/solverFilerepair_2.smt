@@ -1,15 +1,8 @@
 (set-option :produce-models true)
-(set-option :produce-unsat-cores true)
-(define-fun T ((%init Bool) ($sig$0 Int) ($ignition$0 Bool) ($start_bt$0 Bool) ($launch_bt$0 Bool) ($reset_flag$0 Bool) ($p1$0 Bool) ($H~0.in$0 Bool) ($H~0.out$0 Bool) ($Y~0.out$0 Bool) ($sig$1 Int) ($ignition$1 Bool) ($start_bt$1 Bool) ($launch_bt$1 Bool) ($reset_flag$1 Bool) ($p1$1 Bool) ($H~0.in$1 Bool) ($H~0.out$1 Bool) ($Y~0.out$1 Bool)) Bool
-(and
-  (= $start_bt$1 (ite %init false (ite $reset_flag$0 false (ite (and (and (not $start_bt$0) (not $launch_bt$0)) (= $sig$1 0)) true $start_bt$0))))
-  (= $launch_bt$1 (ite %init false (ite $reset_flag$0 false (ite (and (and $start_bt$0 (not $launch_bt$0)) (= $sig$1 1)) true $launch_bt$0))))
-  (= $ignition$1 (ite %init false (and $launch_bt$0 (and (not $ignition$0) (not $reset_flag$0)))))
-  (= $reset_flag$1 (ite %init false (and $ignition$0 (not $reset_flag$0))))
-  (= $p1$1 $H~0.out$1)
-  (= $H~0.in$1 (=> $reset_flag$1 $Y~0.out$1))
-  (= $H~0.out$1 (ite %init $H~0.in$1 (and $H~0.in$1 $H~0.out$0)))
-  (= $Y~0.out$1 (ite %init false $ignition$0))))
+
+
+(define-fun T (( %init Bool)( $sig$0 Int)( $ignition$0 Bool)( $start_bt$0 Bool)( $launch_bt$0 Bool)( $reset_flag$0 Bool)( $p1$0 Bool)( $H~0.in$0 Bool)( $H~0.out$0 Bool)( $Y~0.out$0 Bool)( $sig$1 Int)( $ignition$1 Bool)( $start_bt$1 Bool)( $launch_bt$1 Bool)( $reset_flag$1 Bool)( $p1$1 Bool)( $H~0.in$1 Bool)( $H~0.out$1 Bool)( $Y~0.out$1 Bool)) Bool
+(and(= $start_bt$1(ite %init false (ite $reset_flag$0 false (ite(and(and(not $start_bt$0)(not $launch_bt$0))(= $sig$1 0)) true  $start_bt$0))))(= $launch_bt$1(ite %init false (ite $reset_flag$0 true (ite(and(and $start_bt$0(not $launch_bt$0))(= $sig$1 1)) true  $launch_bt$0))))(= $ignition$1(ite %init false (and $launch_bt$0(and(not $ignition$0)(not $reset_flag$0)))))(= $reset_flag$1(ite %init false (and $ignition$0(not $reset_flag$0))))(= $p1$1 $H~0.out$1)(= $H~0.in$1(=> $reset_flag$1 $Y~0.out$1))(= $H~0.out$1(ite %init $H~0.in$1(and $H~0.in$1 $H~0.out$0)))(= $Y~0.out$1(ite %init false  $ignition$0))))
 (declare-fun %init () Bool)
 (declare-fun $sig$~1 () Int)
 (declare-fun $ignition$~1 () Bool)
@@ -36,7 +29,7 @@
 (assert true)
 (declare-fun act1 () Bool)
 (assert (=> act1 (not (=> true $p1$0))))
-(check-sat act1)
+;(check-sat act1)
 (echo "@DONE")
 ; Z3: sat
 ; Z3: @DONE
@@ -94,7 +87,7 @@
 (assert true)
 (declare-fun act2 () Bool)
 (assert (=> act2 (not (=> $p1$0 $p1$1))))
-(check-sat act2)
+;(check-sat act2)
 (echo "@DONE")
 ; Z3: unsat
 ; Z3: @DONE
@@ -430,5 +423,7 @@
 ))
 )		( and input_match~1 output_match~1 input_match$1 (not output_match$1))
 )))
- (check-sat contract_match$)
 ; ---------- joining contract ends here -------------
+(check-sat contract_match$)
+
+(assert contract_match$)

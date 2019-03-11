@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static Transition.TransitionT.transitionT;
 import static ast.def.BoolConst.FALSE;
 import static ast.def.BoolConst.TRUE;
 import static ast.def.Operator.OperatorKind.AND;
@@ -51,6 +50,7 @@ public class CounterExampleGenerator {
     private Exp createCounterExampleAssertion() {
         ArrayList<Exp> antecedent = generatTestValues(inputModelMapBase);
         antecedent.addAll(generatTestValues(inputModelMapKStep));
+        //antecedent.add(new NExp(new Operator(EQ)), )
 
         Exp antecedentExp = new NExp(new Operator(AND), antecedent);
 

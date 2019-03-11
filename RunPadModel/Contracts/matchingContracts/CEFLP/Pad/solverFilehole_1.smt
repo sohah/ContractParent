@@ -1,15 +1,19 @@
 (set-option :produce-models true)
-(set-option :produce-unsat-cores true)
-(define-fun T ((%init Bool) ($sig$0 Int) ($ignition$0 Bool) ($start_bt$0 Bool) ($launch_bt$0 Bool) ($reset_flag$0 Bool) ($p1$0 Bool) ($H~0.in$0 Bool) ($H~0.out$0 Bool) ($Y~0.out$0 Bool) ($sig$1 Int) ($ignition$1 Bool) ($start_bt$1 Bool) ($launch_bt$1 Bool) ($reset_flag$1 Bool) ($p1$1 Bool) ($H~0.in$1 Bool) ($H~0.out$1 Bool) ($Y~0.out$1 Bool)) Bool
-(and
-  (= $start_bt$1 (ite %init false (ite $reset_flag$0 false (ite (and (and (not $start_bt$0) (not $launch_bt$0)) (= $sig$1 0)) true $start_bt$0))))
-  (= $launch_bt$1 (ite %init false (ite $reset_flag$0 false (ite (and (and $start_bt$0 (not $launch_bt$0)) (= $sig$1 1)) true $launch_bt$0))))
-  (= $ignition$1 (ite %init false (and $launch_bt$0 (and (not $ignition$0) (not $reset_flag$0)))))
-  (= $reset_flag$1 (ite %init false (and $ignition$0 (not $reset_flag$0))))
-  (= $p1$1 $H~0.out$1)
-  (= $H~0.in$1 (=> $reset_flag$1 $Y~0.out$1))
-  (= $H~0.out$1 (ite %init $H~0.in$1 (and $H~0.in$1 $H~0.out$0)))
-  (= $Y~0.out$1 (ite %init false $ignition$0))))
+
+(declare-fun constHole_1 () Bool)
+(declare-fun constHole_2 () Bool)
+(declare-fun constHole_3 () Int)
+(declare-fun constHole_4 () Bool)
+(declare-fun constHole_5 () Bool)
+(declare-fun constHole_6 () Bool)
+(declare-fun constHole_7 () Int)
+(declare-fun constHole_8 () Bool)
+(declare-fun constHole_9 () Bool)
+(declare-fun constHole_10 () Bool)
+(declare-fun constHole_11 () Bool)
+
+(define-fun T (( %init Bool)( $sig$0 Int)( $ignition$0 Bool)( $start_bt$0 Bool)( $launch_bt$0 Bool)( $reset_flag$0 Bool)( $p1$0 Bool)( $H~0.in$0 Bool)( $H~0.out$0 Bool)( $Y~0.out$0 Bool)( $sig$1 Int)( $ignition$1 Bool)( $start_bt$1 Bool)( $launch_bt$1 Bool)( $reset_flag$1 Bool)( $p1$1 Bool)( $H~0.in$1 Bool)( $H~0.out$1 Bool)( $Y~0.out$1 Bool)) Bool
+(and(= $start_bt$1(ite %init  constHole_1 (ite $reset_flag$0  constHole_2 (ite(and(and(not $start_bt$0)(not $launch_bt$0))(= $sig$1  constHole_3 ))  constHole_4  $start_bt$0))))(= $launch_bt$1(ite %init  constHole_5 (ite $reset_flag$0  constHole_6 (ite(and(and $start_bt$0(not $launch_bt$0))(= $sig$1  constHole_7 ))  constHole_8  $launch_bt$0))))(= $ignition$1(ite %init  constHole_9 (and $launch_bt$0(and(not $ignition$0)(not $reset_flag$0)))))(= $reset_flag$1(ite %init  constHole_10 (and $ignition$0(not $reset_flag$0))))(= $p1$1 $H~0.out$1)(= $H~0.in$1(=> $reset_flag$1 $Y~0.out$1))(= $H~0.out$1(ite %init $H~0.in$1(and $H~0.in$1 $H~0.out$0)))(= $Y~0.out$1(ite %init  constHole_11  $ignition$0))))
 (declare-fun %init () Bool)
 (declare-fun $sig$~1 () Int)
 (declare-fun $ignition$~1 () Bool)
@@ -36,7 +40,7 @@
 (assert true)
 (declare-fun act1 () Bool)
 (assert (=> act1 (not (=> true $p1$0))))
-(check-sat act1)
+;(check-sat act1)
 (echo "@DONE")
 ; Z3: sat
 ; Z3: @DONE
@@ -94,7 +98,7 @@
 (assert true)
 (declare-fun act2 () Bool)
 (assert (=> act2 (not (=> $p1$0 $p1$1))))
-(check-sat act2)
+;(check-sat act2)
 (echo "@DONE")
 ; Z3: unsat
 ; Z3: @DONE
@@ -360,7 +364,7 @@
 (declare-fun symVar$r0 () Int)
 (declare-fun w12$1$r0 () Int)
 
-(assert (R  signal$r0 ignition$r0 launch_btn$r0 reset_btn$r0 start_btn$r0 r347.ignition_r.1.7.4$r0 r347.launch_btn.1.17.4$r0 r347.reset_btn.1.9.4$r0 r347.start_btn.1.15.4$r0 w14$3$r0 w12$2$r0 w13$2$r0 w14$2$r0 r347.start_btn.1.3.4$r0 r347.launch_btn.1.3.4$r0 r347.launch_btn.1.5.4$r0 r347.start_btn.1.5.4$r0 r347.launch_btn.1.7.4$r0 r347.start_btn.1.7.4$r0 r347.launch_btn.1.9.4$r0 r347.start_btn.1.9.4$r0 r347.launch_btn.1.11.4$r0 r347.reset_btn.1.4.4$r0 r347.ignition_r.1.4.4$r0 r347.reset_btn.1.5.4$r0 r347.start_btn.1.11.4$r0 r347.launch_btn.1.13.4$r0 r347.ignition_r.1.5.4$r0 r347.start_btn.1.13.4$r0 r347.launch_btn.1.15.4$r0 r347.reset_btn.1.7.4$r0 symVar$r0 w12$1$r0 ))
+(assert (R  signal$r0 ignition$r0 launch_btn$r0 reset_btn$r0 start_btn$r0 r347.ignition_r.1.7.4$r0 r347.launch_btn.1.17.4$r0 r347.reset_btn.1.9.4$r0 r347.start_btn.1.15.4$r0 w14$3$r0 w12$2$r0 w13$2$r0 w14$2$r0 r347.start_btn.1.3.4$r0 r347.launch_btn.1.3.4$r0 r347.launch_btn.1.5.4$r0 r347.start_btn.1.5.4$r0 r347.launch_btn.1.7.4$r0 r347.start_btn.1.7.4$r0 r347.launch_btn.1.9.4$r0 r347.start_btn.1.9.4$r0 r347.launch_btn.1.11.4$r0 r347.reset_btn.1.4.4$r0 r347.ignition_r.1.4.4$r0 r347.reset_btn.1.5.4$r0 r347.start_btn.1.11.4$r0 r347.launch_btn.1.13.4$r0 r347.ignition_r.1.5.4$r0 r347.start_btn.1.13.4$r0 r347.launch_btn.1.15.4$r0 r347.reset_btn.1.7.4$r0 1 w12$1$r0 ))
 
 (declare-fun signal$r1 () Int)
 (declare-fun r347.ignition_r.1.7.4$r1 () Int)
@@ -392,7 +396,8 @@
 (declare-fun symVar$r1 () Int)
 (declare-fun w12$1$r1 () Int)
 
-(assert (R  signal$r1 r347.ignition_r.1.7.4$r0 r347.launch_btn.1.17.4$r0 r347.reset_btn.1.9.4$r0 r347.start_btn.1.15.4$r0 r347.ignition_r.1.7.4$r1 r347.launch_btn.1.17.4$r1 r347.reset_btn.1.9.4$r1 r347.start_btn.1.15.4$r1 w14$3$r1 w12$2$r1 w13$2$r1 w14$2$r1 r347.start_btn.1.3.4$r1 r347.launch_btn.1.3.4$r1 r347.launch_btn.1.5.4$r1 r347.start_btn.1.5.4$r1 r347.launch_btn.1.7.4$r1 r347.start_btn.1.7.4$r1 r347.launch_btn.1.9.4$r1 r347.start_btn.1.9.4$r1 r347.launch_btn.1.11.4$r1 r347.reset_btn.1.4.4$r1 r347.ignition_r.1.4.4$r1 r347.reset_btn.1.5.4$r1 r347.start_btn.1.11.4$r1 r347.launch_btn.1.13.4$r1 r347.ignition_r.1.5.4$r1 r347.start_btn.1.13.4$r1 r347.launch_btn.1.15.4$r1 r347.reset_btn.1.7.4$r1 symVar$r1 w12$1$r1 ))
+(assert (R  signal$r1 r347.ignition_r.1.7.4$r0 r347.launch_btn.1.17.4$r0 r347.reset_btn.1.9.4$r0 r347.start_btn.1.15.4$r0 r347.ignition_r.1.7.4$r1 r347.launch_btn.1.17.4$r1 r347.reset_btn.1.9.4$r1 r347.start_btn.1.15.4$r1 w14$3$r1 w12$2$r1 w13$2$r1 w14$2$r1 r347.start_btn.1.3.4$r1 r347.launch_btn.1.3.4$r1 r347.launch_btn.1.5.4$r1 r347.start_btn.1.5.4$r1 r347.launch_btn.1.7.4$r1 r347.start_btn.1.7.4$r1 r347.launch_btn.1.9.4$r1 r347.start_btn.1.9.4$r1 r347.launch_btn.1.11.4$r1 r347.reset_btn.1.4.4$r1 r347.ignition_r.1.4.4$r1 r347.reset_btn.1.5.4$r1 r347.start_btn.1.11.4$r1 r347.launch_btn.1.13.4$r1 r347.ignition_r.1.5.4$r1 r347.start_btn.1.13.4$r1 r347.launch_btn.1.15.4$r1 r347.reset_btn.1.7.4$r1 1 w12$1$r1 ))
+(assert (=>(and(= signal$r0 2)(= start_btn$r0 1)(= reset_btn$r0 0)(= ignition$r0 1)(= launch_btn$r0 1)(= signal$r1 2)(= r347.reset_btn.1.9.4$r0 1)(= r347.ignition_r.1.7.4$r0 0)(= r347.launch_btn.1.17.4$r0 1)(= r347.start_btn.1.15.4$r0 1))(and(= r347.reset_btn.1.9.4$r1 0)(= r347.ignition_r.1.7.4$r1 0)(= r347.launch_btn.1.17.4$r1 0)(= r347.start_btn.1.15.4$r1 0))))
 ; ---------- joining contract begins here -------------
 (declare-fun contract_match$() bool)
 
@@ -428,7 +433,9 @@
 			(= $reset_flag$1(= r347.reset_btn.1.9.4$r1 1))
 			(= $start_bt$1(= r347.start_btn.1.15.4$r1 1))
 ))
-)		( and input_match~1 output_match~1 input_match$1 (not output_match$1))
+)
+
+( and input_match~1 output_match~1 input_match$1 output_match$1)
 )))
- (check-sat contract_match$)
 ; ---------- joining contract ends here -------------
+(assert contract_match$)
