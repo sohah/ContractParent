@@ -1,9 +1,6 @@
 package Transition;
 
-import ast.def.DiscoveryException;
-import ast.def.Exp;
-import ast.def.NExp;
-import ast.def.Var;
+import ast.def.*;
 import com.microsoft.z3.Model;
 import ref.Pair;
 
@@ -77,20 +74,26 @@ public class TransitionT {
 
     /**
      * This method is used for the static transition with hole to accumulate counter examples.
+     *
      * @param contractInput
      * @param model
      */
     public void collectCounterExample(ContractInput contractInput, Model model) throws IOException, DiscoveryException {
-        counterExampleAssertions.add(counterExampleGenerator.generateCounterExample(contractInput, model));
+        Exp newCounterExampleAssertion = counterExampleGenerator.generateCounterExample(contractInput, model);
+        if (counterExampleAssertions.contains(newCounterExampleAssertion)) {
+            System.out.println("repeated counter example, that can't happen!");
+            assert false;
+        } else
+            counterExampleAssertions.add(newCounterExampleAssertion);
     }
 
     public String counterExampleAssertionsToString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for(Exp counterExample: counterExampleAssertions){
+        for (Exp counterExample : counterExampleAssertions) {
             stringBuilder.append("(assert ");
             stringBuilder.append(counterExample.toString());
-            stringBuilder.append(")");
+            stringBuilder.append(")\n");
         }
         return stringBuilder.toString();
 

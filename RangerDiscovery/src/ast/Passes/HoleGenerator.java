@@ -29,4 +29,8 @@ public class HoleGenerator {
     }
 
 
+    public static void reset() {
+        uniquePostfix = 1;
+        varHoleHashMap.clear();
+    }
 }

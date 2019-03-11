@@ -2,9 +2,11 @@ package ast.Passes;
 
 import ast.def.*;
 import ast.visitors.AstVisitor;
+import ref.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class RemoveHolesVisitor implements AstVisitor<Ast> {
 
@@ -33,11 +35,19 @@ public class RemoveHolesVisitor implements AstVisitor<Ast> {
     @Override
     public Ast visit(Hole hole) {
         Ast value = instantiatedHoles.get(hole);
+        /*Ast var = Utility.getKeyByValue(ToConstantHoleVisitor.assignedVarToHole, hole);
 
+        if (var == null) {
+            System.out.println("var for a hole cannot be null!");
+            assert false;
+        }
+*/
         if (value == null)
             return hole.orignalAst;
-        else
+        else {
+            System.out.println("repair for (hole, original value, new value): " + hole.toString() + " = " + hole.orignalAst.toString() + " = " + value);
             return value;
+        }
     }
 
     @Override

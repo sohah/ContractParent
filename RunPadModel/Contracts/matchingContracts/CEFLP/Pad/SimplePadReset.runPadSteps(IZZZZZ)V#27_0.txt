@@ -426,5 +426,4 @@
 ))
 )		( and input_match~1 output_match~1 input_match$1 (not output_match$1))
 )))
- (check-sat contract_match$)
 ; ---------- joining contract ends here -------------

@@ -5,10 +5,12 @@ import ast.visitors.AstVisitor;
 import ref.Pair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class ToConstantHoleVisitor implements AstVisitor<Ast> {
     public LinkedHashMap<String, Var> tPrimeContext = new LinkedHashMap<>();
+    //public static HashMap<Ast, Ast> assignedVarToHole = new HashMap<>();
 
     @Override
     public Exp visit(IntConst numExp) {
@@ -60,13 +62,25 @@ public class ToConstantHoleVisitor implements AstVisitor<Ast> {
         Ast newOperator = nExp.operator.accept(this);
         ArrayList<Exp> newOperands = new ArrayList<>();
 
-        for(Ast operand: nExp.operands){
-            newOperands.add((Exp)operand.accept(this));
+/*
+        if (nExp.operands.size() == 2) {
+            Ast op1 = nExp.operands.get(0).accept(this);
+            Ast op2 = nExp.operands.get(1).accept(this);
+            if ((op1 instanceof Var) && (op2 instanceof Hole))
+                assignedVarToHole.put(op1, op2);
+            newOperands.add((Exp) op1);
+            newOperands.add((Exp) op2);
+        } else
+*/
+        for (Ast operand : nExp.operands) {
+            newOperands.add((Exp) operand.accept(this));
         }
         return new NExp((Operator) newOperator, newOperands);
-}
+    }
 
     public static Pair<LinkedHashMap<String, Var>, Ast> execute(Ast t) throws DiscoveryException {
+        //assignedVarToHole.clear();
+        HoleGenerator.reset();
         ToConstantHoleVisitor toConstantHoleVisitor = new ToConstantHoleVisitor();
         Ast tPrimeWithHoles = t.accept(toConstantHoleVisitor);
         return new Pair(toConstantHoleVisitor.tPrimeContext, tPrimeWithHoles);

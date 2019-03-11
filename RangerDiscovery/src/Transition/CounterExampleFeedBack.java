@@ -21,6 +21,8 @@ import static ast.def.BoolConst.TRUE;
 
 public class CounterExampleFeedBack {
 
+    public static boolean printContracts;
+
     ContractInput contractInput;
     HashMap<String, String> cfg;
 
@@ -30,7 +32,7 @@ public class CounterExampleFeedBack {
     public String solverFile = "../RunPadModel/Contracts/matchingContracts/CEFLP/Pad/solverFile.smt";
 
     public CounterExampleFeedBack() {
-       clearSolverContext();
+        clearSolverContext();
     }
 
     public static CounterExampleFeedBack counterExampleFeedBack = new CounterExampleFeedBack();
@@ -63,7 +65,11 @@ public class CounterExampleFeedBack {
             holeTransitionT.tContext.putAll(contextAndBody.getFirst());
             holeTransitionT.tBody = (Exp) contextAndBody.getSecond();
 
-            System.out.println("**************** Checking SAT for holeContract:\n" + holeTransitionT.declare_Hole_Constants() + holeTransitionT.define_fun_T());
+            if (printContracts)
+                System.out.println("**************** Checking SAT for holeContract:\n" + holeTransitionT.declare_Hole_Constants() + holeTransitionT.define_fun_T());
+            else
+                System.out.println("**************** Checking SAT for holeContract:\n");
+
             boolean synthesisSat = checkSat(holeTransitionT, true);
             if (!synthesisSat) {
                 System.out.println("Cannot find a repair!");
@@ -75,7 +81,11 @@ public class CounterExampleFeedBack {
             instantiatedHoles = getModelForHoles();
             transitionTprime.tBody = (Exp) RemoveHolesVisitor.execute(instantiatedHoles, holeTransitionT.tBody);
 
-            System.out.println("*************** Checking SAT for the repaired Contract T': \n" + transitionTprime.define_fun_T());
+            if (printContracts)
+                System.out.println("*************** Checking SAT for the repaired Contract T': \n" + transitionTprime.define_fun_T());
+            else
+                System.out.println("*************** Checking SAT for the repaired Contract T': \n");
+
             sat = checkSat(transitionTprime, false);
             if (sat) {
                 System.out.println("SAT: repair is no good, collecting counter example");
@@ -128,10 +138,15 @@ public class CounterExampleFeedBack {
         int endT = stringBuilder.indexOf("(declare-fun %init () Bool)");
         stringBuilder = stringBuilder.replace(startT, endT, newTransitionT.toString());
 
-        if(isHoleT)
+        if (isHoleT)
             stringBuilder.append(atransitionT.counterExampleAssertionsToString());
 
-        System.out.println("**************** checking SAT for ******************\n"+stringBuilder.toString());
+        stringBuilder.append("\n(assert contract_match$)\n");
+        if (printContracts)
+            System.out.println("|-|-|-|-|-|-|-|- checking SAT for |-|-|-|-|-|-|-|-\n" + stringBuilder.toString());
+        else
+            System.out.println("|-|-|-|-|-|-|-|- checking SAT |-|-|-|-|-|-|-|-\n");
+
         clearSolverContext();
         solver = ctx.mkSolver();
         solver.fromString(stringBuilder.toString());
@@ -143,7 +158,7 @@ public class CounterExampleFeedBack {
             return false;
     }
 
-    private void clearSolverContext(){
+    private void clearSolverContext() {
         this.cfg = new HashMap<String, String>();
         cfg.put("model", "true");
         ctx = new Context(cfg);
