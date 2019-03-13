@@ -15,8 +15,7 @@ import java.util.LinkedHashMap;
 import static Transition.TransitionT.holeTransitionT;
 import static Transition.TransitionT.transitionT;
 import static Transition.TransitionT.transitionTprime;
-import static ast.def.BoolConst.FALSE;
-import static ast.def.BoolConst.TRUE;
+import static ast.def.BoolConst.*;
 
 
 public class CounterExampleFeedBack {
@@ -116,13 +115,13 @@ public class CounterExampleFeedBack {
                 Expr interpetation = model.getConstInterp(decl);
                 if (interpetation.isInt())
                     instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
-                            new IntConst(Integer.valueOf(interpetation.toString())));
+                            new IntConst(Integer.valueOf(interpetation.toString()), true));
                 else if (interpetation.isTrue())
                     instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
-                            TRUE);
+                            TRUE_REPAIR);
                 else if (interpetation.isFalse())
                     instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
-                            FALSE);
+                            FALSE_REPAIR);
                 else throw new DiscoveryException("unexpected interpretation");
             }
         }
@@ -167,7 +166,8 @@ public class CounterExampleFeedBack {
         solver = ctx.mkSolver();
         solver.fromString(stringBuilder.toString());
         //solver.fromFile(this.solverFile);
-        Status status = solver.check(solver.getAssertions()[solver.getNumAssertions() - 1]);
+        //Status status = solver.check(solver.getAssertions()[solver.getNumAssertions() - 1]);
+        Status status = solver.check();
         if (status == Status.SATISFIABLE)
             return true;
         else

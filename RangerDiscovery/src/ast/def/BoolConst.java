@@ -2,7 +2,7 @@ package ast.def;
 
 import ast.visitors.AstVisitor;
 
-public class BoolConst implements Exp {
+public class BoolConst extends Exp {
 
     private String name;
 
@@ -10,6 +10,11 @@ public class BoolConst implements Exp {
         this.name = name;
     }
 
+
+    public BoolConst(String name, boolean isRepair) {
+        this.name = name;
+        this.isRepair = isRepair;
+    }
     @Override
     public <T> T accept(AstVisitor<T> visitor) {
         return visitor.visit(this);
@@ -29,6 +34,8 @@ public class BoolConst implements Exp {
     }
 
     public final static BoolConst TRUE = new BoolConst(" true ");
+    public final static BoolConst TRUE_REPAIR = new BoolConst(" true ", true);
     public final static BoolConst FALSE = new BoolConst(" false ");
+    public final static BoolConst FALSE_REPAIR = new BoolConst(" false ", true);
 
 }

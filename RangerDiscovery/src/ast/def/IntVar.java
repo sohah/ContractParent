@@ -8,9 +8,13 @@ public class IntVar extends Var {
         super(name, VarType.INT);
     }
 
+    public IntVar(String name, boolean isRepair) {
+        super(name, VarType.INT, isRepair);
+    }
+
     @Override
     public Var clone() {
-        return new IntVar(name);
+        return new IntVar(name, this.isRepair);
     }
 
     @Override

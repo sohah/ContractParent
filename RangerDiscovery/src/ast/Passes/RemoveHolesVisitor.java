@@ -2,11 +2,9 @@ package ast.Passes;
 
 import ast.def.*;
 import ast.visitors.AstVisitor;
-import ref.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 public class RemoveHolesVisitor implements AstVisitor<Ast> {
 

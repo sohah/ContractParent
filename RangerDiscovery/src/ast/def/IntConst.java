@@ -2,12 +2,17 @@ package ast.def;
 
 import ast.visitors.AstVisitor;
 
-public class IntConst implements Exp {
+public class IntConst extends Exp {
 
     public final int value;
 
     public IntConst(int value) {
         this.value = value;
+    }
+
+    public IntConst(int value, boolean isRepair) {
+        this.value = value;
+        this.isRepair = true;
     }
 
     @Override

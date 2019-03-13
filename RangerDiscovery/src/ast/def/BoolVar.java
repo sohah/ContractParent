@@ -8,9 +8,13 @@ public class BoolVar extends Var {
         super(name, VarType.BOOL);
     }
 
+    public BoolVar(String name, boolean isRepair) {
+        super(name, VarType.BOOL, isRepair);
+    }
+
     @Override
     public Var clone() {
-        return new BoolVar(name);
+        return new BoolVar(name, isRepair);
     }
 
     @Override

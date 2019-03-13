@@ -4,7 +4,7 @@ import ast.visitors.AstVisitor;
 
 import java.util.ArrayList;
 
-public class NExp implements Exp {
+public class NExp extends Exp {
 
     public final Operator operator;
     public final ArrayList<Exp> operands;
@@ -14,6 +14,14 @@ public class NExp implements Exp {
         this.operator = operator;
         this.operands = operands;
         this.expType = operator.type;
+    }
+
+
+    public NExp(Operator operator, ArrayList operands, boolean isRepair) {
+        this.operator = operator;
+        this.operands = operands;
+        this.expType = operator.type;
+        this.isRepair = isRepair;
     }
 
     @Override

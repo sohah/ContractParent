@@ -2,7 +2,7 @@ package ast.def;
 
 import ast.visitors.AstVisitor;
 
-public class Hole implements Exp {
+public class Hole extends Exp {
 
     //this is the original ast part for which we are creating a hole.
     public Ast orignalAst;

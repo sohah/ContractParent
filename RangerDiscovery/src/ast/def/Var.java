@@ -2,7 +2,7 @@ package ast.def;
 
 import ast.visitors.AstVisitor;
 
-public abstract class Var implements Cloneable, Exp {
+public abstract class Var extends Exp implements Cloneable {
 
     public final String name;
 
@@ -12,6 +12,13 @@ public abstract class Var implements Cloneable, Exp {
         this.name = name;
         this.type = type;
     }
+
+    protected Var(String name, VarType type, boolean isRepair) {
+        this.name = name;
+        this.type = type;
+        this.isRepair = isRepair;
+    }
+
 
     @Override
     public abstract Var clone();
