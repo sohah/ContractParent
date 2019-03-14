@@ -18,7 +18,7 @@ import static ast.def.Operator.OperatorKind.IMPLIES;
 
 public class R_CounterExampleGenerator extends CounterExampleGenerator{
 
-    public static R_CounterExampleGenerator R_CounterExampleGenerator = new R_CounterExampleGenerator();
+    public static R_CounterExampleGenerator r_CounterExampleGenerator = new R_CounterExampleGenerator();
 
     private HashMap<Var, Ast> inputModelMapBase = new HashMap<>();
     //private HashMap<Var, Ast> outputModelMapBase = new HashMap<>(); // i am commenting this out since it is a subset of the input that is passed to the kstep
@@ -27,7 +27,6 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator{
     private HashMap<Var, Ast> outputModelMapKStep = new HashMap<>();
 
     private ContractInput contractInput;
-    private Model model;
 
     public Exp generateCounterExample(ContractInput contractInput, Model model) throws IOException, DiscoveryException {
         this.contractInput = contractInput;

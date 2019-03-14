@@ -14,9 +14,9 @@ import static ast.def.BoolConst.FALSE;
 import static ast.def.BoolConst.TRUE;
 import static ast.def.Operator.OperatorKind.*;
 
-public class GeneralCounterExampleGenerator extends CounterExampleGenerator{
+public class GeneralCounterExampleGenerator extends CounterExampleGenerator {
 
-    public static GeneralCounterExampleGenerator counterExampleGenerator = new GeneralCounterExampleGenerator();
+    public static GeneralCounterExampleGenerator generalCounterExampleGenerator = new GeneralCounterExampleGenerator();
 
     private HashMap<Var, Ast> inputMap = new HashMap<>();
 
@@ -38,7 +38,6 @@ public class GeneralCounterExampleGenerator extends CounterExampleGenerator{
     public Exp generateCounterExample(ContractInput contractInput, Model model) throws IOException, DiscoveryException {
         this.contractInput = contractInput;
         this.model = model;
-
 
         if (outputMap.size() == 0)
             populateOutputMapKeys();
@@ -66,7 +65,6 @@ public class GeneralCounterExampleGenerator extends CounterExampleGenerator{
     }
 
 
-
     /**
      * has the side effect of populating values to the 4 maps in this class with the right test case values.
      */
@@ -77,15 +75,25 @@ public class GeneralCounterExampleGenerator extends CounterExampleGenerator{
             Exp expValue;
             Expr interpretation = model.getConstInterp(decl);
             expValue = translateToAst(interpretation);
-            if (outputMap.containsKey(decl.getName().toString()))
+            Var var = null;
+            if (interpretation.isInt())
+                var = new IntVar(decl.getName().toString());
+            else if (interpretation.isBool())
+                var = new BoolVar(decl.getName().toString());
+            else {
+                System.out.println("unexpected Var");
+                assert false;
+            }
+
+            if (outputMap.containsKey(var))
                 updateMap(outputMap, decl.getName().toString(), expValue);
-            else{
-                Var var = translateToAstVar(decl);
-                inputMap.put(var, expValue);
+            else {
+                Var newVar = translateToAstVar(decl);
+                if (newVar != null) //it can be null for Jkind vars or vars for defining the contract
+                    inputMap.put(newVar, expValue);
             }
         }
     }
-
 
 
     private boolean updateMap(HashMap<Var, Ast> map, String varName, Exp expValue) {

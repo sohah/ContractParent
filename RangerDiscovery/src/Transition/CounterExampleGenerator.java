@@ -52,17 +52,20 @@ public abstract class CounterExampleGenerator {
     protected Var translateToAstVar(FuncDecl funcDecl) throws DiscoveryException {
 
         Var expVar;
-        Expr interpretation = model.getConstInterp(funcDecl);
+        if ((funcDecl.getName().toString().endsWith("$r0")) || (funcDecl.getName().toString().endsWith("$r1"))) {
+            Expr interpretation = model.getConstInterp(funcDecl);
 
-        if (interpretation.isInt())
-            expVar = new IntVar(funcDecl.getName().toString());
-        else if (interpretation.isTrue())
-            expVar = new BoolVar(funcDecl.getName().toString());
-        else throw new DiscoveryException("unexpected interpretation");
+            if (interpretation.isInt())
+                expVar = new IntVar(funcDecl.getName().toString());
+            else if (interpretation.isBool())
+                expVar = new BoolVar(funcDecl.getName().toString());
+            else throw new DiscoveryException("unexpected interpretation");
 
-        return expVar;
+            return expVar;
+        }
+        else
+            return null;
     }
-
 
 
     /**
@@ -72,6 +75,7 @@ public abstract class CounterExampleGenerator {
      * @return
      */
     protected Var findInModel(String s) throws DiscoveryException {
+        s = s.replaceAll("\\s+", "");
         Var var;
         FuncDecl[] constDecl = model.getConstDecls();
         for (FuncDecl funcDecl : constDecl) {
