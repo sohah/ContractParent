@@ -49,7 +49,7 @@ public class CounterExampleFeedBack {
 
         HashMap<Hole, Ast> instantiatedHoles;
 
-        boolean sat = checkSat(transitionT, false, false, "firstTime");
+        boolean sat = checkSat(transitionT, false, printContracts, "firstTime");
         if (!sat) {
             System.out.println("Contract and Implementation already match, no repair is needed, aborting.");
             return;
@@ -70,7 +70,7 @@ public class CounterExampleFeedBack {
             else
                 System.out.println("**************** Checking SAT for holeContract:\n");
 
-            boolean synthesisSat = checkSat(holeTransitionT, true, false, ("hole_" + fileSequence));
+            boolean synthesisSat = checkSat(holeTransitionT, true, true, ("hole_" + fileSequence));
             if (!synthesisSat) {
                 System.out.println("Cannot find a repair!");
                 return;
@@ -115,13 +115,13 @@ public class CounterExampleFeedBack {
                 Expr interpetation = model.getConstInterp(decl);
                 if (interpetation.isInt())
                     instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
-                            new IntConst(Integer.valueOf(interpetation.toString()), true));
+                            new IntConst(Integer.valueOf(interpetation.toString())));
                 else if (interpetation.isTrue())
                     instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
-                            TRUE_REPAIR);
+                            TRUE);
                 else if (interpetation.isFalse())
                     instantiatedHolesMap.put(HoleGenerator.varHoleHashMap.get(var),
-                            FALSE_REPAIR);
+                            FALSE);
                 else throw new DiscoveryException("unexpected interpretation");
             }
         }
@@ -166,8 +166,8 @@ public class CounterExampleFeedBack {
         solver = ctx.mkSolver();
         solver.fromString(stringBuilder.toString());
         //solver.fromFile(this.solverFile);
-        //Status status = solver.check(solver.getAssertions()[solver.getNumAssertions() - 1]);
-        Status status = solver.check();
+        Status status = solver.check(solver.getAssertions()[solver.getNumAssertions() - 1]);
+        //Status status = solver.check();
         if (status == Status.SATISFIABLE)
             return true;
         else
