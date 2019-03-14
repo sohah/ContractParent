@@ -166,8 +166,8 @@ public class CounterExampleFeedBack {
         solver = ctx.mkSolver();
         solver.fromString(stringBuilder.toString());
         //solver.fromFile(this.solverFile);
-        Status status = solver.check(solver.getAssertions()[solver.getNumAssertions() - 1]);
-        //Status status = solver.check();
+        //Status status = solver.check(solver.getAssertions()[solver.getNumAssertions() - 1]);
+        Status status = solver.check();
         if (status == Status.SATISFIABLE)
             return true;
         else

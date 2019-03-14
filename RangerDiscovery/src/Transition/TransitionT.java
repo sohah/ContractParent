@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static Transition.CounterExampleGenerator.counterExampleGenerator;
+import static Transition.R_CounterExampleGenerator.R_CounterExampleGenerator;
 
 public class TransitionT {
 
@@ -79,7 +79,7 @@ public class TransitionT {
      * @param model
      */
     public void collectCounterExample(ContractInput contractInput, Model model) throws IOException, DiscoveryException {
-        Exp newCounterExampleAssertion = counterExampleGenerator.generateCounterExample(contractInput, model);
+        Exp newCounterExampleAssertion = R_CounterExampleGenerator.generateCounterExample(contractInput, model);
         if (counterExampleAssertions.contains(newCounterExampleAssertion)) {
             System.out.println("repeated counter example, that can't happen!");
             assert false;
