@@ -57,15 +57,20 @@ public class CounterExampleFeedBack {
             System.out.println("Contract and Implementation not matching, collecting counter example and repairing");
             holeTransitionT.collectCounterExample(contractInput, solver.getModel());
         }
-
-        /*********************** synthesis step, body for holeTransition is the same, no need to be part of the loop ******************************/
-        contextAndBody = ToConstantHoleVisitor.execute(transitionT.tBody);
-        holeTransitionT.tContext.putAll(transitionT.tContext);
-        holeTransitionT.tContext.putAll(contextAndBody.getFirst());
-        holeTransitionT.tBody = (Exp) contextAndBody.getSecond();
+        boolean firstTime = true;
 
         while (sat) {
             /*********************** synthesis step ******************************/
+            if (firstTime){ // i do not really need this, but it is easier to look at holes and their changes on the tprime rather than the t.
+                contextAndBody = ToConstantHoleVisitor.execute(transitionT.tBody);
+                firstTime = false;
+            }
+            else
+                contextAndBody = ToConstantHoleVisitor.execute(transitionTprime.tBody);
+
+            holeTransitionT.tContext.putAll(transitionT.tContext);
+            holeTransitionT.tContext.putAll(contextAndBody.getFirst());
+            holeTransitionT.tBody = (Exp) contextAndBody.getSecond();
 
             if (printContracts)
                 System.out.println("**************** Checking SAT for holeContract:\n" + holeTransitionT.declare_Hole_Constants() + holeTransitionT.define_fun_T());

@@ -39,8 +39,6 @@ public class GeneralCounterExampleGenerator extends CounterExampleGenerator {
         this.contractInput = contractInput;
         this.model = model;
 
-        System.out.println("printing model for counter example:\n"+ model.toString());
-
         if (outputMap.size() == 0)
             populateOutputMapKeys();
 
