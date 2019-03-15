@@ -58,12 +58,14 @@ public class CounterExampleFeedBack {
             holeTransitionT.collectCounterExample(contractInput, solver.getModel());
         }
 
+        /*********************** synthesis step, body for holeTransition is the same, no need to be part of the loop ******************************/
+        contextAndBody = ToConstantHoleVisitor.execute(transitionT.tBody);
+        holeTransitionT.tContext.putAll(transitionT.tContext);
+        holeTransitionT.tContext.putAll(contextAndBody.getFirst());
+        holeTransitionT.tBody = (Exp) contextAndBody.getSecond();
+
         while (sat) {
             /*********************** synthesis step ******************************/
-            contextAndBody = ToConstantHoleVisitor.execute(transitionT.tBody);
-            holeTransitionT.tContext.putAll(transitionT.tContext);
-            holeTransitionT.tContext.putAll(contextAndBody.getFirst());
-            holeTransitionT.tBody = (Exp) contextAndBody.getSecond();
 
             if (printContracts)
                 System.out.println("**************** Checking SAT for holeContract:\n" + holeTransitionT.declare_Hole_Constants() + holeTransitionT.define_fun_T());
@@ -103,8 +105,8 @@ public class CounterExampleFeedBack {
         HashMap<Hole, Ast> instantiatedHolesMap = new HashMap<>();
 
         Model model = solver.getModel();
-        System.out.println("printing model for step number : " + fileSequence);
-        System.out.println(model.toString());
+        //System.out.println("printing models for holes for step number : " + fileSequence);
+        //System.out.println(model.toString());
 
 
         FuncDecl[] constDecl = model.getConstDecls();
@@ -147,7 +149,7 @@ public class CounterExampleFeedBack {
             StringBuilder assertionBuilder = new StringBuilder(atransitionT.counterExampleAssertionsToString());
             int contactMatchStart = stringBuilder.indexOf("; ---------- joining contract begins here -------------");
             stringBuilder.insert(contactMatchStart, assertionBuilder);
-            stringBuilder.append("\n( and input_match~1 output_match~1 input_match$1 output_match$1)\n" +
+            stringBuilder.append("\n(=> (and input_match~1 output_match~1 input_match$1) output_match$1)\n" +
                     ")))\n" +
                     "; ---------- joining contract ends here -------------\n(assert contract_match$)\n");
         } else {

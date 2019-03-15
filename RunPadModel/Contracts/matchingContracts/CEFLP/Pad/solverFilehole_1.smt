@@ -25,7 +25,6 @@
 (declare-fun $H~0.out$~1 () Bool)
 (declare-fun $Y~0.out$~1 () Bool)
 (assert (and (<= 0 $sig$~1) (<= $sig$~1 2)))
-; K = 0
 (declare-fun $sig$0 () Int)
 (declare-fun $ignition$0 () Bool)
 (declare-fun $start_bt$0 () Bool)
@@ -40,50 +39,6 @@
 (assert true)
 (declare-fun act1 () Bool)
 (assert (=> act1 (not (=> true $p1$0))))
-;(check-sat act1)
-(echo "@DONE")
-; Z3: sat
-; Z3: @DONE
-;(get-model)
-(echo "@DONE")
-; Z3: (model
-; Z3:   (define-fun act1 () Bool
-; Z3:     true)
-; Z3:   (define-fun $p1$0 () Bool
-; Z3:     false)
-; Z3:   (define-fun $launch_bt$0 () Bool
-; Z3:     true)
-; Z3:   (define-fun $H~0.out$0 () Bool
-; Z3:     false)
-; Z3:   (define-fun %init () Bool
-; Z3:     false)
-; Z3:   (define-fun $start_bt$~1 () Bool
-; Z3:     true)
-; Z3:   (define-fun $ignition$~1 () Bool
-; Z3:     false)
-; Z3:   (define-fun $H~0.in$0 () Bool
-; Z3:     true)
-; Z3:   (define-fun $launch_bt$~1 () Bool
-; Z3:     true)
-; Z3:   (define-fun $H~0.out$~1 () Bool
-; Z3:     false)
-; Z3:   (define-fun $start_bt$0 () Bool
-; Z3:     true)
-; Z3:   (define-fun $Y~0.out$0 () Bool
-; Z3:     false)
-; Z3:   (define-fun $reset_flag$~1 () Bool
-; Z3:     false)
-; Z3:   (define-fun $reset_flag$0 () Bool
-; Z3:     false)
-; Z3:   (define-fun $sig$~1 () Int
-; Z3:     0)
-; Z3:   (define-fun $ignition$0 () Bool
-; Z3:     true)
-; Z3:   (define-fun $sig$0 () Int
-; Z3:     0)
-; Z3: )
-; Z3: @DONE
-; K = 1
 (declare-fun $sig$1 () Int)
 (declare-fun $ignition$1 () Bool)
 (declare-fun $start_bt$1 () Bool)
@@ -98,12 +53,6 @@
 (assert true)
 (declare-fun act2 () Bool)
 (assert (=> act2 (not (=> $p1$0 $p1$1))))
-;(check-sat act2)
-(echo "@DONE")
-; Z3: unsat
-; Z3: @DONE
-(assert $p1$0)
-(assert $p1$1)
 (define-fun R ((signal Int) (ignition Int) (launch_btn Int) (reset_btn Int) (start_btn Int) (r347.ignition_r.1.7.4 Int) (r347.launch_btn.1.17.4 Int) (r347.reset_btn.1.9.4 Int) (r347.start_btn.1.15.4 Int) (w14$3 Int) (w12$2 Int) (w13$2 Int) (w14$2 Int) (r347.start_btn.1.3.4 Int) (r347.launch_btn.1.3.4 Int) (r347.launch_btn.1.5.4 Int) (r347.start_btn.1.5.4 Int) (r347.launch_btn.1.7.4 Int) (r347.start_btn.1.7.4 Int) (r347.launch_btn.1.9.4 Int) (r347.start_btn.1.9.4 Int) (r347.launch_btn.1.11.4 Int) (r347.reset_btn.1.4.4 Int) (r347.ignition_r.1.4.4 Int) (r347.reset_btn.1.5.4 Int) (r347.start_btn.1.11.4 Int) (r347.launch_btn.1.13.4 Int) (r347.ignition_r.1.5.4 Int) (r347.start_btn.1.13.4 Int) (r347.launch_btn.1.15.4 Int) (r347.reset_btn.1.7.4 Int) (symVar Int) (w12$1 Int) ) Bool
 (and
  	(= symVar 1)
@@ -397,7 +346,7 @@
 (declare-fun w12$1$r1 () Int)
 
 (assert (R  signal$r1 r347.ignition_r.1.7.4$r0 r347.launch_btn.1.17.4$r0 r347.reset_btn.1.9.4$r0 r347.start_btn.1.15.4$r0 r347.ignition_r.1.7.4$r1 r347.launch_btn.1.17.4$r1 r347.reset_btn.1.9.4$r1 r347.start_btn.1.15.4$r1 w14$3$r1 w12$2$r1 w13$2$r1 w14$2$r1 r347.start_btn.1.3.4$r1 r347.launch_btn.1.3.4$r1 r347.launch_btn.1.5.4$r1 r347.start_btn.1.5.4$r1 r347.launch_btn.1.7.4$r1 r347.start_btn.1.7.4$r1 r347.launch_btn.1.9.4$r1 r347.start_btn.1.9.4$r1 r347.launch_btn.1.11.4$r1 r347.reset_btn.1.4.4$r1 r347.ignition_r.1.4.4$r1 r347.reset_btn.1.5.4$r1 r347.start_btn.1.11.4$r1 r347.launch_btn.1.13.4$r1 r347.ignition_r.1.5.4$r1 r347.start_btn.1.13.4$r1 r347.launch_btn.1.15.4$r1 r347.reset_btn.1.7.4$r1 1 w12$1$r1 ))
-(assert (=>(and(= signal$r0 2)(= start_btn$r0 0)(= reset_btn$r0 0)(= ignition$r0 0)(= launch_btn$r0 0)(= signal$r1 0)(= r347.reset_btn.1.9.4$r0 0)(= r347.ignition_r.1.7.4$r0 0)(= r347.launch_btn.1.17.4$r0 0)(= r347.start_btn.1.15.4$r0 0))(and(= r347.reset_btn.1.9.4$r1 0)(= r347.ignition_r.1.7.4$r1 0)(= r347.launch_btn.1.17.4$r1 0)(= r347.start_btn.1.15.4$r1 1))))
+(assert (=>(and(= signal$r0 1)(= start_btn$r0 1)(= reset_btn$r0 0)(= ignition$r0 1)(= launch_btn$r0 1)(= signal$r1 2)(= r347.reset_btn.1.9.4$r0 1)(= r347.ignition_r.1.7.4$r0 0)(= r347.launch_btn.1.17.4$r0 1)(= r347.start_btn.1.15.4$r0 1))(and(= r347.reset_btn.1.9.4$r1 0)(= r347.ignition_r.1.7.4$r1 0)(= r347.launch_btn.1.17.4$r1 0)(= r347.start_btn.1.15.4$r1 0))))
 ; ---------- joining contract begins here -------------
 (declare-fun contract_match$() bool)
 
@@ -435,7 +384,7 @@
 ))
 )
 
-( and input_match~1 output_match~1 input_match$1 output_match$1)
+(=> (and input_match~1 output_match~1 input_match$1) output_match$1)
 )))
 ; ---------- joining contract ends here -------------
 (assert contract_match$)

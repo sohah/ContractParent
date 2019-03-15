@@ -52,7 +52,8 @@ public abstract class CounterExampleGenerator {
     protected Var translateToAstVar(FuncDecl funcDecl) throws DiscoveryException {
 
         Var expVar;
-        if ((funcDecl.getName().toString().endsWith("$r0")) || (funcDecl.getName().toString().endsWith("$r1"))) {
+        //if ((funcDecl.getName().toString().endsWith("$r0")) || (funcDecl.getName().toString().endsWith("$r1"))) {
+        if(!funcDecl.getName().toString().contains("contract")){
             Expr interpretation = model.getConstInterp(funcDecl);
 
             if (interpretation.isInt())

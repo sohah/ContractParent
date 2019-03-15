@@ -2,7 +2,7 @@
 
 
 (define-fun T (( %init Bool)( $sig$0 Int)( $ignition$0 Bool)( $start_bt$0 Bool)( $launch_bt$0 Bool)( $reset_flag$0 Bool)( $p1$0 Bool)( $H~0.in$0 Bool)( $H~0.out$0 Bool)( $Y~0.out$0 Bool)( $sig$1 Int)( $ignition$1 Bool)( $start_bt$1 Bool)( $launch_bt$1 Bool)( $reset_flag$1 Bool)( $p1$1 Bool)( $H~0.in$1 Bool)( $H~0.out$1 Bool)( $Y~0.out$1 Bool)) Bool
-(and(= $start_bt$1(ite %init false (ite $reset_flag$0 false (ite(and(and(not $start_bt$0)(not $launch_bt$0))(= $sig$1 -1)) false  $start_bt$0))))(= $launch_bt$1(ite %init false (ite $reset_flag$0 false (ite(and(and $start_bt$0(not $launch_bt$0))(= $sig$1 -1)) false  $launch_bt$0))))(= $ignition$1(ite %init false (and $launch_bt$0(and(not $ignition$0)(not $reset_flag$0)))))(= $reset_flag$1(ite %init false (and $ignition$0(not $reset_flag$0))))(= $p1$1 $H~0.out$1)(= $H~0.in$1(=> $reset_flag$1 $Y~0.out$1))(= $H~0.out$1(ite %init $H~0.in$1(and $H~0.in$1 $H~0.out$0)))(= $Y~0.out$1(ite %init false  $ignition$0))))
+(and(= $start_bt$1(ite %init false (ite $reset_flag$0 true (ite(and(and(not $start_bt$0)(not $launch_bt$0))(= $sig$1 1)) false  $start_bt$0))))(= $launch_bt$1(ite %init false (ite $reset_flag$0 true (ite(and(and $start_bt$0(not $launch_bt$0))(= $sig$1 0)) false  $launch_bt$0))))(= $ignition$1(ite %init false (and $launch_bt$0(and(not $ignition$0)(not $reset_flag$0)))))(= $reset_flag$1(ite %init true (and $ignition$0(not $reset_flag$0))))(= $p1$1 $H~0.out$1)(= $H~0.in$1(=> $reset_flag$1 $Y~0.out$1))(= $H~0.out$1(ite %init $H~0.in$1(and $H~0.in$1 $H~0.out$0)))(= $Y~0.out$1(ite %init true  $ignition$0))))
 (declare-fun %init () Bool)
 (declare-fun $sig$~1 () Int)
 (declare-fun $ignition$~1 () Bool)
@@ -14,7 +14,6 @@
 (declare-fun $H~0.out$~1 () Bool)
 (declare-fun $Y~0.out$~1 () Bool)
 (assert (and (<= 0 $sig$~1) (<= $sig$~1 2)))
-; K = 0
 (declare-fun $sig$0 () Int)
 (declare-fun $ignition$0 () Bool)
 (declare-fun $start_bt$0 () Bool)
@@ -29,50 +28,6 @@
 (assert true)
 (declare-fun act1 () Bool)
 (assert (=> act1 (not (=> true $p1$0))))
-;(check-sat act1)
-(echo "@DONE")
-; Z3: sat
-; Z3: @DONE
-;(get-model)
-(echo "@DONE")
-; Z3: (model
-; Z3:   (define-fun act1 () Bool
-; Z3:     true)
-; Z3:   (define-fun $p1$0 () Bool
-; Z3:     false)
-; Z3:   (define-fun $launch_bt$0 () Bool
-; Z3:     true)
-; Z3:   (define-fun $H~0.out$0 () Bool
-; Z3:     false)
-; Z3:   (define-fun %init () Bool
-; Z3:     false)
-; Z3:   (define-fun $start_bt$~1 () Bool
-; Z3:     true)
-; Z3:   (define-fun $ignition$~1 () Bool
-; Z3:     false)
-; Z3:   (define-fun $H~0.in$0 () Bool
-; Z3:     true)
-; Z3:   (define-fun $launch_bt$~1 () Bool
-; Z3:     true)
-; Z3:   (define-fun $H~0.out$~1 () Bool
-; Z3:     false)
-; Z3:   (define-fun $start_bt$0 () Bool
-; Z3:     true)
-; Z3:   (define-fun $Y~0.out$0 () Bool
-; Z3:     false)
-; Z3:   (define-fun $reset_flag$~1 () Bool
-; Z3:     false)
-; Z3:   (define-fun $reset_flag$0 () Bool
-; Z3:     false)
-; Z3:   (define-fun $sig$~1 () Int
-; Z3:     0)
-; Z3:   (define-fun $ignition$0 () Bool
-; Z3:     true)
-; Z3:   (define-fun $sig$0 () Int
-; Z3:     0)
-; Z3: )
-; Z3: @DONE
-; K = 1
 (declare-fun $sig$1 () Int)
 (declare-fun $ignition$1 () Bool)
 (declare-fun $start_bt$1 () Bool)
@@ -87,12 +42,6 @@
 (assert true)
 (declare-fun act2 () Bool)
 (assert (=> act2 (not (=> $p1$0 $p1$1))))
-;(check-sat act2)
-(echo "@DONE")
-; Z3: unsat
-; Z3: @DONE
-(assert $p1$0)
-(assert $p1$1)
 (define-fun R ((signal Int) (ignition Int) (launch_btn Int) (reset_btn Int) (start_btn Int) (r347.ignition_r.1.7.4 Int) (r347.launch_btn.1.17.4 Int) (r347.reset_btn.1.9.4 Int) (r347.start_btn.1.15.4 Int) (w14$3 Int) (w12$2 Int) (w13$2 Int) (w14$2 Int) (r347.start_btn.1.3.4 Int) (r347.launch_btn.1.3.4 Int) (r347.launch_btn.1.5.4 Int) (r347.start_btn.1.5.4 Int) (r347.launch_btn.1.7.4 Int) (r347.start_btn.1.7.4 Int) (r347.launch_btn.1.9.4 Int) (r347.start_btn.1.9.4 Int) (r347.launch_btn.1.11.4 Int) (r347.reset_btn.1.4.4 Int) (r347.ignition_r.1.4.4 Int) (r347.reset_btn.1.5.4 Int) (r347.start_btn.1.11.4 Int) (r347.launch_btn.1.13.4 Int) (r347.ignition_r.1.5.4 Int) (r347.start_btn.1.13.4 Int) (r347.launch_btn.1.15.4 Int) (r347.reset_btn.1.7.4 Int) (symVar Int) (w12$1 Int) ) Bool
 (and
  	(= symVar 1)
