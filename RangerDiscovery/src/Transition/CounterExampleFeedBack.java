@@ -148,16 +148,18 @@ public class CounterExampleFeedBack {
         int startT = stringBuilder.indexOf("(define-fun T");
         int endT = stringBuilder.indexOf("(declare-fun %init () Bool)");
         stringBuilder = stringBuilder.replace(startT, endT, newTransitionT.toString());
-
+        int contactMatchStart = stringBuilder.indexOf("; ---------- joining contract begins here -------------");
 
         if (isHoleT) {
             StringBuilder assertionBuilder = new StringBuilder(atransitionT.counterExampleAssertionsToString());
-            int contactMatchStart = stringBuilder.indexOf("; ---------- joining contract begins here -------------");
-            stringBuilder.insert(contactMatchStart, assertionBuilder);
+            stringBuilder.insert(contactMatchStart,"(assert act1)\n(assert act2)\n");
+            int newContactMatchStart = stringBuilder.indexOf("(assert act1)");
+            stringBuilder.insert(newContactMatchStart, assertionBuilder);
             stringBuilder.append("\n(=> (and input_match~1 output_match~1 input_match$1) output_match$1)\n" +
                     ")))\n" +
                     "; ---------- joining contract ends here -------------\n(assert contract_match$)\n");
         } else {
+            stringBuilder.insert(contactMatchStart,"(assert (not act1))\n(assert (not act2))\n");
             stringBuilder.append("\n( and input_match~1 output_match~1 input_match$1 (not output_match$1))\n" +
                     ")))\n" +
                     "; ---------- joining contract ends here -------------\n(assert contract_match$)\n");
@@ -167,7 +169,7 @@ public class CounterExampleFeedBack {
         } else
             System.out.println("|-|-|-|-|-|-|-|- checking SAT |-|-|-|-|-|-|-|-\n");
 
-        saveToSolverFile(stringBuilder.toString(), extension);
+       // saveToSolverFile(stringBuilder.toString(), extension);
 
         clearSolverContext();
         solver = ctx.mkSolver();
