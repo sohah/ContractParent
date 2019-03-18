@@ -82,7 +82,7 @@ public class TransitionT {
     public void collectCounterExample(ContractInput contractInput, Model model) throws IOException, DiscoveryException {
         //Exp newCounterExampleAssertion = r_CounterExampleGenerator.generateCounterExample(contractInput, model);
         System.out.println("printing model for counter example:\n"+ model.toString());
-        Exp newCounterExampleAssertion = generalCounterExampleGenerator.generateCounterExample(contractInput, model);
+        Exp newCounterExampleAssertion = r_CounterExampleGenerator.generateCounterExample(contractInput, model);
         if (counterExampleAssertions.contains(newCounterExampleAssertion)) {
             System.out.println("repeated counter example, that can't happen!");
             assert false;

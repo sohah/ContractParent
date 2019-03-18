@@ -12,8 +12,8 @@ public class Main {
 
         String folderName;
         folderName = "../RunPadModel/Contracts/matchingContracts/CEFLP/Pad/";
-        //String expfileName = folderName + "SimplePadReset.runPadSteps(IZZZZZ)V#27_0.txt";
-        String expfileName = "ImaginaryPad.k-induction.smt2";
+        String expfileName = folderName + "SimplePadReset.runPadSteps(IZZZZZ)V#27_0.txt";
+        //String expfileName = folderName + "ImaginaryPad.k-induction.smt2";
         CounterExampleFeedBack.printContracts = true;
         ContractInput contractInput = new ContractInput(expfileName, expfileName + "FreeIN", expfileName + "StateIN", expfileName + "OUT");
 

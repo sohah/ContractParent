@@ -9,6 +9,8 @@ import com.microsoft.z3.*;
 import ref.Pair;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -61,11 +63,10 @@ public class CounterExampleFeedBack {
 
         while (sat) {
             /*********************** synthesis step ******************************/
-            if (firstTime){ // i do not really need this, but it is easier to look at holes and their changes on the tprime rather than the t.
+            if (firstTime) { // i do not really need this, but it is easier to look at holes and their changes on the tprime rather than the t.
                 contextAndBody = ToConstantHoleVisitor.execute(transitionT.tBody);
                 firstTime = false;
-            }
-            else
+            } else
                 contextAndBody = ToConstantHoleVisitor.execute(transitionTprime.tBody);
 
             holeTransitionT.tContext.putAll(transitionT.tContext);
@@ -152,40 +153,51 @@ public class CounterExampleFeedBack {
 
         if (isHoleT) {
             StringBuilder assertionBuilder = new StringBuilder(atransitionT.counterExampleAssertionsToString());
-            //stringBuilder.insert(contactMatchStart,"(assert act1)\n(assert act2)\n");
-            //int newContactMatchStart = stringBuilder.indexOf("(assert act1)");
-            stringBuilder.insert(contactMatchStart, assertionBuilder);
+            stringBuilder.insert(contactMatchStart, "(assert (not act1))\n(assert (not act2))\n");
+            int newContactMatchStart = stringBuilder.indexOf("(assert (not act1))");
+            stringBuilder.insert(newContactMatchStart, assertionBuilder);
             stringBuilder.append("\n(=> (and input_match~1 output_match~1 input_match$1) output_match$1)\n" +
                     ")))\n" +
-                    "; ---------- joining contract ends here -------------\n(assert contract_match$)\n");
+                    "; ---------- joining contract ends here -------------\n");
         } else {
-           // stringBuilder.insert(contactMatchStart,"(assert (not act1))\n(assert (not act2))\n");
+            //stringBuilder.insert(contactMatchStart,"(assert act1)\n(assert act2)\n");
             stringBuilder.append("\n( and input_match~1 output_match~1 input_match$1 (not output_match$1))\n" +
                     ")))\n" +
-                    "; ---------- joining contract ends here -------------\n(assert contract_match$)\n");
+                    "; ---------- joining contract ends here -------------\n");
+            System.out.println(stringBuilder.toString());
         }
         if (printContracts) {
             System.out.println("|-|-|-|-|-|-|-|- checking SAT and dumping file for |-|-|-|-|-|-|-|-\n" + stringBuilder.toString());
         } else
             System.out.println("|-|-|-|-|-|-|-|- checking SAT |-|-|-|-|-|-|-|-\n");
 
-       // saveToSolverFile(stringBuilder.toString(), extension);
 
         clearSolverContext();
         solver = ctx.mkSolver();
         solver.fromString(stringBuilder.toString());
-        //solver.fromFile(this.solverFile);
-        //Status status = solver.check(solver.getAssertions()[solver.getNumAssertions() - 1]);
-        Status status = solver.check();
+        saveToSolverFile(stringBuilder.toString(), extension);
+
+        //solver.fromFile((this.solverFile+"firstTime.smt"));
+        assert((solver.getAssertions()[solver.getNumAssertions() - 1]).getArgs()[0] instanceof BoolExpr);
+        BoolExpr contract_match = (BoolExpr) (solver.getAssertions()[solver.getNumAssertions() - 1]).getArgs()[0];
+        BoolExpr contract_match_assertion = ctx.mkBoolConst("contract_match_assertion");
+        solver.assertAndTrack(contract_match_assertion, contract_match);
+
+        Status status = solver.check(contract_match_assertion); //means the same thing as check, unless the assumptions are not added to the solver already
+      //  Status status = solver.check();
         if (status == Status.SATISFIABLE)
             return true;
-        else
+        else {
+            ArrayList unsatCore = new ArrayList<BoolExpr>( Arrays.asList(solver.getUnsatCore()));
+            assert (unsatCore.contains(contract_match));
             return false;
+        }
     }
 
     private void clearSolverContext() {
         this.cfg = new HashMap<String, String>();
         cfg.put("model", "true");
+        cfg.put("proof", "true");
         ctx = new Context(cfg);
     }
 
