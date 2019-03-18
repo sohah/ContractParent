@@ -153,14 +153,22 @@ public class CounterExampleFeedBack {
 
         if (isHoleT) {
             StringBuilder assertionBuilder = new StringBuilder(atransitionT.counterExampleAssertionsToString());
-            stringBuilder.insert(contactMatchStart, "(assert (not act1))\n(assert (not act2))\n");
+            stringBuilder.insert(contactMatchStart, "(assert (not act1))\n(assert (not act2))\n(assert $p1$0)\n(assert $p1$1)\n");
             int newContactMatchStart = stringBuilder.indexOf("(assert (not act1))");
+
+            /*stringBuilder.insert(contactMatchStart, "(assert $p1$0)\n" +
+                    "(assert $p1$1)\n");
+            int newContactMatchStart = stringBuilder.indexOf("(assert $p1$0)");
+*/
+
             stringBuilder.insert(newContactMatchStart, assertionBuilder);
             stringBuilder.append("\n(=> (and input_match~1 output_match~1 input_match$1) output_match$1)\n" +
                     ")))\n" +
                     "; ---------- joining contract ends here -------------\n");
         } else {
-            //stringBuilder.insert(contactMatchStart,"(assert act1)\n(assert act2)\n");
+            //stringBuilder.insert(contactMatchStart,"(assert (not act1))\n(assert (not act2))\n");
+            stringBuilder.insert(contactMatchStart, "(assert $p1$0)\n" + "(assert $p1$1)\n");
+            //stringBuilder.insert(contactMatchStart, "(assert (not act1))\n(assert (not act2))\n(assert $p1$0)\n(assert $p1$1)\n");
             stringBuilder.append("\n( and input_match~1 output_match~1 input_match$1 (not output_match$1))\n" +
                     ")))\n" +
                     "; ---------- joining contract ends here -------------\n");

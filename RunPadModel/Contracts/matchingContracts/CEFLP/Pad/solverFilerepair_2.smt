@@ -339,6 +339,8 @@
 ;(assert $p1$0)
 ;(assert $p1$1)
 
+(assert (not act1))
+(assert (not act2))
 (assert $p1$0)
 (assert $p1$1)
 ; ---------- joining contract begins here -------------
