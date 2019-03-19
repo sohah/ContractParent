@@ -1,5 +1,10 @@
 package ref;
 
+import com.microsoft.z3.BoolExpr;
+import com.microsoft.z3.Context;
+import com.microsoft.z3.Expr;
+import com.microsoft.z3.Solver;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -11,16 +16,17 @@ public class Utility {
     /**
      * takes a definition of transition T in string, returns two strings, one for the header and another for the body, including their opening and closing
      * brackets but missing the outer ones for the function definition.
+     *
      * @param query
      * @return
      */
-    public static Pair<String,String> splitHeaderBody(String query) {
+    public static Pair<String, String> splitHeaderBody(String query) {
         assert (query.length() > 0);
 
         String functionDefStr = "define-fun T";
 
         //defined as the first character after "define-fun T
-        int startingIndex = query.indexOf(functionDefStr)+functionDefStr.length();
+        int startingIndex = query.indexOf(functionDefStr) + functionDefStr.length();
 
         //defined as the last character before the last closing bracket
         int endingIndex = query.lastIndexOf(")");
@@ -34,7 +40,7 @@ public class Utility {
 
         String header = query.substring(0, returnIndex);
 
-        String body = query.substring(returnIndex-1, query.length());
+        String body = query.substring(returnIndex - 1, query.length());
         return new Pair(header, body);
     }
 
@@ -128,6 +134,24 @@ public class Utility {
         for (Map.Entry<T, E> entry : map.entrySet()) {
             if (Objects.equals(value, entry.getValue())) {
                 return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    public static Expr findZ3Expr(String exprStr, Expr[] assertions) {
+
+        int i = 0;
+        while (i < assertions.length) {
+            if (assertions[i].toString().equals(exprStr))
+                return assertions[i];
+            else {
+                if (assertions[i].getNumArgs() > 0) {
+                    Expr childAssertion = findZ3Expr(exprStr, assertions[i].getArgs());
+                    if (childAssertion != null)
+                        return childAssertion;
+                }
+                i++;
             }
         }
         return null;
