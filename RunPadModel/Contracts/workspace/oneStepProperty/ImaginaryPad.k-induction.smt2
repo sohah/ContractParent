@@ -1,0 +1,35 @@
+(set-option :produce-models true)
+(set-option :produce-unsat-cores true)
+(define-fun T ((%init Bool) ($sig$0 Int) ($ignition$0 Bool) ($start_bt$0 Bool) ($launch_bt$0 Bool) ($reset_flag$0 Bool) ($p1$0 Bool) ($sig$1 Int) ($ignition$1 Bool) ($start_bt$1 Bool) ($launch_bt$1 Bool) ($reset_flag$1 Bool) ($p1$1 Bool)) Bool
+  (and
+    (= $start_bt$1 (ite %init false (ite $reset_flag$0 false (ite (and (and (not $start_bt$0) (not $launch_bt$0)) (= $sig$1 0)) true $start_bt$0))))
+    (= $launch_bt$1 (ite %init false (ite $reset_flag$0 false (ite (and (and $start_bt$0 (not $launch_bt$0)) (= $sig$1 1)) true $launch_bt$0))))
+    (= $ignition$1 (ite %init false (and $launch_bt$0 (and (not $ignition$0) (not $reset_flag$0)))))
+    (= $reset_flag$1 (ite %init false (and $ignition$0 (not $reset_flag$0))))
+    (= $p1$1 (=> $ignition$1 $launch_bt$1))))
+
+(declare-fun %init () Bool)
+(declare-fun $sig$~1 () Int)
+(declare-fun $ignition$~1 () Bool)
+(declare-fun $start_bt$~1 () Bool)
+(declare-fun $launch_bt$~1 () Bool)
+(declare-fun $reset_flag$~1 () Bool)
+(declare-fun $p1$~1 () Bool)
+(assert (and (<= 0 $sig$~1) (<= $sig$~1 2)))
+; K = 0
+(declare-fun $sig$0 () Int)
+(declare-fun $ignition$0 () Bool)
+(declare-fun $start_bt$0 () Bool)
+(declare-fun $launch_bt$0 () Bool)
+(declare-fun $reset_flag$0 () Bool)
+(declare-fun $p1$0 () Bool)
+(assert (and (<= 0 $sig$0) (<= $sig$0 2)))
+(assert (T %init $sig$~1 $ignition$~1 $start_bt$~1 $launch_bt$~1 $reset_flag$~1 $p1$~1 $sig$0 $ignition$0 $start_bt$0 $launch_bt$0 $reset_flag$0 $p1$0))
+(assert true)
+(declare-fun act1 () Bool)
+(assert (=> act1 (not (=> true $p1$0))))
+(check-sat act1)
+(echo "@DONE")
+; Z3: unsat
+; Z3: @DONE
+(assert $p1$0)

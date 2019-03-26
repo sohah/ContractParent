@@ -1,0 +1,58 @@
+-- this pad has the following requirements for states:
+-- 1. if current launch_bt is true then it must be the case that the start_bt is on now and also in the previous step.
+-- 2. if ignition is true for only one step after launch_bt is true. That is ignition is true only if the previous
+--	 step launch was on and it wasn't the case that in the previous step that iginition was on nore was the reset.
+-- 3. there will be one state where start_bt, launch_bt, ignition are on, followed by a step where
+-- 	start_bt, launch_bt and reset_btn are on, while the ignition is off. The following step would be
+--	reseting everything, that is all buttons are false.
+
+type signal = enum{START_SIG, LAUNCH_SIG, EMPTY_SIG};
+
+	-- the Y operator for yesterday which is the dual of the X operator:
+	node Y(in: bool) returns (out: bool); let out = false -> pre in; tel;
+
+	-- the Z operator which is the same as Y except for being true at initial step:
+	node Z(in: bool) returns (out: bool); let out = true -> pre in; tel;
+
+	-- the H operator for history which is the dual of the G operator:
+	node H(in: bool) returns (out: bool); let out = in -> (in and pre out); tel;
+
+	-- the O operator for once which is the dual of the F operator:
+	node O(in: bool) returns (out: bool);	let out = in -> (in or pre out); tel;
+
+	-- the S operator for since which is the dual of the U operator:
+	node S(p, q: bool) returns (out: bool);	let out = q or (false -> (p and pre out)); tel;
+
+node main(sig: signal) returns (ignition: bool);
+var
+	start_bt: bool;
+	launch_bt: bool;
+  reset_flag: bool;
+	p1: bool;
+
+let
+	start_bt = false -> if(pre reset_flag) then
+															false
+													else if(not(pre start_bt) and (not (pre launch_bt))) and (sig = START_SIG) then
+																true
+															else
+																pre start_bt;
+
+
+	launch_bt = false -> if(pre reset_flag) then
+														false
+													else if((pre start_bt) and (not (pre launch_bt ))) and (sig = LAUNCH_SIG) then
+																true
+															else
+															 pre launch_bt;
+
+
+  ignition = false -> ((pre launch_bt) and (not (pre ignition) and (not pre reset_flag)));
+
+  reset_flag = false -> ( (pre ignition) and not (pre reset_flag));
+
+	p1 = ignition => launch_bt;
+
+	--%PROPERTY p1;
+
+tel;
