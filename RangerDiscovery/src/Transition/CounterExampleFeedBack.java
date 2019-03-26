@@ -7,7 +7,9 @@ import ast.Passes.ToConstantHoleVisitor;
 import ast.def.*;
 import com.microsoft.z3.*;
 import ref.Pair;
+import ref.Utility;
 
+import javax.rmi.CORBA.Util;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -153,22 +155,15 @@ public class CounterExampleFeedBack {
 
         if (isHoleT) {
             StringBuilder assertionBuilder = new StringBuilder(atransitionT.counterExampleAssertionsToString());
-            stringBuilder.insert(contactMatchStart, "(assert (not act1))\n(assert (not act2))\n(assert $p1$0)\n(assert $p1$1)\n");
-            int newContactMatchStart = stringBuilder.indexOf("(assert (not act1))");
-
-            /*stringBuilder.insert(contactMatchStart, "(assert $p1$0)\n" +
-                    "(assert $p1$1)\n");
+            stringBuilder.insert(contactMatchStart, "(assert $p1$0)\n(assert $p1$1)\n");
             int newContactMatchStart = stringBuilder.indexOf("(assert $p1$0)");
-*/
 
             stringBuilder.insert(newContactMatchStart, assertionBuilder);
             stringBuilder.append("\n(=> (and input_match~1 output_match~1 input_match$1) output_match$1)\n" +
                     ")))\n" +
                     "; ---------- joining contract ends here -------------\n");
         } else {
-            //stringBuilder.insert(contactMatchStart,"(assert (not act1))\n(assert (not act2))\n");
-            stringBuilder.insert(contactMatchStart, "(assert $p1$0)\n" + "(assert $p1$1)\n");
-            //stringBuilder.insert(contactMatchStart, "(assert (not act1))\n(assert (not act2))\n(assert $p1$0)\n(assert $p1$1)\n");
+            //stringBuilder.insert(contactMatchStart, "(assert $p1$0)\n" + "(assert $p1$1)\n");
             stringBuilder.append("\n( and input_match~1 output_match~1 input_match$1 (not output_match$1))\n" +
                     ")))\n" +
                     "; ---------- joining contract ends here -------------\n");
@@ -188,10 +183,19 @@ public class CounterExampleFeedBack {
         //solver.fromFile((this.solverFile+"firstTime.smt"));
         assert((solver.getAssertions()[solver.getNumAssertions() - 1]).getArgs()[0] instanceof BoolExpr);
         BoolExpr contract_match = (BoolExpr) (solver.getAssertions()[solver.getNumAssertions() - 1]).getArgs()[0];
-        BoolExpr contract_match_assertion = ctx.mkBoolConst("contract_match_assertion");
-        solver.assertAndTrack(contract_match_assertion, contract_match);
+        BoolExpr property_sat = (BoolExpr) Utility.findZ3Expr("$p1$1", solver.getAssertions());
 
-        Status status = solver.check(contract_match_assertion); //means the same thing as check, unless the assumptions are not added to the solver already
+        assert(property_sat != null);
+
+        BoolExpr contract_match_assertion = ctx.mkBoolConst("contract_match_assertion");
+        BoolExpr property_sat_assertion = ctx.mkBoolConst("property_sat");
+
+        BoolExpr[] assumptions = new BoolExpr[] {ctx.mkOr(contract_match, property_sat)};
+
+        /*solver.assertAndTrack(contract_match_assertion, contract_match);
+        solver.assertAndTrack(property_sat_assertion, property_sat);
+*/
+        Status status = solver.check(assumptions); //means the same thing as check, unless the assumptions are not added to the solver already
       //  Status status = solver.check();
         if (status == Status.SATISFIABLE)
             return true;
