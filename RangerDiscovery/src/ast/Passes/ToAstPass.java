@@ -57,7 +57,7 @@ public class ToAstPass {
         LinkedHashMap<String, Var> tContext = toAstPass.recoverFunContext(toAstPass.transition);
 
         Ast tBody = toAstPass.recoverFunBody(toAstPass.transition, tContext);
-        System.out.println(tBody);
+        //System.out.println(tBody);
         return new Pair(tContext, tBody);
     }
 

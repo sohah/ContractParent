@@ -335,8 +335,6 @@
 (declare-fun w12$1$r1 () Int)
 
 (assert (R  signal$r1 r347.ignition_r.1.7.4$r0 r347.launch_btn.1.17.4$r0 r347.reset_btn.1.9.4$r0 r347.start_btn.1.15.4$r0 r347.ignition_r.1.7.4$r1 r347.launch_btn.1.17.4$r1 r347.reset_btn.1.9.4$r1 r347.start_btn.1.15.4$r1 w14$3$r1 w12$2$r1 w13$2$r1 w14$2$r1 r347.start_btn.1.3.4$r1 r347.launch_btn.1.3.4$r1 r347.launch_btn.1.5.4$r1 r347.start_btn.1.5.4$r1 r347.launch_btn.1.7.4$r1 r347.start_btn.1.7.4$r1 r347.launch_btn.1.9.4$r1 r347.start_btn.1.9.4$r1 r347.launch_btn.1.11.4$r1 r347.reset_btn.1.4.4$r1 r347.ignition_r.1.4.4$r1 r347.reset_btn.1.5.4$r1 r347.start_btn.1.11.4$r1 r347.launch_btn.1.13.4$r1 r347.ignition_r.1.5.4$r1 r347.start_btn.1.13.4$r1 r347.launch_btn.1.15.4$r1 r347.reset_btn.1.7.4$r1 1 w12$1$r1 ))
-;(assert $p1$0)
-;(assert $p1$1)
 
 (assert $p1$0)
 (assert (= %init false))
