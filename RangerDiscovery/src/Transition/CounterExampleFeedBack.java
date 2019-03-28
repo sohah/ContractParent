@@ -53,13 +53,13 @@ public class CounterExampleFeedBack {
 
         HashMap<Hole, Ast> instantiatedHoles;
 
-        boolean sat = checkSat(transitionT, false, printContracts, "firstTime");
+        boolean sat = checkSat(transitionT, false, printContracts, "_FirstTime");
         if (!sat) {
             System.out.println("Contract and Implementation already match, no repair is needed, aborting.");
             return;
         } else {// collect counter example
             System.out.println("Contract and Implementation not matching, collecting counter example and repairing");
-            holeTransitionT.collectCounterExample(contractInput, solver.getModel());
+            holeTransitionT.collectCounterExample(contractInput, solver, this, true);
         }
         boolean firstTime = true;
 
@@ -96,10 +96,11 @@ public class CounterExampleFeedBack {
             else
                 System.out.println("*************** Checking SAT for the repaired Contract T': \n");
 
-            sat = checkSat(transitionTprime, false, false, ("repair_" + fileSequence++));
+            sat = checkSat(transitionTprime, false, false, ("repair_" + fileSequence));
             if (sat) {
                 System.out.println("SAT: repair is no good, collecting counter example");
-                holeTransitionT.collectCounterExample(contractInput, solver.getModel());
+                holeTransitionT.collectCounterExample(contractInput, solver, this, false);
+                ++fileSequence;
             } else {
                 System.out.println("UNSAT ---- repair is found ^-^ , printing repaired tPrime");
                 System.out.println(transitionTprime.define_fun_T());
@@ -152,19 +153,17 @@ public class CounterExampleFeedBack {
         int endT = stringBuilder.indexOf("(declare-fun %init () Bool)");
         stringBuilder = stringBuilder.replace(startT, endT, newTransitionT.toString());
         int contactMatchStart = stringBuilder.indexOf("; ---------- joining contract begins here -------------");
-
+        stringBuilder.insert(contactMatchStart, "(assert $p1$0)\n(assert (= %init false))\n");
         if (isHoleT) {
             StringBuilder assertionBuilder = new StringBuilder(atransitionT.counterExampleAssertionsToString());
-            stringBuilder.insert(contactMatchStart, "(assert $p1$0)\n(assert $p1$1)\n");
             int newContactMatchStart = stringBuilder.indexOf("(assert $p1$0)");
 
             stringBuilder.insert(newContactMatchStart, assertionBuilder);
-            stringBuilder.append("\n(=> (and input_match~1 output_match~1 input_match$1) output_match$1)\n" +
+            stringBuilder.append("\n(=> (and input_match~1 output_match~1 input_match$1) (and output_match$1 $p1$1))\n" +
                     ")))\n" +
                     "; ---------- joining contract ends here -------------\n");
         } else {
-            //stringBuilder.insert(contactMatchStart, "(assert $p1$0)\n" + "(assert $p1$1)\n");
-            stringBuilder.append("\n( and input_match~1 output_match~1 input_match$1 (not output_match$1))\n" +
+            stringBuilder.append("\n( and input_match~1 output_match~1 input_match$1 (or (not output_match$1) (not $p1$1)))\n" +
                     ")))\n" +
                     "; ---------- joining contract ends here -------------\n");
             System.out.println(stringBuilder.toString());
@@ -188,9 +187,10 @@ public class CounterExampleFeedBack {
         assert(property_sat != null);
 
         BoolExpr contract_match_assertion = ctx.mkBoolConst("contract_match_assertion");
-        BoolExpr property_sat_assertion = ctx.mkBoolConst("property_sat");
+      //  BoolExpr property_sat_assertion = ctx.mkBoolConst("property_sat");
 
-        BoolExpr[] assumptions = new BoolExpr[] {ctx.mkOr(contract_match, property_sat)};
+        //BoolExpr[] assumptions = new BoolExpr[] {ctx.mkOr(contract_match, property_sat)};
+        BoolExpr[] assumptions = new BoolExpr[] {contract_match};
 
         /*solver.assertAndTrack(contract_match_assertion, contract_match);
         solver.assertAndTrack(property_sat_assertion, property_sat);

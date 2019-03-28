@@ -2,7 +2,9 @@ package Transition;
 
 import ast.def.*;
 import com.microsoft.z3.Model;
+import com.microsoft.z3.Solver;
 import ref.Pair;
+import ref.Utility;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -77,11 +79,15 @@ public class TransitionT {
      * This method is used for the static transition with hole to accumulate counter examples.
      *
      * @param contractInput
-     * @param model
      */
-    public void collectCounterExample(ContractInput contractInput, Model model) throws IOException, DiscoveryException {
-        //Exp newCounterExampleAssertion = r_CounterExampleGenerator.generateCounterExample(contractInput, model);
-        System.out.println("printing model for counter example:\n"+ model.toString());
+    public void collectCounterExample(ContractInput contractInput, Solver solver, CounterExampleFeedBack counterExampleFeedBack, boolean firstTime) throws IOException, DiscoveryException {
+
+        Model model = solver.getModel();
+        if (firstTime)
+            counterExampleFeedBack.saveToSolverFile(model.toString(), ("model_FirstTime"));
+        else
+            counterExampleFeedBack.saveToSolverFile(model.toString(), ("model" + CounterExampleFeedBack.fileSequence));
+
         Exp newCounterExampleAssertion = r_CounterExampleGenerator.generateCounterExample(contractInput, model);
         if (counterExampleAssertions.contains(newCounterExampleAssertion)) {
             System.out.println("repeated counter example, that can't happen!");

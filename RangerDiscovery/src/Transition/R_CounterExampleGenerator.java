@@ -43,7 +43,16 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator{
         }
 
         populateMapValues();
+        printMap();
         return createCounterExampleAssertion();
+    }
+
+    private void printMap() {
+        System.out.println("**** printing counter example model valuation for input and output*****\n");
+        System.out.println(inputModelMapBase);
+        System.out.println(inputModelMapKStep);
+        System.out.println(outputModelMapKStep);
+        System.out.println("**** End of counter example model valuation for input and output*****\n");
     }
 
     private Exp createCounterExampleAssertion() {

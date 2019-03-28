@@ -1,13 +1,11 @@
 package ref;
 
-import com.microsoft.z3.BoolExpr;
-import com.microsoft.z3.Context;
-import com.microsoft.z3.Expr;
-import com.microsoft.z3.Solver;
+import com.microsoft.z3.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -157,4 +155,17 @@ public class Utility {
         return null;
     }
 
+
+    public static ArrayList<Expr> findZ3ExprList(ArrayList<String> exprStrList, Expr[] assertions){
+        ArrayList<Expr> exprArrayList = new ArrayList<>();
+
+        for(String expr: exprStrList){
+            exprArrayList.add(findZ3Expr(expr, assertions));
+        }
+        if (exprArrayList.size() > 0){
+            System.out.println("unexpected empty list for expression list.");
+            assert false;
+        }
+        return exprArrayList;
+    }
 }
