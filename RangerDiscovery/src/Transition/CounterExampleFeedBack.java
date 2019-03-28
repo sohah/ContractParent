@@ -9,12 +9,8 @@ import com.microsoft.z3.*;
 import ref.Pair;
 import ref.Utility;
 
-import javax.rmi.CORBA.Util;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 import static Transition.TransitionT.holeTransitionT;
 import static Transition.TransitionT.transitionT;
@@ -25,6 +21,8 @@ import static ast.def.BoolConst.*;
 public class CounterExampleFeedBack {
 
     public static boolean printContracts;
+
+    public static ArrayList<Model> allCounterExampleModels = new ArrayList<>();
 
     ContractInput contractInput;
     HashMap<String, String> cfg;
@@ -59,6 +57,7 @@ public class CounterExampleFeedBack {
             return;
         } else {// collect counter example
             System.out.println("Contract and Implementation not matching, collecting counter example and repairing");
+            allCounterExampleModels.add(solver.getModel());
             holeTransitionT.collectCounterExample(contractInput, solver, this, true);
         }
         boolean firstTime = true;
@@ -80,7 +79,7 @@ public class CounterExampleFeedBack {
             else
                 System.out.println("**************** Checking SAT for holeContract:\n");
 
-            boolean synthesisSat = checkSat(holeTransitionT, true, true, ("hole_" + fileSequence));
+            boolean synthesisSat = checkSat(holeTransitionT, true, printContracts, ("hole_" + fileSequence));
             if (!synthesisSat) {
                 System.out.println("Cannot find a repair!");
                 return;
@@ -96,9 +95,10 @@ public class CounterExampleFeedBack {
             else
                 System.out.println("*************** Checking SAT for the repaired Contract T': \n");
 
-            sat = checkSat(transitionTprime, false, false, ("repair_" + fileSequence));
+            sat = checkSat(transitionTprime, false, printContracts, ("repair_" + fileSequence));
             if (sat) {
                 System.out.println("SAT: repair is no good, collecting counter example");
+                allCounterExampleModels.add(solver.getModel());
                 holeTransitionT.collectCounterExample(contractInput, solver, this, false);
                 ++fileSequence;
             } else {
@@ -166,7 +166,7 @@ public class CounterExampleFeedBack {
             stringBuilder.append("\n( and input_match~1 output_match~1 input_match$1 (or (not output_match$1) (not $p1$1)))\n" +
                     ")))\n" +
                     "; ---------- joining contract ends here -------------\n");
-            System.out.println(stringBuilder.toString());
+            //System.out.println(stringBuilder.toString());
         }
         if (printContracts) {
             System.out.println("|-|-|-|-|-|-|-|- checking SAT and dumping file for |-|-|-|-|-|-|-|-\n" + stringBuilder.toString());

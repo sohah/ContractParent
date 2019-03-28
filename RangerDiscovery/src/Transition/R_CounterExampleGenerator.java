@@ -10,13 +10,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ast.def.BoolConst.FALSE;
-import static ast.def.BoolConst.TRUE;
 import static ast.def.Operator.OperatorKind.AND;
-import static ast.def.Operator.OperatorKind.EQ;
 import static ast.def.Operator.OperatorKind.IMPLIES;
 
-public class R_CounterExampleGenerator extends CounterExampleGenerator{
+public class R_CounterExampleGenerator extends CounterExampleGenerator {
 
     public static R_CounterExampleGenerator r_CounterExampleGenerator = new R_CounterExampleGenerator();
 
@@ -24,7 +21,8 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator{
     //private HashMap<Var, Ast> outputModelMapBase = new HashMap<>(); // i am commenting this out since it is a subset of the input that is passed to the kstep
 
     private HashMap<Var, Ast> inputModelMapKStep = new HashMap<>();
-    private HashMap<Var, Ast> outputModelMapKStep = new HashMap<>();
+    private HashMap<Var, Ast> outputRModelMapKStep = new HashMap<>();
+    private HashMap<Var, Ast> outputTModelMapKStep = new HashMap<>();
 
     private ContractInput contractInput;
 
@@ -34,11 +32,13 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator{
 
         if (inputModelMapBase.size() > 0) { //reset of the map synthesis from previous step
             assert (inputModelMapKStep.size() > 0
-                    && outputModelMapKStep.size() > 0);
+                    && outputRModelMapKStep.size() > 0
+                    && outputTModelMapKStep.size() > 0);
             clearModelMapValues();
         } else {
             assert (inputModelMapKStep.size() == 0
-                    && outputModelMapKStep.size() == 0);
+                    && outputRModelMapKStep.size() == 0
+                    && outputTModelMapKStep.size() == 0);
             populateMapKeys();
         }
 
@@ -49,9 +49,10 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator{
 
     private void printMap() {
         System.out.println("**** printing counter example model valuation for input and output*****\n");
-        System.out.println(inputModelMapBase);
-        System.out.println(inputModelMapKStep);
-        System.out.println(outputModelMapKStep);
+        System.out.println("Input in base step:\t" + inputModelMapBase + "\n");
+        System.out.println("Input in k-step:\t" + inputModelMapKStep + "\n");
+        System.out.println("Output of k-step in R:\t" + outputRModelMapKStep + "\n");
+        System.out.println("Output of k-step for T:\t" + outputTModelMapKStep + "\n");
         System.out.println("**** End of counter example model valuation for input and output*****\n");
     }
 
@@ -62,7 +63,7 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator{
 
         Exp antecedentExp = new NExp(new Operator(AND), antecedent);
 
-        ArrayList<Exp> consequent = generatTestValues(outputModelMapKStep);
+        ArrayList<Exp> consequent = generatTestValues(outputRModelMapKStep);
 
         Exp consequentExp = new NExp(new Operator(AND), consequent);
 
@@ -86,7 +87,8 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator{
 
             updateMap(inputModelMapBase, decl.getName().toString(), expValue);
             updateMap(inputModelMapKStep, decl.getName().toString(), expValue);
-            updateMap(outputModelMapKStep, decl.getName().toString(), expValue);
+            updateMap(outputRModelMapKStep, decl.getName().toString(), expValue);
+            updateMap(outputTModelMapKStep, decl.getName().toString(), expValue);
         }
     }
 
@@ -112,9 +114,9 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator{
         try (BufferedReader br = new BufferedReader(new FileReader(contractInput.freeInVarFileName))) {
             for (String line; (line = br.readLine()) != null; ) {
                 // process the line.
-                Var var = findInModel(line.replaceAll(" ","") + "$r0");
+                Var var = findInModel(line.replaceAll(" ", "") + "$r0");
                 inputModelMapBase.put(var, null);
-                var = findInModel(line.replaceAll(" ","") + "$r1");
+                var = findInModel(line.replaceAll(" ", "") + "$r1");
                 inputModelMapKStep.put(var, null);
             }
         }
@@ -127,7 +129,7 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator{
             }
         }
 
-        /****** populating output ******/
+        /****** populating R output ******/
         try (BufferedReader br = new BufferedReader(new FileReader(contractInput.outVarFileName))) {
             for (String line; (line = br.readLine()) != null; ) {
                 // process the line.
@@ -135,9 +137,22 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator{
                 inputModelMapKStep.put(var, null);
 
                 var = findInModel(line + "$r1");
-                outputModelMapKStep.put(var, null);
+                outputRModelMapKStep.put(var, null);
             }
         }
+
+        /****** populating T output ******/
+        Var var1 = findInModel("$ignition$1");
+        outputTModelMapKStep.put(var1, null);
+
+        Var var2 = findInModel("$launch_bt$1");
+        outputTModelMapKStep.put(var2, null);
+
+        Var var3 = findInModel("$start_bt$1");
+        outputTModelMapKStep.put(var3, null);
+
+        Var var4 = findInModel("$reset_flag$1");
+        outputTModelMapKStep.put(var4, null);
     }
 
     private void clearModelMapValues() {
@@ -147,7 +162,10 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator{
         for (Map.Entry<Var, Ast> entry : inputModelMapKStep.entrySet())
             entry.setValue(null);
 
-        for (Map.Entry<Var, Ast> entry : outputModelMapKStep.entrySet())
+        for (Map.Entry<Var, Ast> entry : outputRModelMapKStep.entrySet())
+            entry.setValue(null);
+
+        for (Map.Entry<Var, Ast> entry : outputTModelMapKStep.entrySet())
             entry.setValue(null);
     }
 }

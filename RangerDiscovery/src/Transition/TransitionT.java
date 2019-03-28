@@ -11,8 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static Transition.GeneralCounterExampleGenerator.generalCounterExampleGenerator;
 import static Transition.R_CounterExampleGenerator.r_CounterExampleGenerator;
+import static ref.Utility.printMismatchingModAssertions;
 
 public class TransitionT {
 
@@ -91,6 +91,14 @@ public class TransitionT {
         Exp newCounterExampleAssertion = r_CounterExampleGenerator.generateCounterExample(contractInput, model);
         if (counterExampleAssertions.contains(newCounterExampleAssertion)) {
             System.out.println("repeated counter example, that can't happen!");
+            int index = counterExampleAssertions.indexOf(newCounterExampleAssertion);
+            Model oldModel = CounterExampleFeedBack.allCounterExampleModels.get(index);
+            Model newModel = solver.getModel();
+
+            printMismatchingModAssertions(oldModel, solver);
+
+            assert (oldModel != null
+                    && newModel != null);
             assert false;
         } else
             counterExampleAssertions.add(newCounterExampleAssertion);

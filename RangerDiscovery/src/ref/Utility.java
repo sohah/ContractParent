@@ -156,16 +156,35 @@ public class Utility {
     }
 
 
-    public static ArrayList<Expr> findZ3ExprList(ArrayList<String> exprStrList, Expr[] assertions){
+    public static ArrayList<Expr> findZ3ExprList(ArrayList<String> exprStrList, Expr[] assertions) {
         ArrayList<Expr> exprArrayList = new ArrayList<>();
 
-        for(String expr: exprStrList){
+        for (String expr : exprStrList) {
             exprArrayList.add(findZ3Expr(expr, assertions));
         }
-        if (exprArrayList.size() > 0){
+        if (exprArrayList.size() > 0) {
             System.out.println("unexpected empty list for expression list.");
             assert false;
         }
         return exprArrayList;
+    }
+
+
+    /**
+     * This method tries to find mismatching valuations or eateries between two models, the old one and a new model identified by the new solver.
+     */
+    public static void printMismatchingModAssertions(Model oldModel, Solver newSolver) {
+        FuncDecl[] oldFunDecList = oldModel.getConstDecls();
+        ;
+        System.out.println("Printing Mismatched Enteries:");
+        System.out.println("\tConstant\t\t\told value \t\tnew value");
+        for (FuncDecl funcDecl : oldFunDecList) {
+            Expr oldInterpretation = oldModel.getConstInterp(funcDecl);
+            Expr exprObjectInNewModel = findZ3Expr(funcDecl.getName().toString(), newSolver.getAssertions());
+            assert (exprObjectInNewModel != null);
+            Expr newInterpretation = newSolver.getModel().getConstInterp(exprObjectInNewModel);
+            if (!oldInterpretation.toString().equals(newInterpretation.toString()))
+                System.out.println(funcDecl.getName().toString() + "\t\t\t" + oldInterpretation.toString() + "\t\t" + newInterpretation.toString());
+        }
     }
 }
