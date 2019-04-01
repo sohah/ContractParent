@@ -79,12 +79,14 @@ public class CounterExampleFeedBack {
             else
                 System.out.println("**************** Checking SAT for holeContract:\n");
 
-            boolean synthesisSat = checkSat(holeTransitionT, true, printContracts, ("hole_" + fileSequence));
+            boolean synthesisSat = checkSat(holeTransitionT, true, printContracts, ("_hole_" + fileSequence));
             if (!synthesisSat) {
                 System.out.println("Cannot find a repair!");
                 return;
-            } else
+            } else{
                 System.out.println("SAT: synthesis for a possible repair is found");
+                saveToSolverFile(solver.getModel().toString(), "_synModel_" + fileSequence);
+            }
 
             /********************* checking candidate repair step *********************************/
             instantiatedHoles = getModelForHoles();
@@ -95,7 +97,7 @@ public class CounterExampleFeedBack {
             else
                 System.out.println("*************** Checking SAT for the repaired Contract T': \n");
 
-            sat = checkSat(transitionTprime, false, printContracts, ("repair_" + fileSequence));
+            sat = checkSat(transitionTprime, false, printContracts, ("_repair_" + fileSequence));
             if (sat) {
                 System.out.println("SAT: repair is no good, collecting counter example");
                 allCounterExampleModels.add(solver.getModel());
@@ -153,7 +155,7 @@ public class CounterExampleFeedBack {
         int endT = stringBuilder.indexOf("(declare-fun %init () Bool)");
         stringBuilder = stringBuilder.replace(startT, endT, newTransitionT.toString());
         int contactMatchStart = stringBuilder.indexOf("; ---------- joining contract begins here -------------");
-        stringBuilder.insert(contactMatchStart, "(assert $p1$0)\n(assert (= %init false))\n");
+        stringBuilder.insert(contactMatchStart, "(assert $p1$0)\n(assert $p1$~1)\n(assert (= %init false))\n");
         if (isHoleT) {
             StringBuilder assertionBuilder = new StringBuilder(atransitionT.counterExampleAssertionsToString());
             int newContactMatchStart = stringBuilder.indexOf("(assert $p1$0)");

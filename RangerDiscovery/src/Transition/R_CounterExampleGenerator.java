@@ -24,6 +24,9 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator {
     private HashMap<Var, Ast> outputRModelMapKStep = new HashMap<>();
     private HashMap<Var, Ast> outputTModelMapKStep = new HashMap<>();
 
+    private HashMap<Var, Ast> inputPropBaseAndKStep = new HashMap<>();
+    private HashMap<Var, Ast> outputPropKStep = new HashMap<>();
+
     private ContractInput contractInput;
 
     public Exp generateCounterExample(ContractInput contractInput, Model model) throws IOException, DiscoveryException {
@@ -33,12 +36,16 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator {
         if (inputModelMapBase.size() > 0) { //reset of the map synthesis from previous step
             assert (inputModelMapKStep.size() > 0
                     && outputRModelMapKStep.size() > 0
-                    && outputTModelMapKStep.size() > 0);
+                    && outputTModelMapKStep.size() > 0
+                    && inputPropBaseAndKStep.size() > 0
+                    && outputPropKStep.size() > 0);
             clearModelMapValues();
         } else {
             assert (inputModelMapKStep.size() == 0
                     && outputRModelMapKStep.size() == 0
-                    && outputTModelMapKStep.size() == 0);
+                    && outputTModelMapKStep.size() == 0
+                    && inputPropBaseAndKStep.size() == 0
+                    && outputPropKStep.size() == 0);
             populateMapKeys();
         }
 
@@ -59,11 +66,14 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator {
     private Exp createCounterExampleAssertion() {
         ArrayList<Exp> antecedent = generatTestValues(inputModelMapBase);
         antecedent.addAll(generatTestValues(inputModelMapKStep));
+        antecedent.addAll(generatTestValues(inputPropBaseAndKStep));
+
         //antecedent.add(new NExp(new Operator(EQ)), )
 
         Exp antecedentExp = new NExp(new Operator(AND), antecedent);
 
         ArrayList<Exp> consequent = generatTestValues(outputRModelMapKStep);
+        consequent.addAll(generatTestValues(outputPropKStep));
 
         Exp consequentExp = new NExp(new Operator(AND), consequent);
 
@@ -89,6 +99,20 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator {
             updateMap(inputModelMapKStep, decl.getName().toString(), expValue);
             updateMap(outputRModelMapKStep, decl.getName().toString(), expValue);
             updateMap(outputTModelMapKStep, decl.getName().toString(), expValue);
+            updateMap(inputPropBaseAndKStep, decl.getName().toString(), expValue);
+            updateMap(outputPropKStep, decl.getName().toString(), expValue);
+        }
+        assertPropTrue(inputPropBaseAndKStep);
+        assertPropTrue(outputPropKStep);
+
+    }
+
+    private void assertPropTrue(HashMap<Var, Ast> outputPropKStep) {
+        for (Map.Entry<Var, Ast> entry : outputPropKStep.entrySet()) {
+            if (!(entry.getValue().equals(BoolConst.TRUE))) {
+                System.out.println("Property Problem! One property is not true");
+                assert false;
+            }
         }
     }
 
@@ -115,8 +139,14 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator {
             for (String line; (line = br.readLine()) != null; ) {
                 // process the line.
                 Var var = findInModel(line.replaceAll(" ", "") + "$r0");
+                if (var == null)
+                    catchInputOutputProblem();
+
                 inputModelMapBase.put(var, null);
                 var = findInModel(line.replaceAll(" ", "") + "$r1");
+                if (var == null)
+                    catchInputOutputProblem();
+
                 inputModelMapKStep.put(var, null);
             }
         }
@@ -125,6 +155,10 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator {
             for (String line; (line = br.readLine()) != null; ) {
                 // process the line.
                 Var var = findInModel(line + "$r0");
+
+                if (var == null)
+                    catchInputOutputProblem();
+
                 inputModelMapBase.put(var, null);
             }
         }
@@ -134,25 +168,55 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator {
             for (String line; (line = br.readLine()) != null; ) {
                 // process the line.
                 Var var = findInModel(line + "$r0");
+                if(var == null)
+                    catchInputOutputProblem();
                 inputModelMapKStep.put(var, null);
 
                 var = findInModel(line + "$r1");
+
+                if(var == null)
+                    catchInputOutputProblem();
                 outputRModelMapKStep.put(var, null);
             }
         }
 
         /****** populating T output ******/
         Var var1 = findInModel("$ignition$1");
-        outputTModelMapKStep.put(var1, null);
+        if (var1 == null)
+            catchInputOutputProblem();
+        else
+            outputTModelMapKStep.put(var1, null);
 
         Var var2 = findInModel("$launch_bt$1");
-        outputTModelMapKStep.put(var2, null);
+        if (var2 == null)
+            catchInputOutputProblem();
+        else
+            outputTModelMapKStep.put(var2, null);
 
         Var var3 = findInModel("$start_bt$1");
-        outputTModelMapKStep.put(var3, null);
+        if (var3 == null)
+            catchInputOutputProblem();
+        else
+            outputTModelMapKStep.put(var3, null);
 
         Var var4 = findInModel("$reset_flag$1");
-        outputTModelMapKStep.put(var4, null);
+        if (var4 == null)
+            catchInputOutputProblem();
+        else
+            outputTModelMapKStep.put(var4, null);
+
+        /****** populating Property input and output ******/
+        Var var5 = findInModel("$p1$~1");
+        if (var5 != null)
+            inputPropBaseAndKStep.put(var5, null);
+
+        Var var6 = findInModel("$p1$0");
+        if (var6 != null)
+            inputPropBaseAndKStep.put(var6, null);
+
+        Var var7 = findInModel("$p1$1");
+        if (var7 != null)
+            outputPropKStep.put(var7, null);
     }
 
     private void clearModelMapValues() {
@@ -167,5 +231,12 @@ public class R_CounterExampleGenerator extends CounterExampleGenerator {
 
         for (Map.Entry<Var, Ast> entry : outputTModelMapKStep.entrySet())
             entry.setValue(null);
+
+        for (Map.Entry<Var, Ast> entry : inputPropBaseAndKStep.entrySet())
+            entry.setValue(null);
+
+        for (Map.Entry<Var, Ast> entry : outputPropKStep.entrySet())
+            entry.setValue(null);
+
     }
 }

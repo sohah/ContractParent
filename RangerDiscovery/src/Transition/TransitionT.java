@@ -84,9 +84,9 @@ public class TransitionT {
 
         Model model = solver.getModel();
         if (firstTime)
-            counterExampleFeedBack.saveToSolverFile(model.toString(), ("model_FirstTime"));
+            counterExampleFeedBack.saveToSolverFile(model.toString(), ("_model_FirstTime"));
         else
-            counterExampleFeedBack.saveToSolverFile(model.toString(), ("model" + CounterExampleFeedBack.fileSequence));
+            counterExampleFeedBack.saveToSolverFile(model.toString(), ("_model" + CounterExampleFeedBack.fileSequence));
 
         Exp newCounterExampleAssertion = r_CounterExampleGenerator.generateCounterExample(contractInput, model);
         if (counterExampleAssertions.contains(newCounterExampleAssertion)) {

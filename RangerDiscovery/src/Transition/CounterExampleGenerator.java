@@ -91,8 +91,12 @@ public abstract class CounterExampleGenerator {
                 } else throw new DiscoveryException("unexpected interpretation");
             }
         }
-        assert false;
         return null;
+    }
+
+    protected static void catchInputOutputProblem(){
+        System.out.println("input or output of a contract cannot be found in model!");
+        assert false;
     }
 
 }
