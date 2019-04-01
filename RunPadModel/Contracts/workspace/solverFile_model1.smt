@@ -39,11 +39,11 @@
 (define-fun $ignition$0 () Bool
   false)
 (define-fun $sig$0 () Int
-  1)
+  2)
 (define-fun act1 () Bool
   false)
 (define-fun w13$2$r0 () Int
-  1)
+  0)
 (define-fun r347.start_btn.1.3.4$r0 () Int
   0)
 (define-fun act2 () Bool
@@ -115,7 +115,7 @@
 (define-fun $p1$1 () Bool
   true)
 (define-fun w14$2$r0 () Int
-  1)
+  0)
 (define-fun r347.launch_btn.1.5.4$r1 () Int
   0)
 (define-fun $launch_bt$~1 () Bool
@@ -127,7 +127,7 @@
 (define-fun $reset_flag$0 () Bool
   false)
 (define-fun r347.launch_btn.1.3.4$r0 () Int
-  1)
+  0)
 (define-fun $p1$0 () Bool
   true)
 (define-fun r347.start_btn.1.5.4$r0 () Int
@@ -155,7 +155,7 @@
 (define-fun r347.launch_btn.1.13.4$r0 () Int
   0)
 (define-fun signal$r0 () Int
-  1)
+  2)
 (define-fun r347.launch_btn.1.5.4$r0 () Int
   0)
 (define-fun r347.start_btn.1.7.4$r0 () Int

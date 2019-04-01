@@ -53,7 +53,7 @@ public abstract class CounterExampleGenerator {
 
         Var expVar;
         //if ((funcDecl.getName().toString().endsWith("$r0")) || (funcDecl.getName().toString().endsWith("$r1"))) {
-        if(!funcDecl.getName().toString().contains("contract")){
+        if (!funcDecl.getName().toString().contains("contract")) {
             Expr interpretation = model.getConstInterp(funcDecl);
 
             if (interpretation.isInt())
@@ -63,8 +63,7 @@ public abstract class CounterExampleGenerator {
             else throw new DiscoveryException("unexpected interpretation");
 
             return expVar;
-        }
-        else
+        } else
             return null;
     }
 
@@ -94,9 +93,68 @@ public abstract class CounterExampleGenerator {
         return null;
     }
 
-    protected static void catchInputOutputProblem(){
+    protected static void catchInputOutputProblem() {
         System.out.println("input or output of a contract cannot be found in model!");
         assert false;
     }
 
+    /**
+     * returns the counter example in the form of antecedent => consequent.
+     *
+     * @param counterExampleAssertions
+     * @return
+     */
+    protected String counterExampleImplicationAssertionsString(ArrayList<Exp> counterExampleAssertions) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Exp counterExample : counterExampleAssertions) {
+            stringBuilder.append("(assert ");
+            stringBuilder.append(counterExample.toString());
+            stringBuilder.append(")\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * returns the counter example in the form of antecedent => consequent but also asserts that at least one of the antecedents must be true.
+     *
+     * @param counterExampleAssertions
+     * @return
+     */
+    protected String counterExampleDivideAssertionsToString(ArrayList<Exp> counterExampleAssertions) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        //creating the definitions for all expected antecedents.
+        for (int i = 0; i < counterExampleAssertions.size(); i++) {
+            stringBuilder.append("(declare-fun antecedent_").append(i).append(" () bool)\n");
+        }
+
+        if (counterExampleAssertions.size() > 1) {
+            stringBuilder.append("(assert (or ");
+            for (int i = 0; i < counterExampleAssertions.size(); i++) {
+                stringBuilder.append(" antecedent_").append(i);
+            }
+            stringBuilder.append("))");
+        }
+        else
+            stringBuilder.append("(assert antecedent_0)");
+
+        stringBuilder.append("\n");
+
+        //creating the definition of every antecedent
+        for (int i = 0; i < counterExampleAssertions.size(); i++) {
+            assert (counterExampleAssertions.get(i) instanceof NExp);
+            Exp antecedentExp = ((NExp) counterExampleAssertions.get(i)).operands.get(0);
+            stringBuilder.append("(assert (= antecedent_").append(i).append(" ").append(antecedentExp.toString()).append("))\n");
+        }
+
+
+        //creating the implication for every testcase
+        for (int i = 0; i < counterExampleAssertions.size(); i++) {
+            assert (counterExampleAssertions.get(i) instanceof NExp);
+            Exp consequent = ((NExp) counterExampleAssertions.get(i)).operands.get(1);
+            stringBuilder.append("(assert (=> antecedent_").append(i).append(" ").append(consequent).append("))\n");
+        }
+        return stringBuilder.toString();
+    }
 }

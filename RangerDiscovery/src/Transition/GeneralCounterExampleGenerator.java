@@ -14,6 +14,9 @@ import static ast.def.BoolConst.FALSE;
 import static ast.def.BoolConst.TRUE;
 import static ast.def.Operator.OperatorKind.*;
 
+
+//TODO: important, current GeneralCounterExampleGenerator is not correct, we need to remove from the antecedent the output of k.
+
 public class GeneralCounterExampleGenerator extends CounterExampleGenerator {
 
     public static GeneralCounterExampleGenerator generalCounterExampleGenerator = new GeneralCounterExampleGenerator();

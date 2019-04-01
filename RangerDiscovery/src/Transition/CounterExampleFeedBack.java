@@ -155,9 +155,9 @@ public class CounterExampleFeedBack {
         int endT = stringBuilder.indexOf("(declare-fun %init () Bool)");
         stringBuilder = stringBuilder.replace(startT, endT, newTransitionT.toString());
         int contactMatchStart = stringBuilder.indexOf("; ---------- joining contract begins here -------------");
-        stringBuilder.insert(contactMatchStart, "(assert $p1$0)\n(assert $p1$~1)\n(assert (= %init false))\n");
+        stringBuilder.insert(contactMatchStart, "(assert $H~0.out$~1)\n(assert $p1$0)\n(assert $p1$~1)\n(assert (= %init false))\n");
         if (isHoleT) {
-            StringBuilder assertionBuilder = new StringBuilder(atransitionT.counterExampleAssertionsToString());
+            StringBuilder assertionBuilder = new StringBuilder(atransitionT.mycounterExampleString());
             int newContactMatchStart = stringBuilder.indexOf("(assert $p1$0)");
 
             stringBuilder.insert(newContactMatchStart, assertionBuilder);

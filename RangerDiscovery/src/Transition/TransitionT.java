@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static Transition.GeneralCounterExampleGenerator.generalCounterExampleGenerator;
 import static Transition.R_CounterExampleGenerator.r_CounterExampleGenerator;
 import static ref.Utility.printMismatchingModAssertions;
 
@@ -104,15 +105,10 @@ public class TransitionT {
             counterExampleAssertions.add(newCounterExampleAssertion);
     }
 
-    public String counterExampleAssertionsToString() {
-        StringBuilder stringBuilder = new StringBuilder();
+    public String mycounterExampleString() {
 
-        for (Exp counterExample : counterExampleAssertions) {
-            stringBuilder.append("(assert ");
-            stringBuilder.append(counterExample.toString());
-            stringBuilder.append(")\n");
-        }
-        return stringBuilder.toString();
+        //return r_CounterExampleGenerator.counterExampleImplicationAssertionsString(counterExampleAssertions);
+        return r_CounterExampleGenerator.counterExampleDivideAssertionsToString(counterExampleAssertions);
 
     }
 }

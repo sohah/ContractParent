@@ -1,11 +1,11 @@
 (define-fun r347.launch_btn.1.3.4$r1 () Int
-  0)
+  1)
 (define-fun $H~0.out$0 () Bool
   true)
 (define-fun $reset_flag$1 () Bool
   false)
 (define-fun r347.start_btn.1.5.4$r1 () Int
-  1)
+  0)
 (define-fun r347.launch_btn.1.11.4$r0 () Int
   0)
 (define-fun r347.start_btn.1.11.4$r0 () Int
@@ -15,7 +15,7 @@
 (define-fun $ignition$~1 () Bool
   false)
 (define-fun w12$2$r1 () Int
-  1)
+  0)
 (define-fun r347.launch_btn.1.17.4$r1 () Int
   0)
 (define-fun r347.launch_btn.1.9.4$r1 () Int
@@ -28,6 +28,8 @@
   true)
 (define-fun r347.launch_btn.1.15.4$r0 () Int
   0)
+(define-fun constHole_3 () Int
+  0)
 (define-fun r347.ignition_r.1.7.4$r1 () Int
   0)
 (define-fun r347.reset_btn.1.9.4$r1 () Int
@@ -39,11 +41,11 @@
 (define-fun $ignition$0 () Bool
   false)
 (define-fun $sig$0 () Int
-  1)
+  0)
 (define-fun act1 () Bool
   false)
 (define-fun w13$2$r0 () Int
-  1)
+  0)
 (define-fun r347.start_btn.1.3.4$r0 () Int
   0)
 (define-fun act2 () Bool
@@ -55,7 +57,7 @@
 (define-fun $start_bt$~1 () Bool
   false)
 (define-fun r347.start_btn.1.9.4$r1 () Int
-  1)
+  0)
 (define-fun r347.launch_btn.1.11.4$r1 () Int
   0)
 (define-fun r347.ignition_r.1.5.4$r1 () Int
@@ -73,21 +75,21 @@
 (define-fun $H~0.out$1 () Bool
   true)
 (define-fun w13$2$r1 () Int
-  0)
+  1)
 (define-fun r347.start_btn.1.9.4$r0 () Int
   0)
 (define-fun $Y~0.out$0 () Bool
   false)
-(define-fun $sig$~1 () Int
-  0)
 (define-fun r347.launch_btn.1.9.4$r0 () Int
+  0)
+(define-fun $sig$~1 () Int
   0)
 (define-fun w12$2$r0 () Int
   0)
 (define-fun r347.reset_btn.1.5.4$r1 () Int
   0)
 (define-fun r347.start_btn.1.15.4$r1 () Int
-  1)
+  0)
 (define-fun r347.reset_btn.1.7.4$r1 () Int
   0)
 (define-fun $launch_bt$0 () Bool
@@ -103,11 +105,11 @@
 (define-fun $sig$1 () Int
   0)
 (define-fun r347.start_btn.1.11.4$r1 () Int
-  1)
+  0)
 (define-fun r347.start_btn.1.13.4$r1 () Int
-  1)
+  0)
 (define-fun r347.start_btn.1.7.4$r1 () Int
-  1)
+  0)
 (define-fun w12$1$r1 () Int
   0)
 (define-fun r347.ignition_r.1.4.4$r0 () Int
@@ -115,7 +117,7 @@
 (define-fun $p1$1 () Bool
   true)
 (define-fun w14$2$r0 () Int
-  1)
+  0)
 (define-fun r347.launch_btn.1.5.4$r1 () Int
   0)
 (define-fun $launch_bt$~1 () Bool
@@ -123,11 +125,11 @@
 (define-fun $start_bt$0 () Bool
   false)
 (define-fun r347.start_btn.1.3.4$r1 () Int
-  1)
+  0)
 (define-fun $reset_flag$0 () Bool
   false)
 (define-fun r347.launch_btn.1.3.4$r0 () Int
-  1)
+  0)
 (define-fun $p1$0 () Bool
   true)
 (define-fun r347.start_btn.1.5.4$r0 () Int
@@ -155,17 +157,19 @@
 (define-fun r347.launch_btn.1.13.4$r0 () Int
   0)
 (define-fun signal$r0 () Int
-  1)
+  2)
 (define-fun r347.launch_btn.1.5.4$r0 () Int
   0)
-(define-fun r347.start_btn.1.7.4$r0 () Int
-  0)
+(define-fun constHole_4 () Bool
+  false)
 (define-fun $H~0.out$~1 () Bool
   true)
+(define-fun r347.start_btn.1.7.4$r0 () Int
+  0)
 (define-fun r347.launch_btn.1.17.4$r0 () Int
   0)
 (define-fun signal$r1 () Int
-  0)
+  1)
 (define-fun $reset_flag$~1 () Bool
   false)
 (define-fun r347.start_btn.1.15.4$r0 () Int
