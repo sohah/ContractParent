@@ -17,9 +17,9 @@ import static ref.Utility.printMismatchingModAssertions;
 
 public class TransitionT {
 
+    public Exp tBody;
     public LinkedHashMap<String, Var> tContext = new LinkedHashMap<>();
 
-    public Exp tBody;
     public Pair<String, Pair<Integer, Integer>> mergedContract; //a pair of mergedContract String with to and from indexes of transitionT
 
     public static ArrayList<Exp> counterExampleAssertions = new ArrayList<Exp>();

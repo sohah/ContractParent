@@ -84,7 +84,7 @@ public class CounterExampleFeedBack {
                 System.out.println("Cannot find a repair!");
                 return;
             } else{
-                System.out.println("SAT: synthesis for a possible repair is found");
+                System.out.println("SAT: Possible repair is found");
                 saveToSolverFile(solver.getModel().toString(), "_synModel_" + fileSequence);
             }
 
