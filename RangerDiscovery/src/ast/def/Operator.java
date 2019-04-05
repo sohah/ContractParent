@@ -14,7 +14,7 @@ public class Operator implements Ast {
     }
 
     public static enum OperatorKind {
-        EQ, NOT, AND, OR, IMPLIES, IFTHENELSE, ADD, SUB, FUNCALL;
+        EQ, NOT, AND, OR, IMPLIES, IFTHENELSE, ADD, SUB, FUNCALL, GREATERTHANEQ, LESSTHANEQ, NEGATIVE;
 
         @Override
         public String toString() {
@@ -35,6 +35,12 @@ public class Operator implements Ast {
                     return "add";
                 case SUB:
                     return "sub";
+                case NEGATIVE:
+                    return "-";
+                case GREATERTHANEQ:
+                    return ">=";
+                case LESSTHANEQ:
+                    return "<=";
                 case FUNCALL: //function calls has no operators in SMT-LIB
                     return "";
                 default:
@@ -58,11 +64,14 @@ public class Operator implements Ast {
             case EQ:
             case IMPLIES:
             case FUNCALL:
+            case GREATERTHANEQ:
+            case LESSTHANEQ:
                 arity = 2;
                 type = OperatorType.BOOL;
                 break;
             case ADD:
             case SUB:
+            case NEGATIVE:
                 arity = 2;
                 type = OperatorType.NUM;
                 break;
@@ -99,8 +108,14 @@ public class Operator implements Ast {
             opNameKind = OperatorKind.ADD;
         else if (opName.equals(OperatorKind.SUB.toString()))
             opNameKind = OperatorKind.SUB;
+        else if (opName.equals(OperatorKind.NEGATIVE.toString()))
+            opNameKind = OperatorKind.NEGATIVE;
         else if (opName.equals(OperatorKind.IFTHENELSE.toString()))
             opNameKind = OperatorKind.IFTHENELSE; // no support for parsing function calls.
+        else if (opName.equals(OperatorKind.GREATERTHANEQ.toString()))
+            opNameKind = OperatorKind.GREATERTHANEQ;
+        else if (opName.equals(OperatorKind.LESSTHANEQ.toString()))
+            opNameKind = OperatorKind.LESSTHANEQ;
         else throw new DiscoveryException("unknown operator");
 
         this.opName = opNameKind;
@@ -114,6 +129,8 @@ public class Operator implements Ast {
             case AND:
             case OR:
             case IMPLIES:
+            case GREATERTHANEQ:
+            case LESSTHANEQ:
                 arity = 2;
                 type = OperatorType.BOOL;
                 break;
@@ -125,6 +142,10 @@ public class Operator implements Ast {
             case IFTHENELSE:
                 arity = 3;
                 type = OperatorType.BOOL;
+                break;
+            case NEGATIVE:
+                arity = 1;
+                type = OperatorType.NUM;
                 break;
             default:
                 arity = -1;
@@ -141,7 +162,7 @@ public class Operator implements Ast {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return opName.toString();
     }
 }
