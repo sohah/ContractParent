@@ -16,6 +16,11 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
+/**
+ * This class contains the transition, usually we call it R, that we want to use to repair the other transition T.
+ * For R, we do not need to define holes, and therefore we do not really create an AST for it. Instead we just create the
+ * right string definition for it as well as those of its input and output.
+ */
 public class Transition {
 
     /**
@@ -27,16 +32,6 @@ public class Transition {
      * Which transition is it, R or T?
      */
     public WhichTransition whichTransition;
-
-    /**
-     * The transition definition
-     */
-    public Exp tBody;
-
-    /**
-     * parameters of the transition
-     */
-    public LinkedHashMap<String, Var> tParamters = new LinkedHashMap<>();
 
     /**
      * a pair of a string of the transition function and its location in the string. d
@@ -66,14 +61,6 @@ public class Transition {
         populateBaseVars(baseFreeInput, (filePath + "FreeIN"));
         populateBaseVars(baseConstrainedInput, (filePath + "StateIN"));
         populateBaseVars(baseOutput, (filePath + "OUT"));
-
-        Pair<LinkedHashMap<String, Var>, Ast> contextAndBody = ToAstPass.execute(this.transitionStrLoc.getFirst());
-        tParamters = contextAndBody.getFirst();
-        if(!(contextAndBody.getSecond() instanceof Exp)){
-            System.out.println("cannot have an non Expression in the body of a transition!");
-            assert false;
-        }
-        tBody = (Exp) contextAndBody.getSecond();
     }
 
     /**
@@ -81,7 +68,7 @@ public class Transition {
      *
      * @param file
      */
-    private void populateBaseVars(HashSet varSet, String file) {
+    protected void populateBaseVars(HashSet varSet, String file) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             for (String line; (line = br.readLine()) != null; ) {
                 // process the line.
@@ -95,9 +82,10 @@ public class Transition {
 
     /**
      * Has the side effect of populating the transitionStrLoc with the string of the
+     *
      * @param path
      */
-    public void extractTransitionT(String path) {
+    protected void extractTransitionT(String path) {
         String extractedT = null;
         try {
             extractedT = new String(Files.readAllBytes(Paths.get(path)), "UTF-8");
@@ -106,61 +94,42 @@ public class Transition {
             System.out.println("Problem reading file. " + e.getMessage());
         }
 
+
         int start;
         int end;
-
         if (whichTransition == WhichTransition.T) {
             start = extractedT.indexOf("(define-fun T");
             end = extractedT.indexOf("(declare-fun %init () Bool)");
         } else { // assuming it is R transition then
+            extractedT = preprocessTransition(extractedT); // current preprocessing is only intended for R
             start = extractedT.indexOf("(define-fun R");
             end = extractedT.length();
         }
 
+
         transitionStrLoc = new Pair<>(extractedT.substring(start, end - 1), new Pair<>(start, end));
     }
 
-    public String define_fun_T() {
-        StringBuilder t = new StringBuilder();
-
-        if (whichTransition == WhichTransition.T)
-            t.append("\n(define-fun T (");
-        else // assuming it is R transistion then
-            t.append("\n(define-fun R (");
-
-        for (Map.Entry entry : this.tParamters.entrySet()) { //reconstructing the parameter list for T
-            if (!entry.getValue().toString().contains("Hole")) {
-                t.append("(");
-                t.append(((Var) entry.getValue()).toString());
-                t.append(" ");
-                t.append(((Var) entry.getValue()).type.toString());
-                t.append(")");
-            }
+    /**
+     * used for any pre-processing on the transition before actually using it, for example to remove ranges of int variables.
+     *
+     * @param extractedT
+     * @return
+     */
+    protected String preprocessTransition(String extractedT) {
+        StringBuilder processedTransition = new StringBuilder();
+        String[] lines = extractedT.split(System.getProperty("line.separator"));
+        for (String s : lines) {
+            if (!s.contains("2147483648") && !s.contains("2147483647"))
+                processedTransition.append(s).append("\n");
         }
-        t.append(") Bool\n");
 
-        t.append(this.tBody);
-        t.append(")\n");
-        return t.toString();
+        return processedTransition.toString();
     }
 
-    public String declare_Hole_Constants() {
 
-        if (whichTransition != WhichTransition.T) {
-            System.out.println("Cannot make holes for transitions that are not T");
-            assert false;
-        }
-        ;
-
-        StringBuilder t = new StringBuilder();
-
-        for (Map.Entry<String, Var> entry : this.tParamters.entrySet()) {
-            if (entry.getKey().contains("Hole")) {
-                t.append(entry.getValue().declare_fun());
-                t.append("\n");
-            }
-        }
-        return t.toString();
+    public String define_fun_T() {
+        return transitionStrLoc.getFirst();
     }
 
 }
