@@ -49,7 +49,7 @@ public class ToAstPass {
             if(something.getChild(2).getChild(i) instanceof SMTLIBv2Parser.BodyContext)
                 body = (SMTLIBv2Parser.BodyContext) something.getChild(2).getChild(i);
 
-        return bodyRecoveryVisitor.visit(body);
+        return (Exp) bodyRecoveryVisitor.visit(body);
     }
 
     public static Pair<LinkedHashMap<String, Var>, Ast> execute(String jkindFile) {

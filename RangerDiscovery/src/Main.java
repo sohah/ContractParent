@@ -27,7 +27,6 @@ public class Main {
         h = new HoleTransition(WhichTransition.HOLE, kFileName, maxK, (TransitionToRepair) t);
         r = new TransitionToRepair(WhichTransition.R, rFileName, maxK);
 
-
         CounterExampleFeedBack.printContracts = false;
 
         //counterExampleFeedBack.executeConstantCEFL(contractInput);

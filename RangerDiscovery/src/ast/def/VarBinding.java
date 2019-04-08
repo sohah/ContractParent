@@ -13,7 +13,7 @@ public class VarBinding implements Ast{
 
     @Override
     public String toString() {
-        return null;
+        return "(" + var.toString() + " " + exp.toString() + ")";
     }
 
     @Override

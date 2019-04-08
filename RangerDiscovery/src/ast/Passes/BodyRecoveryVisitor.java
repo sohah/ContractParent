@@ -12,7 +12,7 @@ import static ast.def.BoolConst.FALSE;
 import static ast.def.BoolConst.TRUE;
 
 
-public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Exp> {
+public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Ast> {
 
 
     private final LinkedHashMap<String, Var> tContext;
@@ -23,7 +23,7 @@ public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Exp> {
     }
 
     @Override
-    public Exp visitTerm(SMTLIBv2Parser.TermContext ctx) {
+    public Ast visitTerm(SMTLIBv2Parser.TermContext ctx) {
         if (ctx.getChildCount() >= 4) { // 4 because at least not operator will require the term to have 4 children
             Operator operator;
             try {
@@ -33,23 +33,43 @@ public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Exp> {
                 assert false;
                 return null;
             }
-            ArrayList<Exp> operands = new ArrayList<>();
-            for (int i = 2; i < ctx.getChildCount() - 1; i++) { //to exclude opening and begining brackets as well as
-                operands.add(ctx.getChild(i).accept(this));
-            }
+            if (operator.opName != Operator.OperatorKind.LET) {
+                ArrayList<Ast> operands = new ArrayList<>();
+                for (int i = 2; i < ctx.getChildCount() - 1; i++) { //to exclude opening and begining brackets as well as
+                    operands.add(ctx.getChild(i).accept(this));
+                }
 
-            return new NExp(operator, operands);
+                return new NExp(operator, operands);
+            } else {
+                ArrayList<VarBinding> varBindings = new ArrayList<>();
+                for (int i = 3; i < ctx.getChildCount() - 3; i++) { //to exclude opening and begining brackets as well as
+                    varBindings.add((VarBinding) ctx.getChild(i).accept(this));
+                }
+                ArrayList<Ast> operands = new ArrayList<>();
+                operands.add(ctx.getChild(ctx.getChildCount() - 2).accept(this));
+                return new LetExp(operator, varBindings, operands);
+            }
         } else
             return super.visitTerm(ctx);
     }
 
     @Override
-    public Exp visitSimpleSymbol(SMTLIBv2Parser.SimpleSymbolContext ctx) {
+    public Ast visitVar_binding(SMTLIBv2Parser.Var_bindingContext ctx) {
+        Var var = (Var)ctx.getChild(1).accept(this);
+        Exp exp = (Exp)ctx.getChild(2).accept(this);
+        return new VarBinding(var, exp);
+    }
+
+    @Override
+    public Ast visitSimpleSymbol(SMTLIBv2Parser.SimpleSymbolContext ctx) {
         if (ctx.getChild(0) instanceof SMTLIBv2Parser.PredefSymbolContext)
             return super.visitSimpleSymbol(ctx);
         else {
             Var var = tContext.get(ctx.getText());
-            if ((var == null) && !(ctx.getText().equals("T")) & (!aTypeOrOp(ctx.getText()))) {
+            if (ctx.getText().contains("a!"))
+                return new BoolVar(ctx.getText());
+
+            if ((var == null) && !(ctx.getText().equals("T") & (!aTypeOrOp(ctx.getText())))) {
                 System.out.println("cannot find variable in context!");
                 return null;
             }
@@ -68,7 +88,7 @@ public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Exp> {
     }
 
     @Override
-    public Exp visitPredefSymbol(SMTLIBv2Parser.PredefSymbolContext ctx) {
+    public Ast visitPredefSymbol(SMTLIBv2Parser.PredefSymbolContext ctx) {
         if (ctx.getText().equals("true"))
             return TRUE;
         else if (ctx.getText().equals("false"))
@@ -81,7 +101,7 @@ public class BodyRecoveryVisitor extends SMTLIBv2BaseVisitor<Exp> {
     }
 
     @Override
-    public Exp visitNumeral(SMTLIBv2Parser.NumeralContext ctx) {
+    public Ast visitNumeral(SMTLIBv2Parser.NumeralContext ctx) {
         return new IntConst(Integer.parseInt(ctx.getChild(0).getText()));
     }
 }
