@@ -42,4 +42,14 @@ public class PrettyPrintVisitor implements AstVisitor{
     public Object visit(NExp nExp) {
         return null;
     }
+
+    @Override
+    public Object visit(LetExp letExp) throws DiscoveryException {
+        return null;
+    }
+
+    @Override
+    public Object visit(VarBinding varBinding) {
+        return null;
+    }
 }

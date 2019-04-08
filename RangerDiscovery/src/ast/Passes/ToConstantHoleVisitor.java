@@ -59,7 +59,7 @@ public class ToConstantHoleVisitor implements AstVisitor<Ast> {
 
     @Override
     public Ast visit(NExp nExp) throws DiscoveryException {
-        Ast newOperator = nExp.operator.accept(this);
+        Ast newOperator = new Operator(nExp.operator.toString());
         ArrayList<Exp> newOperands = new ArrayList<>();
 
 /*
@@ -76,6 +76,22 @@ public class ToConstantHoleVisitor implements AstVisitor<Ast> {
             newOperands.add((Exp) operand.accept(this));
         }
         return new NExp((Operator) newOperator, newOperands);
+    }
+
+    @Override
+    public Ast visit(LetExp letExp) throws DiscoveryException {
+        Ast newOperator = new Operator(letExp.operator.toString());
+
+        ArrayList<Exp> newOperands = new ArrayList<>();
+        for (Ast operand : letExp.operands) {
+            newOperands.add((Exp) operand.accept(this));
+        }
+        return new LetExp((Operator) newOperator, letExp.varBindings, newOperands);
+    }
+
+    @Override
+    public Ast visit(VarBinding varBinding) { //no holes for now on varBindings.
+        return new VarBinding(varBinding.var, varBinding.exp);
     }
 
     public static Pair<LinkedHashMap<String, Var>, Ast> execute(Ast t) throws DiscoveryException {

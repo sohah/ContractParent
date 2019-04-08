@@ -54,8 +54,9 @@ public class Transition {
     public LinkedHashSet<String> baseOutput = new LinkedHashSet<>();
 
 
-    public Transition(WhichTransition whichTransition, String filePath) {
+    public Transition(WhichTransition whichTransition, String filePath, int maxK) {
         this.whichTransition = whichTransition;
+        this.maxK = maxK;
         extractTransitionT(filePath);
 
         populateBaseVars(baseFreeInput, (filePath + "FreeIN"));
@@ -97,7 +98,7 @@ public class Transition {
 
         int start;
         int end;
-        if (whichTransition == WhichTransition.T) {
+        if (whichTransition == WhichTransition.T || whichTransition == WhichTransition.HOLE) {
             start = extractedT.indexOf("(define-fun T");
             end = extractedT.indexOf("(declare-fun %init () Bool)");
         } else { // assuming it is R transition then

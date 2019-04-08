@@ -29,9 +29,9 @@ public class TransitionToRepair extends Transition {
     public LinkedHashMap<String, Var> tParamters = new LinkedHashMap<>();
 
 
-    public TransitionToRepair(WhichTransition whichTransition, String filePath) {
-        super(whichTransition, filePath);
-        if (whichTransition == WhichTransition.T) {
+    public TransitionToRepair(WhichTransition whichTransition, String filePath, int maxK) {
+        super(whichTransition, filePath, maxK);
+   //     if (whichTransition == WhichTransition.T) {
             Pair<LinkedHashMap<String, Var>, Ast> contextAndBody = ToAstPass.execute(this.transitionStrLoc.getFirst());
             tParamters = contextAndBody.getFirst();
             if (!(contextAndBody.getSecond() instanceof Exp)) {
@@ -39,10 +39,10 @@ public class TransitionToRepair extends Transition {
                 assert false;
             }
             tBody = (Exp) contextAndBody.getSecond();
-        } else {
+     /*   } else {
             System.out.println("Repaired Transition must be type T!");
             assert false;
-        }
+        }*/
     }
 
     public String declare_Hole_Constants() {

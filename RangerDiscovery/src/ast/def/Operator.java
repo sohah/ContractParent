@@ -14,7 +14,7 @@ public class Operator implements Ast {
     }
 
     public static enum OperatorKind {
-        EQ, NOT, AND, OR, IMPLIES, IFTHENELSE, ADD, SUB, FUNCALL, GREATERTHANEQ, LESSTHANEQ, NEGATIVE;
+        EQ, NOT, AND, OR, IMPLIES, IFTHENELSE, ADD, SUB, FUNCALL, GREATERTHANEQ, LESSTHANEQ, NEGATIVE, LET;
 
         @Override
         public String toString() {
@@ -43,6 +43,8 @@ public class Operator implements Ast {
                     return "<=";
                 case FUNCALL: //function calls has no operators in SMT-LIB
                     return "";
+                case LET:
+                    return "let";
                 default:
                     return null;
             }
@@ -76,6 +78,7 @@ public class Operator implements Ast {
                 type = OperatorType.NUM;
                 break;
             case IFTHENELSE:
+            case LET:
                 arity = 3;
                 type = OperatorType.BOOL;
                 break;
@@ -116,6 +119,8 @@ public class Operator implements Ast {
             opNameKind = OperatorKind.GREATERTHANEQ;
         else if (opName.equals(OperatorKind.LESSTHANEQ.toString()))
             opNameKind = OperatorKind.LESSTHANEQ;
+        else if (opName.equals(OperatorKind.LET.toString()))
+            opNameKind = OperatorKind.LET;
         else throw new DiscoveryException("unknown operator");
 
         this.opName = opNameKind;
@@ -140,6 +145,7 @@ public class Operator implements Ast {
                 type = OperatorType.NUM;
                 break;
             case IFTHENELSE:
+            case LET:
                 arity = 3;
                 type = OperatorType.BOOL;
                 break;

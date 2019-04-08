@@ -1,4 +1,4 @@
 package kcontract;
 
-public enum WhichTransition {T, R
+public enum WhichTransition {T, R, HOLE
 }

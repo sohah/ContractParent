@@ -20,5 +20,9 @@ public interface AstVisitor<T> {
     T visit(Var var) throws DiscoveryException;
 
     T visit(NExp nExp) throws DiscoveryException;
+
+    T visit(LetExp letExp) throws DiscoveryException;
+
+    T visit(VarBinding varBinding);
 }
 

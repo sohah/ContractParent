@@ -77,6 +77,22 @@ public class RemoveHolesVisitor implements AstVisitor<Ast> {
         return new NExp((Operator) newOperator, newOperands);
     }
 
+    @Override
+    public Ast visit(LetExp letExp) throws DiscoveryException {
+        Ast newOperator = letExp.operator.accept(this);
+        ArrayList<Exp> newOperands = new ArrayList<>();
+
+        for (Ast operand : letExp.operands) {
+            newOperands.add((Exp) operand.accept(this));
+        }
+        return new LetExp((Operator) newOperator, letExp.varBindings, newOperands);
+    }
+
+    @Override
+    public Ast visit(VarBinding varBinding) {
+        return new VarBinding(varBinding.var, varBinding.exp);
+    }
+
 
     public static Ast execute(HashMap<Hole, Ast> instantiatedHolesMap, Ast t) throws DiscoveryException {
         System.out.println("repair for (hole, original value) = new value:");
