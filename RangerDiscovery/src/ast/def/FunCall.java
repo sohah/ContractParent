@@ -6,18 +6,18 @@ import java.util.ArrayList;
 
 public class FunCall extends Exp {
     Transition transition;
-    ArrayList<Var> vars;
+    ArrayList<Exp> exp;
 
 
-    public FunCall(Transition transition, ArrayList<Var> vars){
+    public FunCall(Transition transition, ArrayList<Exp> exp){
         this.transition = transition;
-        this.vars = vars;
+        this.exp = exp;
     }
 
 
     @Override
     public String toString() {
-        return "( assert " + transition.whichTransition.toString() + printVars(vars) + ")";
+        return "( assert " + transition.whichTransition.toString() + printVars(exp) + ")";
     }
 
     /**
@@ -29,17 +29,17 @@ public class FunCall extends Exp {
     }
 
 
-    public String printVars(ArrayList<Var> vars){
-        if(vars.size()==0){
+    public String printVars(ArrayList<Exp> exp){
+        if(exp.size()==0){
             System.out.println("cannot instantiate vars for empty vars!");
             assert false;
         }
 
         StringBuilder stringBuilder = new StringBuilder("(");
-        stringBuilder.append(vars.get(0).toString());
+        stringBuilder.append(exp.get(0).toString());
 
-        for(int i=1; i<vars.size(); i++){
-            stringBuilder.append(",").append(vars.get(i).toString());
+        for(int i=1; i<exp.size(); i++){
+            stringBuilder.append(",").append(exp.get(i).toString());
         }
         stringBuilder.append(")");
         return stringBuilder.toString();

@@ -14,6 +14,11 @@ public class Assertion implements Ast {
         this.tail = tail;
     }
 
+    public Assertion(Exp head) {
+        this.head = head;
+        this.tail = null;
+    }
+
     @Override
     public <T> T accept(AstVisitor<T> visitor) throws DiscoveryException {
         return null;

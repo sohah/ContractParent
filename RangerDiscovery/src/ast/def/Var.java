@@ -13,6 +13,11 @@ public abstract class Var extends Exp implements Cloneable {
         this.type = type;
     }
 
+    protected Var(String name, VarType type, int k) {
+        this.name = name+k;
+        this.type = type;
+    }
+
     @Override
     public abstract Var clone();
 
