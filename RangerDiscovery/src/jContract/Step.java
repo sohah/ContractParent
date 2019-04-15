@@ -35,7 +35,7 @@ public class Step {
      * @param k
      * @return
      */
-    public StepOutput makeStep(ArrayList<Var> input, int k) {
+    public StepOutput makeStep(int k) {
         Pair<ArrayList<Exp>, ArrayList<Var>> stepParamAndVar = null;
         switch (someT.whichTransition) {
             case T:
@@ -64,7 +64,7 @@ public class Step {
         ArrayList<FunParameter> originalParameters = r.parameters;
 
         ArrayList<Exp> instantiationBinding = new ArrayList<>();
-        ArrayList<Var> outputVars = new ArrayList<>();
+        ArrayList<Var> newVars = new ArrayList<>();
 
         for (int i = 1; i < originalParameters.size(); i++) {
             FunParameter parameter = originalParameters.get(i);
@@ -80,6 +80,8 @@ public class Step {
                         newVar = new IntVar((oldVarNameNoScript + (k - 1)));
                     parameter = new FunParameter(newVar, ParameterType.INPUT);
                     instantiationBinding.add(parameter);
+                    if(k==1) //initially the input vars are newVars
+                        newVars.add(newVar);
                     break;
                 case OUTPUT:
                     if (oldVar.type == Exp.VarType.INT)
@@ -88,7 +90,7 @@ public class Step {
                         newVar = new IntVar((oldVarNameNoScript + (k)));
                     parameter = new FunParameter(newVar, ParameterType.OUTPUT);
                     instantiationBinding.add(parameter);
-                    outputVars.add(newVar);
+                    newVars.add(newVar);
                     break;
                 case FREE_INPUT: // it uses the current k.
                     if (oldVar.type == Exp.VarType.INT)
@@ -117,7 +119,7 @@ public class Step {
             }
         }
 
-        return new Pair<>(instantiationBinding, outputVars);
+        return new Pair<>(instantiationBinding, newVars);
     }
 
     /**
@@ -129,7 +131,7 @@ public class Step {
         ArrayList<FunParameter> originalParameters = t.parameters;
 
         ArrayList<Exp> instantiationBinding = new ArrayList<>();
-        ArrayList<Var> outputVars = new ArrayList<>();
+        ArrayList<Var> newVars = new ArrayList<>();
 
 
         if (whichStep == WhichStep.BMC)
@@ -158,6 +160,8 @@ public class Step {
                         newVar = new IntVar((oldVarNameNoScript + (k - 1)));
                     parameter = new FunParameter(newVar, ParameterType.INPUT);
                     instantiationBinding.add(parameter);
+                    if(k==1) //initially the input vars are newVars
+                        newVars.add(newVar);
                     break;
                 case OUTPUT:
                     if (oldVar.type == Exp.VarType.INT)
@@ -166,7 +170,7 @@ public class Step {
                         newVar = new IntVar((oldVarNameNoScript + (k)));
                     parameter = new FunParameter(newVar, ParameterType.OUTPUT);
                     instantiationBinding.add(parameter);
-                    outputVars.add(newVar);
+                    newVars.add(newVar);
                     break;
                 case FREE_INPUT: // it uses the current k.
                     if (oldVar.type == Exp.VarType.INT)
@@ -183,6 +187,8 @@ public class Step {
                         newVar = new IntVar((oldVarNameNoScript + (k - 1)));
                     parameter = new FunParameter(newVar, ParameterType.DONT_CARE_INPUT);
                     instantiationBinding.add(parameter);
+                    if(k==1) //initially the input vars are newVars
+                        newVars.add(newVar);
                     break;
                 case DONT_CARE_OUTPUT:
                     if (oldVar.type == Exp.VarType.INT)
@@ -191,7 +197,7 @@ public class Step {
                         newVar = new IntVar((oldVarNameNoScript + (k)));
                     parameter = new FunParameter(newVar, ParameterType.DONT_CARE_OUTPUT);
                     instantiationBinding.add(parameter);
-                    outputVars.add(newVar);
+                    newVars.add(newVar);
                     break;
                 case INTERMEDIATE:
                     System.out.println("This should not happen for T!");
@@ -200,7 +206,7 @@ public class Step {
             }
         }
 
-        return new Pair<>(instantiationBinding, outputVars);
+        return new Pair<>(instantiationBinding, newVars);
     }
 
 
