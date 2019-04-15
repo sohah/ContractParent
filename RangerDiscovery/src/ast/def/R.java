@@ -5,6 +5,7 @@ import ref.Pair;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class R extends Transition {
 
@@ -32,10 +33,43 @@ public class R extends Transition {
         int start;
         int end;
         extractedT = removeRange(extractedT); // current preprocessing is only intended for R
+        extractedT = renameInOutVars(extractedT);
         start = extractedT.indexOf("(define-fun R");
         end = extractedT.length();
 
         transitionStrLoc = new Pair<>(extractedT.substring(start, end - 1), new Pair<>(start, end));
+    }
+
+    /**
+     * The purpose of this is to to make the input and output  have the same name but different prefix than the input variables, making the
+     * transition similar to that in T, and thereby allowing it to be handled the same way as T.
+     *
+     * @param extractedT
+     * @return
+     */
+    private String renameInOutVars(String extractedT) {
+        extractedT = doRename(extractedT, baseFreeInput, 1);
+        extractedT = doRename(extractedT, baseConstrainedInput, 0);
+        extractedT = doRename(extractedT, baseOutput, 1);
+        return extractedT;
+    }
+
+
+    /**
+     * This tries to make output have the same name but different prefix than the input variables, making the
+     * transition similar to that in T, and thereby allowing it to be handled the same way as T.
+     *
+     * @param extractedT
+     * @return
+     */
+    private String doRename(String extractedT, ArrayList<String> list, int k) {
+        for (int i = 0; i < list.size(); i++) {
+            String oldName = list.get(i);
+            String newName = oldName + "$" + k; // Making free input start with the same index as transition T.
+            extractedT = extractedT.replace(oldName, newName);
+            list.set(i, newName);
+        }
+        return extractedT;
     }
 
 
@@ -57,10 +91,9 @@ public class R extends Transition {
     }
 
 
-
-
     /**
      * defines the transition using define-fun
+     *
      * @return
      */
     public String toString() {
