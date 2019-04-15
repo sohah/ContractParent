@@ -11,10 +11,6 @@ public class BoolConst extends Exp {
     }
 
 
-    public BoolConst(String name, boolean isRepair) {
-        this.name = name;
-        this.isRepair = isRepair;
-    }
     @Override
     public <T> T accept(AstVisitor<T> visitor) {
         return visitor.visit(this);
@@ -34,8 +30,6 @@ public class BoolConst extends Exp {
     }
 
     public final static BoolConst TRUE = new BoolConst(" true ");
-    public final static BoolConst TRUE_REPAIR = new BoolConst(" true ", true);
     public final static BoolConst FALSE = new BoolConst(" false ");
-    public final static BoolConst FALSE_REPAIR = new BoolConst(" false ", true);
 
 }

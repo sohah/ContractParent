@@ -6,10 +6,7 @@ import ref.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class contains the transition, usually we call it R, that we want to use to repair the other transition T.
@@ -36,17 +33,17 @@ public class Transition extends Exp {
     /**
      * Base name of free input variables
      */
-    public LinkedHashSet<String> baseFreeInput = new LinkedHashSet<>();
+    public ArrayList<String> baseFreeInput = new ArrayList<>();
 
     /**
      * base name of ConstraintInput variables.
      */
-    public LinkedHashSet<String> baseConstrainedInput = new LinkedHashSet<>();
+    public ArrayList<String> baseConstrainedInput = new ArrayList<>();
 
     /**
      * base name of output variables.
      */
-    public LinkedHashSet<String> baseOutput = new LinkedHashSet<>();
+    public ArrayList<String> baseOutput = new ArrayList<>();
 
     /**
      * The transition definition
@@ -87,9 +84,10 @@ public class Transition extends Exp {
     /**
      * Populates base vars into the corresponding set of vars. Base vars are defined as those vars that are used in the contract_match assertion.
      *
+     * @param varSet
      * @param file
      */
-    protected void populateBaseVars(HashSet varSet, String file) {
+    protected void populateBaseVars(ArrayList<String> varSet, String file) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             for (String line; (line = br.readLine()) != null; ) {
                 // process the line.

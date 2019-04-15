@@ -10,11 +10,6 @@ public class IntConst extends Exp {
         this.value = value;
     }
 
-    public IntConst(int value, boolean isRepair) {
-        this.value = value;
-        this.isRepair = true;
-    }
-
     @Override
     public <T> T accept(AstVisitor<T> visitor) {
         return visitor.visit(this);

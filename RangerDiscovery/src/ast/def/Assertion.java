@@ -5,11 +5,11 @@ import ast.visitors.AstVisitor;
 /**
  * linked like list to represent the upper assertions
  */
-public class UpperConjunct implements Ast {
+public class Assertion implements Ast {
     Exp head;
-    UpperConjunct tail;
+    Assertion tail;
 
-    public UpperConjunct(Exp head, UpperConjunct tail) {
+    public Assertion(Exp head, Assertion tail) {
         this.head = head;
         this.tail = tail;
     }
@@ -23,7 +23,8 @@ public class UpperConjunct implements Ast {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("(assert ");
         stringBuilder.append(head).append(")");
-        stringBuilder.append(tail.toString());
+        if (tail != null)
+            stringBuilder.append(tail.toString());
 
         return stringBuilder.toString();
     }
