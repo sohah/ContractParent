@@ -1,5 +1,6 @@
 package jContract;
 
+import ast.def.Assertion;
 import ast.def.R;
 import ast.def.T;
 import ast.def.Transition;
@@ -22,16 +23,21 @@ public class ContractGenerator {
 
     ArrayList<StepOutput> rInstantiationArray = new ArrayList<>();
 
+    Assertion contractKassertion;
 
-    public ContractGenerator(int k, WhichStep whichStep, T t, R r) {
+
+    public ContractGenerator(int k, WhichStep whichStep, T t, R r, boolean counterExample) {
         this.k = k;
         tInstantiationArray = instantiate(whichStep, t);
         rInstantiationArray = instantiate(whichStep, r);
-
+        if(!counterExample)
+            contractKassertion = createContractAssertion();
+        else
+            contractKassertion = createTestCaseContractAssertion();
     }
 
     private ArrayList<StepOutput> instantiate(WhichStep whichStep, Transition transition) {
-        ArrayList<StepOutput> stepsOuput = new ArrayList<StepOutput>();
+        ArrayList<StepOutput> stepsOuput = new ArrayList<>();
         for (int i = 0; i < k; i++) {
             stepsOuput.add((new Step(whichStep, transition)).makeStep(i));
         }

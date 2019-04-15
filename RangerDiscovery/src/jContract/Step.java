@@ -55,7 +55,6 @@ public class Step {
     }
 
 
-
     /**
      * the purpose of this method is to create new vars with the right indexes for the required k.
      * it returns a pair of the Exp and Output Vars that were created resulting from the step.
@@ -75,28 +74,28 @@ public class Step {
             switch (parameter.getParameterType()) {
                 case INPUT:
                     if (oldVar.type == Exp.VarType.INT)
-                        newVar = new IntVar((oldVarNameNoScript + (k - 1)));
+                        newVar = new IntVar((oldVarNameNoScript + "r" + (k - 1)));
                     else
-                        newVar = new IntVar((oldVarNameNoScript + (k - 1)));
+                        newVar = new IntVar((oldVarNameNoScript + "r" + (k - 1)));
                     parameter = new FunParameter(newVar, ParameterType.INPUT);
                     instantiationBinding.add(parameter);
-                    if(k==1) //initially the input vars are newVars
+                    if (k == 1) //initially the input vars are newVars
                         newVars.add(newVar);
                     break;
                 case OUTPUT:
                     if (oldVar.type == Exp.VarType.INT)
-                        newVar = new IntVar((oldVarNameNoScript + (k)));
+                        newVar = new IntVar((oldVarNameNoScript + "r" + (k)));
                     else
-                        newVar = new IntVar((oldVarNameNoScript + (k)));
+                        newVar = new IntVar((oldVarNameNoScript + "r" + (k)));
                     parameter = new FunParameter(newVar, ParameterType.OUTPUT);
                     instantiationBinding.add(parameter);
                     newVars.add(newVar);
                     break;
                 case FREE_INPUT: // it uses the current k.
                     if (oldVar.type == Exp.VarType.INT)
-                        newVar = new IntVar((oldVarNameNoScript + (k)));
+                        newVar = new IntVar((oldVarNameNoScript + "r" + (k)));
                     else
-                        newVar = new IntVar((oldVarNameNoScript + (k)));
+                        newVar = new IntVar((oldVarNameNoScript + "r" + (k)));
                     parameter = new FunParameter(newVar, ParameterType.FREE_INPUT);
                     instantiationBinding.add(parameter);
                     break;
@@ -110,9 +109,9 @@ public class Step {
                     break;
                 case INTERMEDIATE: // Create new vars for intermediate variables.
                     if (oldVar.type == Exp.VarType.INT)
-                        newVar = new IntVar((oldVarNameNoScript + (k)));
+                        newVar = new IntVar((oldVarNameNoScript + "r" + (k)));
                     else
-                        newVar = new IntVar((oldVarNameNoScript + (k)));
+                        newVar = new IntVar((oldVarNameNoScript + "r" + (k)));
                     parameter = new FunParameter(newVar, ParameterType.INTERMEDIATE);
                     instantiationBinding.add(parameter);
                     break;
@@ -160,7 +159,7 @@ public class Step {
                         newVar = new IntVar((oldVarNameNoScript + (k - 1)));
                     parameter = new FunParameter(newVar, ParameterType.INPUT);
                     instantiationBinding.add(parameter);
-                    if(k==1) //initially the input vars are newVars
+                    if (k == 1) //initially the input vars are newVars
                         newVars.add(newVar);
                     break;
                 case OUTPUT:
@@ -187,7 +186,7 @@ public class Step {
                         newVar = new IntVar((oldVarNameNoScript + (k - 1)));
                     parameter = new FunParameter(newVar, ParameterType.DONT_CARE_INPUT);
                     instantiationBinding.add(parameter);
-                    if(k==1) //initially the input vars are newVars
+                    if (k == 1) //initially the input vars are newVars
                         newVars.add(newVar);
                     break;
                 case DONT_CARE_OUTPUT:
