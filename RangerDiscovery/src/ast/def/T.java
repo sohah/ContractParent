@@ -48,7 +48,7 @@ public class T extends Transition {
 
         StringBuilder t = new StringBuilder();
 
-        for (Map.Entry<String, Var> entry : this.parameters.entrySet()) {
+        for (Map.Entry<String, Var> entry : this.context.entrySet()) {
             if (entry.getKey().contains("Hole")) {
                 t.append(entry.getValue().declare_fun());
                 t.append("\n");

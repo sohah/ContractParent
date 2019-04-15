@@ -17,8 +17,8 @@ public class H extends Transition {
         Pair<LinkedHashMap<String, Var>, Ast> contextAndBody;
         try {
             contextAndBody = ToConstantHoleVisitor.execute(t.body);
-            parameters.putAll(t.parameters);
-            parameters.putAll(contextAndBody.getFirst());
+            context.putAll(t.context);
+            context.putAll(contextAndBody.getFirst());
             body = (Exp) contextAndBody.getSecond();
         } catch (DiscoveryException e) {
             System.out.println("error creating hole transition, " + e.getMessage());
@@ -62,7 +62,7 @@ public class H extends Transition {
             assert false;
         }
 
-        for (Map.Entry entry : this.parameters.entrySet()) { //reconstructing the parameter list for T
+        for (Map.Entry entry : this.context.entrySet()) { //reconstructing the parameter list for T
             if (!entry.getValue().toString().contains("Hole")) {
                 t.append("(").append(((Var) entry.getValue()).toString());
                 t.append(" ").append(((Var) entry.getValue()).type.toString());

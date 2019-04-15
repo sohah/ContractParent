@@ -36,8 +36,8 @@ public class Step {
      * @param k
      * @return
      */
-    public StepOutput makeStep(Transition someT, int k) {
-        Pair<ArrayList<Exp>, ArrayList<Var>> stepParamAndVar = null;
+    public StepOutput makeStep(Transition someT, ArrayList<Var> input, int k) {
+        Pair<ArrayList<Exp>, ArrayList<Var>> stepParamAndVar = someT.makeStepParameters(k);
         switch (someT.whichTransition) {
             case T:
             case HOLE:
@@ -67,6 +67,7 @@ public class Step {
      * it returns a pair of the Exp and Output Vars that were created resulting from the step.
      */
     private Pair<ArrayList<Exp>,ArrayList<Var>> makeTstepParameters(Transition someT, int k) {
+
     }
 
 

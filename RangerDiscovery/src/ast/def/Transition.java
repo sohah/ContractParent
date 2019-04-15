@@ -51,10 +51,16 @@ public class Transition extends Exp {
     public Exp body;
 
     /**
+     * context of the transition
+     */
+    public LinkedHashMap<String, Var> context = new LinkedHashMap<>();
+
+
+    /**
      * parameters of the transition
      */
-    public LinkedHashMap<String, Var> parameters = new LinkedHashMap<>();
 
+    public ArrayList<FunParameter> parameters = new ArrayList<>();
 
     public Transition(WhichTransition whichTransition, String filePath, int maxK) {
         this.whichTransition = whichTransition;
@@ -68,17 +74,48 @@ public class Transition extends Exp {
         populateParametersAndBody();
     }
 
-    protected void extractTransition(String filePath){} ;
+    protected void extractTransition(String filePath) {
+    }
+
+    ;
 
 
     private void populateParametersAndBody() {
         Pair<LinkedHashMap<String, Var>, Ast> contextAndBody = ToAstPass.execute(this.transitionStrLoc.getFirst());
-        parameters = contextAndBody.getFirst();
+        context = contextAndBody.getFirst();
+        parameters = extractParameters();
         if (!(contextAndBody.getSecond() instanceof Exp)) {
             System.out.println("cannot have an non Expression in the body of a transition!");
             assert false;
         }
         body = (Exp) contextAndBody.getSecond();
+    }
+
+    /**
+     * The assumption here is that the names of parameters are unique without the last index value.
+     * @return
+     */
+    private ArrayList<FunParameter> extractParameters() {
+        ArrayList<FunParameter> parameters = new ArrayList<>();
+        for (Map.Entry entry : this.context.entrySet()) { //reconstructing the parameter list for R
+            String name = (String) entry.getKey();
+            ParameterType type = null;
+            if (baseFreeInput.contains(name))
+                type = ParameterType.FREE_INPUT;
+            else if(baseConstrainedInput.contains(name))
+                type = ParameterType.INPUT;
+            else if(baseOutput.contains(name))
+                type = ParameterType.OUTPUT;
+            else if(whichTransition == WhichTransition.R)
+                type = ParameterType.INTERMEDIATE;
+            else if((whichTransition == WhichTransition.T) && name.charAt(name.length()-1) =='0')
+                type = ParameterType.DONT_CARE_INPUT;
+            else if((whichTransition == WhichTransition.T) && name.charAt(name.length()-1) =='1')
+                type = ParameterType.DONT_CARE_OUTPUT;
+            else assert false;
+            parameters.add(new FunParameter((Var) entry.getValue(), type));
+        }
+        return parameters;
     }
 
     /**
@@ -98,7 +135,6 @@ public class Transition extends Exp {
             assert false;
         }
     }
-
 
 
     public String define_fun() {
@@ -123,7 +159,7 @@ public class Transition extends Exp {
             assert false;
         }
 
-        for (Map.Entry entry : this.parameters.entrySet()) { //reconstructing the parameter list for R
+        for (Map.Entry entry : this.context.entrySet()) { //reconstructing the parameter list for R
             t.append("(").append(((Var) entry.getValue()).toString());
             t.append(" ").append(((Var) entry.getValue()).type.toString());
             t.append(")");
