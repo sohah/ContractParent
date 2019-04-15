@@ -1,14 +1,7 @@
-import Transition.ContractInput;
 import Transition.CounterExampleFeedBack;
-import ast.def.DiscoveryException;
-import kcontract.HoleTransition;
-import kcontract.TransitionToRepair;
-import kcontract.WhichTransition;
-import kcontract.Transition;
+import ast.def.*;
 
 import java.io.IOException;
-
-import static Transition.CounterExampleFeedBack.counterExampleFeedBack;
 
 public class Main {
 
@@ -23,9 +16,9 @@ public class Main {
 
     public static void main(String[] args) throws DiscoveryException, IOException {
 
-        t = new TransitionToRepair(WhichTransition.T, kFileName, maxK);
-        h = new HoleTransition(WhichTransition.HOLE, kFileName, maxK, (TransitionToRepair) t);
-        r = new TransitionToRepair(WhichTransition.R, rFileName, maxK);
+        t = new T( kFileName, maxK);
+        h = new H(kFileName, maxK, (T) t);
+        r = new R(rFileName, maxK);
 
         CounterExampleFeedBack.printContracts = false;
 

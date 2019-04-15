@@ -1,27 +1,21 @@
-package kcontract;
+package ast.def;
 
 import ast.Passes.ToAstPass;
-import ast.def.Ast;
-import ast.def.Exp;
-import ast.def.Var;
+import ast.visitors.AstVisitor;
 import ref.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
 
 /**
  * This class contains the transition, usually we call it R, that we want to use to repair the other transition T.
  * For R, we do not need to define holes, and therefore we do not really create an AST for it. Instead we just create the
  * right string definition for it as well as those of its input and output.
  */
-public class Transition {
+public class Transition extends Exp {
 
     /**
      * Maximum k-needed for the transition.
@@ -53,15 +47,40 @@ public class Transition {
      */
     public LinkedHashSet<String> baseOutput = new LinkedHashSet<>();
 
+    /**
+     * The transition definition
+     */
+    public Exp body;
+
+    /**
+     * parameters of the transition
+     */
+    public LinkedHashMap<String, Var> parameters = new LinkedHashMap<>();
+
 
     public Transition(WhichTransition whichTransition, String filePath, int maxK) {
         this.whichTransition = whichTransition;
         this.maxK = maxK;
-        extractTransitionT(filePath);
+        extractTransition(filePath);
 
         populateBaseVars(baseFreeInput, (filePath + "FreeIN"));
         populateBaseVars(baseConstrainedInput, (filePath + "StateIN"));
         populateBaseVars(baseOutput, (filePath + "OUT"));
+
+        populateParametersAndBody();
+    }
+
+    protected void extractTransition(String filePath){} ;
+
+
+    private void populateParametersAndBody() {
+        Pair<LinkedHashMap<String, Var>, Ast> contextAndBody = ToAstPass.execute(this.transitionStrLoc.getFirst());
+        parameters = contextAndBody.getFirst();
+        if (!(contextAndBody.getSecond() instanceof Exp)) {
+            System.out.println("cannot have an non Expression in the body of a transition!");
+            assert false;
+        }
+        body = (Exp) contextAndBody.getSecond();
     }
 
     /**
@@ -81,56 +100,40 @@ public class Transition {
         }
     }
 
-    /**
-     * Has the side effect of populating the transitionStrLoc with the string of the
-     *
-     * @param path
-     */
-    protected void extractTransitionT(String path) {
-        String extractedT = null;
-        try {
-            extractedT = new String(Files.readAllBytes(Paths.get(path)), "UTF-8");
-
-        } catch (IOException e) {
-            System.out.println("Problem reading file. " + e.getMessage());
-        }
 
 
-        int start;
-        int end;
-        if (whichTransition == WhichTransition.T || whichTransition == WhichTransition.HOLE) {
-            start = extractedT.indexOf("(define-fun T");
-            end = extractedT.indexOf("(declare-fun %init () Bool)");
-        } else { // assuming it is R transition then
-            extractedT = preprocessTransition(extractedT); // current preprocessing is only intended for R
-            start = extractedT.indexOf("(define-fun R");
-            end = extractedT.length();
-        }
-
-
-        transitionStrLoc = new Pair<>(extractedT.substring(start, end - 1), new Pair<>(start, end));
-    }
-
-    /**
-     * used for any pre-processing on the transition before actually using it, for example to remove ranges of int variables.
-     *
-     * @param extractedT
-     * @return
-     */
-    protected String preprocessTransition(String extractedT) {
-        StringBuilder processedTransition = new StringBuilder();
-        String[] lines = extractedT.split(System.getProperty("line.separator"));
-        for (String s : lines) {
-            if (!s.contains("2147483648") && !s.contains("2147483647"))
-                processedTransition.append(s).append("\n");
-        }
-
-        return processedTransition.toString();
-    }
-
-
-    public String define_fun_T() {
+    public String define_fun() {
         return transitionStrLoc.getFirst();
     }
+
+    @Override
+    public <T> T accept(AstVisitor<T> visitor) throws DiscoveryException {
+        return body.accept(visitor);
+    }
+
+/*
+    public String define_fun_T(WhichTransition whichTransition) {
+        StringBuilder t = new StringBuilder();
+
+        if (whichTransition == WhichTransition.T)
+            t.append("\n(define-fun T (");
+        else if (whichTransition == WhichTransition.R) {
+            t.append("\n(define-fun T (");
+        } else {
+            System.out.println("Repaired Transition must be type T!");
+            assert false;
+        }
+
+        for (Map.Entry entry : this.parameters.entrySet()) { //reconstructing the parameter list for R
+            t.append("(").append(((Var) entry.getValue()).toString());
+            t.append(" ").append(((Var) entry.getValue()).type.toString());
+            t.append(")");
+        }
+        t.append(") Bool\n");
+
+        t.append(this.body);
+        t.append(")\n");
+        return t.toString();
+    }*/
 
 }
