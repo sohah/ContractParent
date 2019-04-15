@@ -58,12 +58,13 @@ public class T extends Transition {
     }
 
 
-
-    /*
-
-    public String define_fun_T() {
+    /**
+     * defines the transition using define-fun
+     * @return
+     */
+    public String toString() {
         return define_fun_T(WhichTransition.T);
     }
-*/
+
 
 }

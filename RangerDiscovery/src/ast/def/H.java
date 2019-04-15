@@ -48,8 +48,11 @@ public class H extends Transition {
         transitionStrLoc = new Pair<>(extractedT.substring(start, end - 1), new Pair<>(start, end));
     }
 
-
-    public String define_fun() {
+    /**
+     * defines the transition using define-fun
+     * @return
+     */
+    public String toString() {
         StringBuilder t = new StringBuilder();
 
         if (whichTransition == WhichTransition.HOLE)
@@ -72,4 +75,5 @@ public class H extends Transition {
         t.append(")\n");
         return t.toString();
     }
+
 }

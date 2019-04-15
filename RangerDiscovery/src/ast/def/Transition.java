@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 
 /**
  * This class contains the transition, usually we call it R, that we want to use to repair the other transition T.
@@ -111,14 +112,14 @@ public class Transition extends Exp {
         return body.accept(visitor);
     }
 
-/*
+
     public String define_fun_T(WhichTransition whichTransition) {
         StringBuilder t = new StringBuilder();
 
         if (whichTransition == WhichTransition.T)
             t.append("\n(define-fun T (");
         else if (whichTransition == WhichTransition.R) {
-            t.append("\n(define-fun T (");
+            t.append("\n(define-fun R (");
         } else {
             System.out.println("Repaired Transition must be type T!");
             assert false;
@@ -134,6 +135,6 @@ public class Transition extends Exp {
         t.append(this.body);
         t.append(")\n");
         return t.toString();
-    }*/
+    }
 
 }
