@@ -27,4 +27,8 @@ public class IntConst extends Exp {
     public String toString() {
         return " " + String.valueOf(value);
     }
+
+    public final static IntConst ZERO = new IntConst(0);
+    public final static IntConst ONE = new IntConst(1);
+
 }

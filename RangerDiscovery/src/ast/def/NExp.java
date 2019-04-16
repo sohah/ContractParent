@@ -17,13 +17,6 @@ public class NExp extends Exp {
     }
 
 
-    public NExp(Operator operator, ArrayList operands, boolean isRepair) {
-        this.operator = operator;
-        this.operands = operands;
-        this.expType = operator.type;
-        this.isRepair = isRepair;
-    }
-
     @Override
     public <T> T accept(AstVisitor<T> visitor) throws DiscoveryException {
         return visitor.visit(this);

@@ -1,11 +1,11 @@
 package jContract;
 
-import ast.def.Assertion;
-import ast.def.R;
-import ast.def.T;
-import ast.def.Transition;
+import ast.def.*;
 
 import java.util.ArrayList;
+
+import static ast.def.Exp.ONE;
+import static ast.def.Var.createVarForType;
 
 /**
  * used to generate instantiations for both T and R as well as the merging of their contract for any number of K.
@@ -30,10 +30,16 @@ public class ContractGenerator {
         this.k = k;
         tInstantiationArray = instantiate(whichStep, t);
         rInstantiationArray = instantiate(whichStep, r);
-        if(!counterExample)
-            contractKassertion = createContractAssertion();
-        else
-            contractKassertion = createTestCaseContractAssertion();
+        contractKassertion = createContractAssertion(t, r, counterExample);
+
+    }
+
+    private Assertion createContractAssertion(T t, R r, boolean counterExample) {
+        NExp inputMatchExp = createInputMatchAssertions(t, r);
+        NExp outputExp = counterExample ? createOutputNotMatch(t, r) : createOutputMatch(t, r);
+
+        return new Assertion(inputMatchExp, new Assertion(outputExp));
+
     }
 
     private ArrayList<StepOutput> instantiate(WhichStep whichStep, Transition transition) {
@@ -44,4 +50,61 @@ public class ContractGenerator {
         return stepsOuput;
     }
 
+
+    /**
+     * This method creates a matching (using equality) expression involving two vars in t and r for specific k. The
+     *
+     * @param tVarName
+     * @param rVarName
+     * @param k
+     * @return
+     */
+    private NExp createNExpforTandR(T t, R r, String tVarName, String rVarName, int k) {
+        Exp.VarType tVarType = getType(tVarName, t);
+        Exp.VarType rVarType = getType(rVarName, r);
+
+        assert (tVarType != null && rVarType != null);
+
+        Var tVar = createVarForType(tVarName + "k", tVarType);
+        Var rVar = createVarForType(tVarName + "k", rVarType);
+
+        Exp rExp;
+        if (!(tVarType == rVarType))
+            rExp = typeConversion(rVar, rVarType, tVarType);
+        else
+            rExp = rVar;
+
+        ArrayList<Exp> operands = new ArrayList();
+        operands.add(tVar);
+        operands.add(rExp);
+
+        return new NExp(new Operator(Operator.OperatorKind.EQ), operands);
+    }
+
+    private NExp typeConversion(Var rVar, Exp.VarType fromType, Exp.VarType toType) {
+        if ((fromType == Exp.VarType.INT) && (toType == Exp.VarType.BOOL)) {
+            ArrayList<Exp> operands = new ArrayList();
+            operands.add(rVar);
+            operands.add(ONE);
+            return new NExp(new Operator(Operator.OperatorKind.EQ), operands);
+        }
+        else {
+            System.out.println("unsupported conversion");
+            assert false;
+            return null;
+        }
+    }
+
+
+    /**
+     * tries to find the type of a var in a transition.
+     *
+     * @param varName
+     * @param transition
+     * @return
+     */
+    private Exp.VarType getType(String varName, Transition transition) {
+        Var var = transition.context.get(varName);
+        return var.type;
+    }
 }

@@ -18,6 +18,18 @@ public abstract class Var extends Exp implements Cloneable {
         this.type = type;
     }
 
+    public static Var createVarForType(String name, VarType varType){// crates a var type for name
+        if(varType == VarType.INT)
+            return new IntVar(name);
+        else if(varType == VarType.BOOL)
+            return new BoolVar(name);
+        else{
+            System.out.println("unsupported type for var!");
+            assert false;
+            return null;
+        }
+    }
+
     @Override
     public abstract Var clone();
 

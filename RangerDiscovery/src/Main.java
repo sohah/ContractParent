@@ -9,9 +9,9 @@ public class Main {
     static String kFileName = folderName + "ImaginaryPad.k-induction.smt2";
     static String rFileName = folderName + "SimplePadReset.runPadSteps(IZZZZZ)V#27_0.txt";
 
-    static Transition t;
-    static Transition r;
-    static Transition h;
+    static T t;
+    static R r;
+    static H h;
     static int maxK;
 
     public static void main(String[] args) throws DiscoveryException, IOException {
