@@ -7,7 +7,7 @@ The paper is talking about extending AADL that is used by agree to support model
 The paper contains some description about a small model of WBS. A basic reference about WBS is found [https://www.sae.org/standards/content/air6110/](here)
 
 
-## Combinatorial Sketching for Finite Programs:
+## Combinatorial Sketching for Finite Programs:ASPLOS 2006
 
 This praper describe system called sketching as a programming language by which the user can define forms of building holes. 
 
@@ -23,6 +23,17 @@ We are different in two different ways:
 - we do not need to unroll loops of the implementation instead we use k-induction to verify that correctness between the specification and the implementation.
 
 
+## Towards Practical Program Repair with On-Demand Candidate Generation SIGPLAN 2018
 
+
+This is basically a program repair paper that uses sketching. The paper tries to use some runtime information which can prune way some repair candidates. The main points about this paper is 
+- They are not using SMT in the repair or the synthesis, instead they sort of create holes where each hole have a set of valid candidates. 
+- they define a grammar for hole expression, i.e., expressions that can contain holes in them. 
+- based on their algorithm, the create a version of the program that have these sketch-hole-statements, then they wait until execution reaches this point, they pick the closest candidate (defined in the next point), and proceed with the execution, if the execution does not fire the test case, then they back track and give a different value to that particular hole. This prevents them from having to make choices for all the holes in advance, they sort of wait until execution arrives and they pick another candidate. 
+- they sort candidates based on closeness to the statement to be repaired, i.e., they give priority of objects/variables defined closer to the repaired statement than those defined a bit earlier in the program. 
+
+This paper have a good performance results, and it is another advocate for having sketch-like repair for contracts. 
+
+I can't think of how we are better than them, except we are trying to do repair on a different level, mainly the spec instead of the program.
 
 
