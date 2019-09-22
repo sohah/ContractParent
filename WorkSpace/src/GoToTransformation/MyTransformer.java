@@ -1,5 +1,6 @@
 package GoToTransformation;
 
+import com.sun.org.apache.bcel.internal.generic.GOTO;
 import org.objectweb.asm.*;
 import org.objectweb.asm.commons.GeneratorAdapter;
 
@@ -25,12 +26,20 @@ public class MyTransformer extends ClassVisitor {
         return v;
     }
 /*
+=======
+
+>>>>>>> ad1d4c83cbdbb72e7530104022ffbdd3abb94432
     @Override
     public void visitEnd() {
         appendShowTwo();
         super.visitEnd();
+<<<<<<< HEAD
     }*/
 /*
+=======
+    }
+
+>>>>>>> ad1d4c83cbdbb72e7530104022ffbdd3abb94432
     private void appendShowTwo() {
         final MethodVisitor defVisitor = super.visitMethod(Opcodes.ACC_PUBLIC, "showTwo", "()V", null, null);
         defVisitor.visitCode();
@@ -40,11 +49,13 @@ public class MyTransformer extends ClassVisitor {
         defVisitor.visitInsn(Opcodes.RETURN);
         defVisitor.visitMaxs(0, 0);
         defVisitor.visitEnd();
+<<<<<<< HEAD
     }*/
-
+    
 
     class MainTransformer extends GeneratorAdapter {
-        MainTransformer(MethodVisitor delegate, int access, String name, String desc, String signature, String[] exceptions) {
+        MainTransformer(MethodVisitor delegate, int access, String name, String desc,
+                        String signature, String[] exceptions) {
             super(Opcodes.ASM5, delegate, access, name, desc);
         }
 
@@ -55,7 +66,6 @@ public class MyTransformer extends ClassVisitor {
                 super.visitVarInsn(Opcodes.ALOAD, 1); // variable c
                 super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "ClassName", "showTwo", "()V", false);
             }
-            super.visitInsn(opcode);
         }
     }
 }
