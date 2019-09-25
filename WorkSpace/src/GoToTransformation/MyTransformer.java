@@ -51,7 +51,7 @@ public class MyTransformer extends ClassVisitor {
         defVisitor.visitEnd();
 <<<<<<< HEAD
     }*/
-    
+
 
     class MainTransformer extends GeneratorAdapter {
         MainTransformer(MethodVisitor delegate, int access, String name, String desc,

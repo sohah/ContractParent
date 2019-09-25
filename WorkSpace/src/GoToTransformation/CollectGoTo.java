@@ -10,6 +10,14 @@ import java.util.ArrayList;
 public class CollectGoTo extends ClassVisitor {
     public static ArrayList<InstructionCollector> instructionCollectors = new ArrayList<>();
 
+    VisitorPass visitorPass;
+
+    //second pass related vairables
+    private InstructionCollector currentInstCollector;
+    ArrayList<Pair<Integer, Label>> collectedJumpInstructions = new ArrayList<>();
+    ArrayList<Label> backEdgeTargetLabels = new ArrayList<>();
+
+
     /*public CollectGoTo(int api) {
         super(Opcodes.ASM5);
     }*/
@@ -18,17 +26,39 @@ public class CollectGoTo extends ClassVisitor {
         super(Opcodes.ASM5, cv);
     }
 
+
+    public CollectGoTo(ClassVisitor cv, ArrayList<Pair<Integer, Label>> collectedJumpInstructions, ArrayList<Label>
+            backEdgeTargetLabels) {
+        super(Opcodes.ASM5, cv);
+        this.collectedJumpInstructions = collectedJumpInstructions;
+        this.backEdgeTargetLabels = backEdgeTargetLabels;
+    }
+
+
     public static void execute(byte[] b) {
         ClassReader classReader = new ClassReader(b);
         final ClassWriter cw = new ClassWriter(classReader, ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-        classReader.accept(new CollectGoTo(cw), ClassReader.EXPAND_FRAMES);
+        CollectGoTo classVisitor = new CollectGoTo(cw);
+        classVisitor.visitorPass = VisitorPass.READINGPASS;
+
+        classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
 
         //System.out.println("visited jump instructions in method: " + name + signature);
         for (InstructionCollector instructionCollector : instructionCollectors) {
             ArrayList<Pair<Integer, Label>> collectedJumpInstructions = instructionCollector.collectedJumpInstructions;
             ArrayList<Label> seenLabels = instructionCollector.seenLabels;
-            ArrayList<Label> backEdgeTargetLabel = instructionCollector.backEdgeTargetLabel;
+            ArrayList<Label> backEdgeTargetLabels = instructionCollector.backEdgeTargetLabel;
 
+
+            if (backEdgeTargetLabels.size() > 0) { // discovered backedge in the method, try to rewrite.
+                final ClassWriter goToWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_FRAMES | ClassWriter
+                        .COMPUTE_MAXS);
+
+                CollectGoTo writerVisitor = new CollectGoTo(cw, collectedJumpInstructions, backEdgeTargetLabels);
+                classVisitor.visitorPass = VisitorPass.WRITINGPASS;
+                classVisitor.currentInstCollector = instructionCollector;
+                classReader.accept(writerVisitor, ClassReader.EXPAND_FRAMES);
+            }
 
             System.out.println("visited jump instructions in method: ");
             System.out.println(collectedJumpInstructions.toString());
@@ -37,12 +67,12 @@ public class CollectGoTo extends ClassVisitor {
             System.out.println(seenLabels);
 
             System.out.println("backedge target labels:");
-            System.out.println(backEdgeTargetLabel);
+            System.out.println(backEdgeTargetLabels);
         }
     }
 
 
-    @Override
+    /*@Override
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         MethodVisitor v = super.visitMethod(access, name, desc, signature, exceptions);
         if (name.equals("testWhileProblem4")) {
@@ -51,9 +81,69 @@ public class CollectGoTo extends ClassVisitor {
         }
 
         return v;
+    }*/
+
+
+    @Override
+    public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+        MethodVisitor v = super.visitMethod(access, name, desc, signature, exceptions);
+        if (name.equals("testWhileProblem4")) {
+            if (visitorPass == VisitorPass.READINGPASS) {
+                v = new InstructionCollector(v, access, name, desc, signature, exceptions);
+                CollectGoTo.instructionCollectors.add((InstructionCollector) v);
+            } else { //writing pass
+                assert (visitorPass == VisitorPass.WRITINGPASS);
+                v = new GoToWriter(v, access, name, desc, signature, exceptions);
+            }
+        }
+        return v;
     }
 
+
     class InstructionCollector extends GeneratorAdapter {
+        public ArrayList<Pair<Integer, Label>> collectedJumpInstructions = new ArrayList<>();
+
+        public ArrayList<Label> seenLabels = new ArrayList<>();
+
+        // indicates the number of goto that we have encountered so far.
+        public int goToPos = 0;
+
+        public ArrayList<Label> backEdgeTargetLabel = new ArrayList<>();
+
+        InstructionCollector(MethodVisitor delegate, int access, String name, String desc, String signature, String[] exceptions) {
+            super(Opcodes.ASM5, delegate, access, name, desc);
+        }
+
+        @Override
+        public void visitJumpInsn(int opcode, Label label) {
+            if (this.mv != null) {
+                if (opcode == 167) { // is a goTo instruction.
+                    ++goToPos;
+                    if (isBackEdgeLabel(label)) {
+                        if (!backEdgeTargetLabel.contains(label))
+                            backEdgeTargetLabel.add(label);
+                        collectedJumpInstructions.add(new Pair<>(goToPos, label));
+                    }
+                }
+                this.mv.visitJumpInsn(opcode, label);
+            }
+        }
+
+        private boolean isBackEdgeLabel(Label label) {
+            return (seenLabels.contains(label));
+        }
+
+        public void visitLabel(Label label) {
+            if (this.mv != null) { //collecting all encountered labels.
+                seenLabels.add(label);
+                this.mv.visitLabel(label);
+            }
+        }
+
+    }
+
+
+    class GoToWriter extends GeneratorAdapter {
         public ArrayList<Pair<Integer, Label>> collectedJumpInstructions = new ArrayList<>();
 
         public ArrayList<Label> seenLabels = new ArrayList<>();
@@ -63,7 +153,8 @@ public class CollectGoTo extends ClassVisitor {
 
         public ArrayList<Label> backEdgeTargetLabel = new ArrayList<>();
 
-        InstructionCollector(MethodVisitor delegate, int access, String name, String desc, String signature, String[] exceptions) {
+        GoToWriter(MethodVisitor delegate, int access, String name, String desc, String signature, String[]
+                exceptions) {
             super(Opcodes.ASM5, delegate, access, name, desc);
         }
 
