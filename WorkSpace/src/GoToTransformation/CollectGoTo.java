@@ -5,6 +5,7 @@ import org.objectweb.asm.*;
 import org.objectweb.asm.commons.GeneratorAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class CollectGoTo extends ClassVisitor {
@@ -13,10 +14,7 @@ public class CollectGoTo extends ClassVisitor {
     VisitorPass visitorPass;
 
     //second pass related vairables
-    private InstructionCollector currentInstCollector;
-    ArrayList<Pair<Integer, Label>> collectedJumpInstructions = new ArrayList<>();
-    ArrayList<Label> backEdgeTargetLabels = new ArrayList<>();
-
+    HashMap<Integer, ModifiedGoTo> goToInsHashMap = new HashMap<>();
 
     /*public CollectGoTo(int api) {
         super(Opcodes.ASM5);
@@ -27,15 +25,13 @@ public class CollectGoTo extends ClassVisitor {
     }
 
 
-    public CollectGoTo(ClassVisitor cv, ArrayList<Pair<Integer, Label>> collectedJumpInstructions, ArrayList<Label>
-            backEdgeTargetLabels) {
+    public CollectGoTo(ClassVisitor cv, ArrayList<Pair<Integer, Label>> collectedJumpInstructions, ArrayList<Label>            backEdgeTargetLabels) {
         super(Opcodes.ASM5, cv);
-        this.collectedJumpInstructions = collectedJumpInstructions;
-        this.backEdgeTargetLabels = backEdgeTargetLabels;
+        goToInsHashMap = ModifiedGoTo.create(collectedJumpInstructions, backEdgeTargetLabels);
     }
 
 
-    public static void execute(byte[] b) {
+    public static byte[] execute(byte[] b) {
         ClassReader classReader = new ClassReader(b);
         final ClassWriter cw = new ClassWriter(classReader, ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
         CollectGoTo classVisitor = new CollectGoTo(cw);
@@ -46,9 +42,8 @@ public class CollectGoTo extends ClassVisitor {
         //System.out.println("visited jump instructions in method: " + name + signature);
         for (InstructionCollector instructionCollector : instructionCollectors) {
             ArrayList<Pair<Integer, Label>> collectedJumpInstructions = instructionCollector.collectedJumpInstructions;
-            ArrayList<Label> seenLabels = instructionCollector.seenLabels;
             ArrayList<Label> backEdgeTargetLabels = instructionCollector.backEdgeTargetLabel;
-
+        }
 
             if (backEdgeTargetLabels.size() > 0) { // discovered backedge in the method, try to rewrite.
                 final ClassWriter goToWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_FRAMES | ClassWriter
@@ -56,9 +51,12 @@ public class CollectGoTo extends ClassVisitor {
 
                 CollectGoTo writerVisitor = new CollectGoTo(cw, collectedJumpInstructions, backEdgeTargetLabels);
                 classVisitor.visitorPass = VisitorPass.WRITINGPASS;
-                classVisitor.currentInstCollector = instructionCollector;
                 classReader.accept(writerVisitor, ClassReader.EXPAND_FRAMES);
+                return goToWriter.toByteArray();
             }
+            else
+                return cw.toByteArray();
+/*
 
             System.out.println("visited jump instructions in method: ");
             System.out.println(collectedJumpInstructions.toString());
@@ -68,7 +66,8 @@ public class CollectGoTo extends ClassVisitor {
 
             System.out.println("backedge target labels:");
             System.out.println(backEdgeTargetLabels);
-        }
+*/
+
     }
 
 
@@ -163,11 +162,18 @@ public class CollectGoTo extends ClassVisitor {
             if (this.mv != null) {
                 if (opcode == 167) { // is a goTo instruction.
                     ++goToOrdNum;
-                    if (isBackEdgeLabel(label)) {
-                        if (!backEdgeTargetLabel.contains(label))
-                            backEdgeTargetLabel.add(label);
-                        collectedJumpInstructions.add(new Pair<>(goToOrdNum, label));
+                    ModifiedGoTo modifiedGoTo = goToInsHashMap.get(goToOrdNum);
+                    if (modifiedGoTo != null) { // if it is in the modifiedGoToHashMap
+                        if (modifiedGoTo.isLastGoTo) { //if it is the last goTo then we need to visit the newLabel first before we visit the instruction.
+                            this.mv.visitLabel(modifiedGoTo.jumpLabel);
+                            this.mv.visitJumpInsn(opcode, label);
+                            return;
+                        } else { // if it is not the last then lets visit the goTo with the new target created for it.
+                            this.mv.visitJumpInsn(opcode, modifiedGoTo.jumpLabel);
+                            return;
+                        }
                     }
+                    this.mv.visitJumpInsn(opcode, label);
                 }
                 this.mv.visitJumpInsn(opcode, label);
             }

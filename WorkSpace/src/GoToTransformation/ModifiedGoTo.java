@@ -38,10 +38,11 @@ public class ModifiedGoTo {
         for (Label backLabel : backEdgeTargetLabels) { // for every identified backedge label we try to get the
             // corrsponding goTo instructions, check if there are more than 2 goTo jumping to the same backedge
             // label, if so then we need to modify those, except for the last one.
+
             ArrayList<Pair<Integer, Label>> relatedGoToIns = getRelatedGoToInst(backLabel, collectedJumpInstructions);
-            if (relatedGoToIns.size() > 2) {// three or more goTos are going to the same back edge label, then this is
+            if (relatedGoToIns.size() > 2) {// three or more goTos are going to the same back edge label, then this is where we want to change
                 Label newLabel = new Label();
-                for (int i = 0; i < relatedGoToIns.size() - 2; i++) {
+                for (int i = 0; i < relatedGoToIns.size() - 2; i++) { //change all of them to a new label except for the last one.
                     Pair<Integer, Label> myGoToPosition = relatedGoToIns.get(i);
                     goToInsHashMap.put(myGoToPosition.getKey(), new ModifiedGoTo(myGoToPosition.getKey(), newLabel, false));
                 }
@@ -50,7 +51,6 @@ public class ModifiedGoTo {
                 goToInsHashMap.put(lastGoToPosition.getKey(), new ModifiedGoTo(lastGoToPosition.getKey(),
                         lastGoToPosition.getValue(),
                         true));
-
             }
 
         }
