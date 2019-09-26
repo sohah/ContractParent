@@ -105,7 +105,7 @@ public class CollectGoTo extends ClassVisitor {
     @Override
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         MethodVisitor v = super.visitMethod(access, name, desc, signature, exceptions);
-        if (name.equals("testWhileProblem4")) {
+        if (name.equals("testWhileProblem2")) {
             if (visitorPass == VisitorPass.READINGPASS) {
                 v = new InstructionCollector(v, access, name, desc, signature, exceptions);
                 CollectGoTo.instructionCollectors.add((InstructionCollector) v);
@@ -157,7 +157,6 @@ public class CollectGoTo extends ClassVisitor {
                 this.mv.visitLabel(label);
             }
         }
-
     }
 
 
@@ -166,6 +165,7 @@ public class CollectGoTo extends ClassVisitor {
         // indicates the number of goto that we have encountered so far.
         public int goToOrdNum = 0;
         private int currentLine;
+        private ArrayList<Label> labelVisitLineNum = new ArrayList<>();
 
         GoToWriter(MethodVisitor delegate, int access, String name, String desc, String signature, String[]
                 exceptions) {
@@ -181,12 +181,15 @@ public class CollectGoTo extends ClassVisitor {
                     if (modifiedGoTo != null) { // if it is in the modifiedGoToHashMap
                         if (modifiedGoTo.isLastGoTo) { //if it is the last goTo then we need to visit the newLabel first before we visit the instruction.
                             super.mv.visitLabel(modifiedGoTo.jumpLabel);
-                            super.mv.visitLineNumber(currentLine,modifiedGoTo.jumpLabel);
                             super.mv.visitJumpInsn(opcode, label);
                             return;
                         } else { // if it is not the last then lets visit the goTo with the new target created for it.
                             super.mv.visitJumpInsn(opcode, modifiedGoTo.jumpLabel);
-                            super.mv.visitLabel(modifiedGoTo.jumpLabel);
+                            /*if (!labelVisitLineNum.contains(modifiedGoTo.jumpLabel)) {
+                                super.mv.visitLabel(modifiedGoTo.jumpLabel);
+                                //super.mv.visitLineNumber(currentLine, modifiedGoTo.jumpLabel);
+                                labelVisitLineNum.add(modifiedGoTo.jumpLabel);
+                            }*/
                             return;
                         }
                     }
@@ -198,7 +201,7 @@ public class CollectGoTo extends ClassVisitor {
         @Override
         public void visitLineNumber(int line, Label start) {
             mv.visitLineNumber(line, start);
-             currentLine = line;
+            currentLine = line;
         }
     }
 }
