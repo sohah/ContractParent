@@ -17,9 +17,9 @@ public class GoToTransformer {
 
         byte[] classByteRead = Files.readAllBytes(pathRead);
 
-        byte[] classByteWrite = MyTransformer.transform(classByteRead);
+        //byte[] classByteWrite = MyTransformer.transform(classByteRead);
 
-        CollectGoTo.execute(classByteRead);
+        byte[] classByteWrite = CollectGoTo.execute(classByteRead);
 
 
         Files.write(pathWrite, classByteWrite);

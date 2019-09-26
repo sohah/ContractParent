@@ -12,9 +12,9 @@ import java.util.HashMap;
  * GOTO where we need to add a label. Also it assigns a new label.
  */
 public class ModifiedGoTo {
-    Integer goToPosition;
-    Label jumpLabel;
-    boolean isLastGoTo = false;
+    public Integer goToPosition;
+    public Label jumpLabel;
+    public boolean isLastGoTo = false;
 
 
     public ModifiedGoTo(Integer goToPosition, Label jumpLabel, boolean isLastGoTo) {
@@ -32,8 +32,9 @@ public class ModifiedGoTo {
      * @param backEdgeTargetLabels
      * @return
      */
-    public static HashMap<Integer, ModifiedGoTo> create(ArrayList<Pair<Integer, Label>> collectedJumpInstructions, ArrayList<Label> backEdgeTargetLabels) {
+    public static Pair create(ArrayList<Pair<Integer, Label>> collectedJumpInstructions, ArrayList<Label> backEdgeTargetLabels) {
         HashMap<Integer, ModifiedGoTo> goToInsHashMap = new HashMap<>();
+        ArrayList<Label> newLabels = new ArrayList<>();
 
         for (Label backLabel : backEdgeTargetLabels) { // for every identified backedge label we try to get the
             // corrsponding goTo instructions, check if there are more than 2 goTo jumping to the same backedge
@@ -42,7 +43,9 @@ public class ModifiedGoTo {
             ArrayList<Pair<Integer, Label>> relatedGoToIns = getRelatedGoToInst(backLabel, collectedJumpInstructions);
             if (relatedGoToIns.size() > 2) {// three or more goTos are going to the same back edge label, then this is where we want to change
                 Label newLabel = new Label();
-                for (int i = 0; i < relatedGoToIns.size() - 2; i++) { //change all of them to a new label except for the last one.
+                newLabels.add(newLabel);
+                for (int i = 0; i <= relatedGoToIns.size() - 2; i++) { //change all of them to a new label except for
+                    // the last one.
                     Pair<Integer, Label> myGoToPosition = relatedGoToIns.get(i);
                     goToInsHashMap.put(myGoToPosition.getKey(), new ModifiedGoTo(myGoToPosition.getKey(), newLabel, false));
                 }
@@ -54,7 +57,7 @@ public class ModifiedGoTo {
             }
 
         }
-        return goToInsHashMap;
+        return new Pair<ArrayList<Label>, HashMap<Integer, ModifiedGoTo>>(newLabels, goToInsHashMap);
     }
 
     private static ArrayList<Pair<Integer, Label>> getRelatedGoToInst(Label backLabel, ArrayList<Pair<Integer, Label>> collectedJumpInstructions) {

@@ -4,6 +4,8 @@ import com.sun.org.apache.bcel.internal.generic.GOTO;
 import org.objectweb.asm.*;
 import org.objectweb.asm.commons.GeneratorAdapter;
 
+import static org.objectweb.asm.Opcodes.*;
+
 public class MyTransformer extends ClassVisitor {
 
     public static byte[] transform(byte[] b) {
@@ -25,32 +27,35 @@ public class MyTransformer extends ClassVisitor {
             v = new MainTransformer(v, access, name, desc, signature, exceptions);
         return v;
     }
-/*
-=======
-
->>>>>>> ad1d4c83cbdbb72e7530104022ffbdd3abb94432
-    @Override
+   /*@Override
     public void visitEnd() {
         appendShowTwo();
         super.visitEnd();
-<<<<<<< HEAD
-    }*/
-/*
-=======
     }
-
->>>>>>> ad1d4c83cbdbb72e7530104022ffbdd3abb94432
+*/
     private void appendShowTwo() {
         final MethodVisitor defVisitor = super.visitMethod(Opcodes.ACC_PUBLIC, "showTwo", "()V", null, null);
-        defVisitor.visitCode();
-        defVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-        defVisitor.visitLdcInsn("Show Two Method");
-        defVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
-        defVisitor.visitInsn(Opcodes.RETURN);
-        defVisitor.visitMaxs(0, 0);
+        defVisitor.visitVarInsn(ILOAD, 1);
+        Label label = new Label();
+        defVisitor.visitJumpInsn(IFLT, label);
+        defVisitor.visitVarInsn(ALOAD, 0);
+        defVisitor.visitVarInsn(ILOAD, 1);
+        defVisitor.visitFieldInsn(PUTFIELD, "pkg/Bean", "f", "I");
+        Label end = new Label();
+        defVisitor.visitJumpInsn(GOTO, end);
+        defVisitor.visitLabel(label);
+        defVisitor.visitFrame(F_SAME, 0, null, 0, null);
+        defVisitor.visitTypeInsn(NEW, "java/lang/IllegalArgumentException");
+        defVisitor.visitInsn(DUP);
+        defVisitor.visitMethodInsn(INVOKESPECIAL,
+                "java/lang/IllegalArgumentException", "<init>", "()V");
+        defVisitor.visitInsn(ATHROW);
+        defVisitor.visitLabel(end);
+        defVisitor.visitFrame(F_SAME, 0, null, 0, null);
+        defVisitor.visitInsn(RETURN);
+        defVisitor.visitMaxs(2, 2);
         defVisitor.visitEnd();
-<<<<<<< HEAD
-    }*/
+    }
 
 
     class MainTransformer extends GeneratorAdapter {
@@ -59,13 +64,44 @@ public class MyTransformer extends ClassVisitor {
             super(Opcodes.ASM5, delegate, access, name, desc);
         }
 
+
         @Override
+        public void visitCode(){
+            Label l0 = new Label();
+            mv.visitLabel(l0);
+            mv.visitLineNumber(16, l0);
+            mv.visitIntInsn(SIPUSH, 10000);
+            mv.visitVarInsn(ILOAD, 2);
+            mv.visitVarInsn(ILOAD, 2);
+            mv.visitInsn(IMUL);
+            mv.visitInsn(ISUB);
+            mv.visitInsn(I2D);
+            mv.visitMethodInsn(INVOKESTATIC,
+                    "java/lang/Math", "sqrt",
+                    "(D)D", false);
+            mv.visitInsn(D2I);
+            mv.visitVarInsn(ISTORE, 3);
+            Label l1 = new Label();
+            mv.visitLabel(l1);
+            mv.visitLineNumber(17, l1);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitVarInsn(ILOAD, 3);
+            mv.visitVarInsn(ILOAD, 2);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitMethodInsn(INVOKESPECIAL,
+                    "de/beyondjava/demos/bytecode/CircleWithoutImplementation",
+                    "draw8Pixels", "(IILjava/awt/Graphics;)V", false);
+            Label l2 = new Label();
+            mv.visitLabel(l2);
+            mv.visitEnd();
+        }
+        /*@Override
         public void visitInsn(int opcode) {
             if (opcode == Opcodes.RETURN) {
                 // before return insert c.showTwo();
-                super.visitVarInsn(Opcodes.ALOAD, 1); // variable c
+                super.visitVarInsn(ALOAD, 1); // variable c
                 super.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "ClassName", "showTwo", "()V", false);
             }
-        }
+        }*/
     }
 }
