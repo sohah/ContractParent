@@ -41,7 +41,7 @@ public class ModifiedGoTo {
             // label, if so then we need to modify those, except for the last one.
 
             ArrayList<Pair<Integer, Label>> relatedGoToIns = getRelatedGoToInst(backLabel, collectedJumpInstructions);
-            if (relatedGoToIns.size() > 2) {// three or more goTos are going to the same back edge label, then this is where we want to change
+            if (relatedGoToIns.size() >= 2) {// three or more goTos are going to the same back edge label, then this is where we want to change
                 Label newLabel = new Label();
                 newLabels.add(newLabel);
                 for (int i = 0; i <= relatedGoToIns.size() - 2; i++) { //change all of them to a new label except for
@@ -52,7 +52,7 @@ public class ModifiedGoTo {
                 //setting the last goTo statement to have its old label but a new flag that it is the last go to.
                 Pair<Integer, Label> lastGoToPosition = relatedGoToIns.get(relatedGoToIns.size() - 1);
                 goToInsHashMap.put(lastGoToPosition.getKey(), new ModifiedGoTo(lastGoToPosition.getKey(),
-                        lastGoToPosition.getValue(),
+                        newLabel,
                         true));
             }
 
