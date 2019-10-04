@@ -17,17 +17,19 @@ public class GoToTransformer {
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
                 String currentName = listOfFiles[i].getName();
-                Path pathRead = FileSystems.getDefault().getPath("resources/old/", currentName);
+                if (currentName.contains("class")) {
+                    Path pathRead = FileSystems.getDefault().getPath("resources/old/", currentName);
 
-                Path pathWrite = FileSystems.getDefault().getPath("resources/new", currentName);
-
-
-                byte[] classByteRead = Files.readAllBytes(pathRead);
-
-                byte[] classByteWrite = CollectGoTo.execute(classByteRead);
+                    Path pathWrite = FileSystems.getDefault().getPath("resources/new", currentName);
 
 
-                Files.write(pathWrite, classByteWrite);
+                    byte[] classByteRead = Files.readAllBytes(pathRead);
+
+                    byte[] classByteWrite = CollectGoTo.execute(classByteRead);
+
+
+                    Files.write(pathWrite, classByteWrite);
+                }
             }
         }
 
