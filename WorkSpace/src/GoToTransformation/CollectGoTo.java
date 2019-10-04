@@ -6,22 +6,22 @@ import org.objectweb.asm.commons.GeneratorAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
 public class CollectGoTo extends ClassVisitor {
-    public static ArrayList<InstructionCollector> instructionCollectors = new ArrayList<>();
+    public static HashMap<String, ArrayList<InstructionCollector>> methodInstHashMap = new HashMap<>();
 
     VisitorPass visitorPass;
 
     //second pass related vairables
-    HashMap<Integer, ModifiedGoTo> goToInsHashMap = new HashMap<>();
+    HashMap<Integer, ModifiedGoTo> methodGoToInsHashMap = new HashMap<>();
 
-    ArrayList<Label> newLabels = new ArrayList<>();
+    ArrayList<Label> methodNewLabelArr = new ArrayList<>();
 
-    /*public CollectGoTo(int api) {
-        super(Opcodes.ASM5);
-    }*/
+    HashMap<String, Pair<ArrayList<Label>, HashMap<Integer, ModifiedGoTo>>> newGoToAndLabelsPairMap;
+
 
     public CollectGoTo(ClassVisitor cv) {
         super(Opcodes.ASM5, cv);
@@ -29,12 +29,11 @@ public class CollectGoTo extends ClassVisitor {
     }
 
 
-    public CollectGoTo(ClassVisitor cv, ArrayList<Pair<Integer, Label>> collectedJumpInstructions, ArrayList<Label> backEdgeTargetLabels) {
+    public CollectGoTo(ClassVisitor cv, HashMap<String, ArrayList<Pair<Integer, Label>>> collectedJumpInstructions,
+                       HashMap<String, ArrayList<Label>> backEdgeTargetLabels) {
         super(Opcodes.ASM5, cv);
         this.visitorPass = VisitorPass.WRITINGPASS;
-        Pair newGoToAndLabelsPair = ModifiedGoTo.create(collectedJumpInstructions, backEdgeTargetLabels);
-        newLabels = (ArrayList<Label>) newGoToAndLabelsPair.getKey();
-        goToInsHashMap = (HashMap<Integer, ModifiedGoTo>) newGoToAndLabelsPair.getValue();
+        newGoToAndLabelsPairMap = ModifiedGoTo.createAll(collectedJumpInstructions, backEdgeTargetLabels);
     }
 
 
@@ -46,25 +45,20 @@ public class CollectGoTo extends ClassVisitor {
         classReader.accept(firstPassClassVisitor, ClassReader.EXPAND_FRAMES);
 
 
-        ArrayList<Pair<Integer, Label>> collectedJumpInstructions = new ArrayList<>();
-        ArrayList<Label> backEdgeTargetLabels = new ArrayList<>();
+        HashMap<String, ArrayList<Pair<Integer, Label>>> collectedJumpInstructions = new HashMap<>();
+        HashMap<String, ArrayList<Label>> backEdgeTargetLabels = new HashMap<>();
 
         //System.out.println("visited jump instructions in method: " + name + signature);
-        for (InstructionCollector instructionCollector : instructionCollectors) {
-            collectedJumpInstructions = instructionCollector.collectedJumpInstructions;
-            backEdgeTargetLabels = instructionCollector.backEdgeTargetLabel;
+        Iterator<Map.Entry<String, ArrayList<InstructionCollector>>> methodInstItr = methodInstHashMap.entrySet().iterator();
+        while (methodInstItr.hasNext()) {
+            Map.Entry<String, ArrayList<InstructionCollector>> entry = methodInstItr.next();
+            String methodName = entry.getKey();
+            for (InstructionCollector instructionCollector : entry.getValue()) {
+                collectedJumpInstructions.put(methodName, instructionCollector.collectedJumpInstructions);
+                backEdgeTargetLabels.put(methodName, instructionCollector.backEdgeTargetLabel);
+            }
         }
-
         if (backEdgeTargetLabels.size() > 0) { // discovered backedge in the method, try to rewrite.
-                /*ClassReader newClassReader = new ClassReader(b);
-                final ClassWriter goToWriter = new ClassWriter(newClassReader, ClassWriter.COMPUTE_FRAMES | ClassWriter
-                        .COMPUTE_MAXS);
-
-                CollectGoTo goToVisitorPass = new CollectGoTo(goToWriter, collectedJumpInstructions,
-                        backEdgeTargetLabels);
-                goToVisitorPass.visitorPass = VisitorPass.WRITINGPASS;
-                newClassReader.accept(goToVisitorPass, ClassReader.EXPAND_FRAMES);
-                return goToWriter.toByteArray();*/
 
             ClassReader newClassReader = new ClassReader(b);
             final ClassWriter newcw = new ClassWriter(newClassReader, ClassWriter.COMPUTE_FRAMES | ClassWriter
@@ -75,44 +69,27 @@ public class CollectGoTo extends ClassVisitor {
 
         } else
             return cw.toByteArray();
-/*
-
-            System.out.println("visited jump instructions in method: ");
-            System.out.println(collectedJumpInstructions.toString());
-
-            System.out.println("visited labels:");
-            System.out.println(seenLabels);
-
-            System.out.println("backedge target labels:");
-            System.out.println(backEdgeTargetLabels);
-*/
-
     }
-
-
-    /*@Override
-    public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
-        MethodVisitor v = super.visitMethod(access, name, desc, signature, exceptions);
-        if (name.equals("testWhileProblem4")) {
-            v = new InstructionCollector(v, access, name, desc, signature, exceptions);
-            CollectGoTo.instructionCollectors.add((InstructionCollector) v);
-        }
-
-        return v;
-    }*/
 
 
     @Override
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         MethodVisitor v = super.visitMethod(access, name, desc, signature, exceptions);
-        if (name.equals("testWhileProblem2")) {
-            if (visitorPass == VisitorPass.READINGPASS) {
-                v = new InstructionCollector(v, access, name, desc, signature, exceptions);
-                CollectGoTo.instructionCollectors.add((InstructionCollector) v);
-            } else { //writing pass
-                assert (visitorPass == VisitorPass.WRITINGPASS);
-                v = new GoToWriter(v, access, name, desc, signature, exceptions);
-            }
+        if (visitorPass == VisitorPass.READINGPASS) {
+            v = new InstructionCollector(v, access, name, desc, signature, exceptions);
+            ArrayList<InstructionCollector> instructionCollectors = CollectGoTo.methodInstHashMap.get(name);
+            if (instructionCollectors == null) {
+                instructionCollectors = new ArrayList<>();
+                instructionCollectors.add((InstructionCollector) v);
+                methodInstHashMap.put(name, instructionCollectors);
+            } else
+                instructionCollectors.add((InstructionCollector) v);
+        } else { //writing pass
+            assert (visitorPass == VisitorPass.WRITINGPASS);
+            Pair<ArrayList<Label>, HashMap<Integer, ModifiedGoTo>> newGoToAndLabelsPair = newGoToAndLabelsPairMap.get(name);
+            methodNewLabelArr = newGoToAndLabelsPair.getKey();
+            methodGoToInsHashMap = newGoToAndLabelsPair.getValue();
+            v = new GoToWriter(v, access, name, desc, signature, exceptions);
         }
         return v;
     }
@@ -177,7 +154,7 @@ public class CollectGoTo extends ClassVisitor {
             if (this.mv != null) {
                 if (opcode == 167) { // is a goTo instruction.
                     ++goToOrdNum;
-                    ModifiedGoTo modifiedGoTo = goToInsHashMap.get(goToOrdNum);
+                    ModifiedGoTo modifiedGoTo = methodGoToInsHashMap.get(goToOrdNum);
                     if (modifiedGoTo != null) { // if it is in the modifiedGoToHashMap
                         if (modifiedGoTo.isLastGoTo) { //if it is the last goTo then we need to visit the newLabel first before we visit the instruction.
                             super.mv.visitLabel(modifiedGoTo.jumpLabel);
