@@ -1,6 +1,4 @@
-package GoToTransformation;
 
-import com.sun.org.apache.bcel.internal.generic.GOTO;
 import org.objectweb.asm.*;
 import org.objectweb.asm.commons.GeneratorAdapter;
 

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,11 +10,11 @@ public class Main {
         System.out.println("Hello World!");
 
         String string = "test the example in the paper ";
-        List<Character> textList = string.chars().mapToObj((i) -> Character.valueOf((char)i)).collect(Collectors.toList());
+        List<Character> textList = string.chars().mapToObj((i) -> Character.valueOf((char) i)).collect(Collectors.toList());
 
         //(new Main()).paperExample(textList);
 
-        ArrayList<Integer> numberList = new ArrayList<Integer>(Arrays.asList(0,1,1,1,0, 1,1, 0,0, 1,1,1,1,1,1,0));
+        ArrayList<Integer> numberList = new ArrayList<Integer>(Arrays.asList(0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0));
 
         (new Main()).paperExampleNum(numberList);
 
@@ -26,7 +27,7 @@ public class Main {
         boolean inWord;
 
         if (numList.size() > 0) { //would be nice if we have early return here.
-            if(numList.get(0) == 0)
+            if (numList.get(0) == 0)
                 inWord = false;
             else
                 inWord = true;
@@ -49,19 +50,18 @@ public class Main {
     }
 
 
-    public int paperExample(List<Character> textList){
+    public int paperExample(List<Character> textList) {
         boolean inWord = false;
         int wordCount = 0;
 
-        for(int i = 0; i < textList.size(); i++){
-            if(inWord){
-                if(Character.isWhitespace(textList.get(i))){
+        for (int i = 0; i < textList.size(); i++) {
+            if (inWord) {
+                if (Character.isWhitespace(textList.get(i))) {
                     ++wordCount;
                     inWord = false;
                 }
-            }
-            else{
-                if(!Character.isWhitespace(textList.get(i))){
+            } else {
+                if (!Character.isWhitespace(textList.get(i))) {
                     inWord = true;
                 }
             }
@@ -86,21 +86,24 @@ public class Main {
             else
                 inWord = true;
 
-            for (int i = 0; i < numberList.size(); i++) {
+            Iterator<Integer> iter = numberList.iterator();
+
+            while (iter.hasNext()) {
+                Integer curr = iter.next();
                 if (inWord) {
-                    if (numberList.get(i) == 0) { //0 means there is a whitespace
+                    if (curr == 0) { //0 means there is a whitespace
                         ++wordCount;
                         inWord = false;
                     }
                 } else {
-                    if (numberList.get(i) != 0) { // non whitespace.
+                    if (curr != 0) { // non whitespace.
                         inWord = true;
                     }
                 }
             }
+            System.out.println("Number of words is:" + wordCount);
+            return wordCount;
         }
-        System.out.println("Number of words is:" + wordCount);
-        return wordCount;
+        return 0;
     }
-
 }

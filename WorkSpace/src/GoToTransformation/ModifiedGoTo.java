@@ -5,6 +5,8 @@ import org.objectweb.asm.Label;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 
 /**
@@ -24,15 +26,38 @@ public class ModifiedGoTo {
     }
 
     /**
-     * The input is really a candidate goTo instructions and some backedge identified labels
-     * The output are ordered goTo Statements that we need to either change their target labels or in case of the
-     * last goto just a flag indicating that it is the last one.
-     *
-     * @param collectedJumpInstructions
-     * @param backEdgeTargetLabels
-     * @return
+     * This method iterates over all methods for which we have collected a backedge and tries to create the right
+     * label set for it.
      */
-    public static Pair create(ArrayList<Pair<Integer, Label>> collectedJumpInstructions, ArrayList<Label> backEdgeTargetLabels) {
+    public static HashMap<String, Pair<ArrayList<Label>, HashMap<Integer, ModifiedGoTo>>> createAll(HashMap<String, ArrayList<Pair<Integer, Label>>>
+                                                           methodCollectedJmpInstMap,
+                                                                                                    HashMap<String, ArrayList<Label>>  methodBackEdgeTargetLabels) {
+
+
+        HashMap<String, Pair<ArrayList<Label>, HashMap<Integer, ModifiedGoTo>>> newMethodGoToMap = new HashMap<>();
+
+        Iterator<Map.Entry<String, ArrayList<Pair<Integer, Label>>>> methodCollectedJmpInstMapItr = methodCollectedJmpInstMap.entrySet().iterator();
+
+        while(methodCollectedJmpInstMapItr.hasNext()){
+            Map.Entry<String, ArrayList<Pair<Integer, Label>>> entry = methodCollectedJmpInstMapItr.next();
+
+            String methodName = entry.getKey();
+
+            ArrayList<Pair<Integer, Label>> collectedJmpInst = entry.getValue();
+
+            ArrayList<Label> backEdgeLabel = methodBackEdgeTargetLabels.get(methodName);
+
+            Pair newGoToPair = createForMethod(collectedJmpInst, backEdgeLabel);
+
+            newMethodGoToMap.put(methodName, newGoToPair);
+        }
+
+        return newMethodGoToMap;
+    }
+
+
+    public static Pair<ArrayList<Label>, HashMap<Integer, ModifiedGoTo>> createForMethod(ArrayList<Pair<Integer, Label>> collectedJumpInstructions, ArrayList<Label>
+            backEdgeTargetLabels) {
         HashMap<Integer, ModifiedGoTo> goToInsHashMap = new HashMap<>();
         ArrayList<Label> newLabels = new ArrayList<>();
 
@@ -59,6 +84,7 @@ public class ModifiedGoTo {
         }
         return new Pair<ArrayList<Label>, HashMap<Integer, ModifiedGoTo>>(newLabels, goToInsHashMap);
     }
+
 
     private static ArrayList<Pair<Integer, Label>> getRelatedGoToInst(Label backLabel, ArrayList<Pair<Integer, Label>> collectedJumpInstructions) {
         ArrayList<Pair<Integer, Label>> filteredGoToLabels = new ArrayList<Pair<Integer, Label>>();

@@ -1,5 +1,6 @@
 package GoToTransformation;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -10,19 +11,27 @@ public class GoToTransformer {
 
     public static void execute() throws IOException {
 
-        Path pathRead = FileSystems.getDefault().getPath("resources", "VeritestingPerf.class");
+        File folder = new File("resources/old");
+        File[] listOfFiles = folder.listFiles();
 
-        Path pathWrite = FileSystems.getDefault().getPath("resources", "VeritestingPerfNew.class");
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                String currentName = listOfFiles[i].getName();
+                if (currentName.contains("class")) {
+                    Path pathRead = FileSystems.getDefault().getPath("resources/old/", currentName);
+
+                    Path pathWrite = FileSystems.getDefault().getPath("resources/new", currentName);
 
 
-        byte[] classByteRead = Files.readAllBytes(pathRead);
+                    byte[] classByteRead = Files.readAllBytes(pathRead);
 
-        //byte[] classByteWrite = MyTransformer.transform(classByteRead);
-
-        byte[] classByteWrite = CollectGoTo.execute(classByteRead);
+                    byte[] classByteWrite = CollectGoTo.execute(classByteRead);
 
 
-        Files.write(pathWrite, classByteWrite);
+                    Files.write(pathWrite, classByteWrite);
+                }
+            }
+        }
 
     }
 
