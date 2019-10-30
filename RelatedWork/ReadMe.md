@@ -37,3 +37,36 @@ This paper have a good performance results, and it is another advocate for havin
 I can't think of how we are better than them, except we are trying to do repair on a different level, mainly the spec instead of the program.
 
 
+## SketchFix
+
+Sketchfix is about program repair using Sketch approach. They use in the backend SketechEd.
+Their general idea is that "Generate and Validate" type of repair, iteratively generate candidate programs with possible fixes. Validate them against given tests, until a candidate that passes all the test if found.
+problem: large number of candidates, needs to be generated, compiled and tested.
+They propose On-Demand candidate generation through sketching.
+Their key insight is that the space of candidate programs can be pruned substantially by utilizing runtime information and by generating candidates on-demand during test validation. Example, consider trying to fix a faulty condition in a while-loop as well as the body of the loop; if a test execution raises an exception upon evaluating a specific candidate while-loop condition, all candidates of the while-loop body are pruned from search for that choice of the candidate condition expression.
+Thus they do runtime, on-demand, lazy candidate generation.
+SketchFix work as follows:
+Given a suspicious location in the program that needs a repair, SketchFix transforms that location to an AST node-level schema that is made of possible holes.
+The program is then compiled once and the generated Sketch represents a number of valid/possible candidates. 
+Possible candidates are ranked and explored by EdSketch, possibly backtracking and exploring a different choice. 
+SketchFix defines transformation schemas at a fine granularity and prioritizes first the schemas that introduce smaller perturbations to the original program (less # of holes, and keep the main structure). 
+
+After transforming the original faulty program to sketches based on the schemas, SketechFix executes test cases to synthesize sketches with on-demand candidate generation. 
+SketchFix will not generate concrete candidates for a hole until the test execution reaches the hole. 
+The candidates are created based on the runtime information. For instance, no candidates for field dereferences for null variables.
+
+They evaluated SketchFix on the Defect4J, which consists of 357 real defects from 5 open source Java applications. 
+SketchFix uses an existing spectrum-based fault localization technique called Ochiai. The figure shows repair results of SketchFix over top 50 suspicious statements.SketchFix is able to repair 19 out of 357 in average of 23 min.
+
+Not that, SketchFix explores the search space of repair candidates for each program sketch until the space of candidates is exhausted or we find a pre-defined number of repairs that pass all tests. Currently we terminate after finding the first repair yet we set the number of output repairs as configurable. They also used java parser to generate the program sketches.
+
+I have a power point presentation from the secuity group, which might be uselful to go to for further reference.
+
+
+## Feedback-Driven Dynamic Invariant Discovery 
+This paper is about a tool iDiscovery that utlizes Daikon, SPF and Green to discover invariants. Basically the whole idea is that, given some test cases, the tool uses Daikon to discover invariants, they instruement them into the code, and check their validity with SPF, if they fail, new tests are generated which are used on the original program (without the assertions) to generate the traces to be supplied to Daikon to generate new assertions. Using this loop, assertions can be refined, they stop when Daikon's assertions are fixed, that is they reach a fix point with Daikon's generation of assertions.
+
+The paper proposes two optimizations, (1) assertion restrictions and (2) violation assertions. In the first optimization they focus symbolic exection on checking one assertion at a time. The goal really is to reduce the complexity of the queries generated from adding too many assertions, especially if under the sat of one assertion another is check, that is there is no need need to recheck the previous one, because at that point we know that it is true (sat). For this they use some backtracking primitives supplied by JPF, where inserted assertions are only checked once down one path. The second optimization really generates a counter example of an assertion once, that is if there are multiple paths in which they all hit this assertion, then there is a possibility that a few of them would violate the assertion, for this, they just record the first violation and they do not recheck the assertion on subsequent pathes. 
+
+The have interesting evaluation. Mainly they measured three things: (1) the effect with and without optimizations, (2) the effect of every optimization sperately, (3) the effect of having different sets of test suits to start with as the initial set for Daikon invariant generation. The also compared usage of green solver with and without the optimiations turned on. Generally, the effect of optimizations were good for it either convered faster, in less time and less iterations, there are in fact two benchmarks that used to time out in 20hours without these optimizations turned on, and with the optimizations turned on they could actually finish in more than an hour. Also their second study seems to be say different things about the optimizations, their first optimization seems to reduce the time and also the number of iterations, the later part they have not justified and I am not sure why it happned, while the second optimization seems to reduce the time without reducing the number of iterations, comparing without the optimizations. Also when they reported about reusing constraints using green solver, it seems that that was also quite a boots to their performance as it saved more time needed to talk to the solver. Finally for the initial set of starting test cases, seems that starting with the initial set being the set genreated by running the symbolic execution seems to give the best results, but they do have a bit of detailed discussion about that part, which is perhaps useful to go back to, if I ever wanted to talk about his particular part.
+
