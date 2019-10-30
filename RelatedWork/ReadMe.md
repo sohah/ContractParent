@@ -7,7 +7,7 @@ The paper is talking about extending AADL that is used by agree to support model
 The paper contains some description about a small model of WBS. A basic reference about WBS is found [https://www.sae.org/standards/content/air6110/](here)
 
 
-## Combinatorial Sketching for Finite Programs:ASPLOS 2006
+## Combinatorial Sketching for Finite Programs:ASPLOS 2006 (Program Repair Category)
 
 This praper describe system called sketching as a programming language by which the user can define forms of building holes. 
 
@@ -23,7 +23,7 @@ We are different in two different ways:
 - we do not need to unroll loops of the implementation instead we use k-induction to verify that correctness between the specification and the implementation.
 
 
-## Towards Practical Program Repair with On-Demand Candidate Generation SIGPLAN 2018
+## Towards Practical Program Repair with On-Demand Candidate Generation SIGPLAN 2018 (Program Repair Category)
 
 
 This is basically a program repair paper that uses sketching. The paper tries to use some runtime information which can prune way some repair candidates. The main points about this paper is 
@@ -37,7 +37,7 @@ This paper have a good performance results, and it is another advocate for havin
 I can't think of how we are better than them, except we are trying to do repair on a different level, mainly the spec instead of the program.
 
 
-## SketchFix
+## SketchFix- (Program Repair Category)
 
 Sketchfix is about program repair using Sketch approach. They use in the backend SketechEd.
 Their general idea is that "Generate and Validate" type of repair, iteratively generate candidate programs with possible fixes. Validate them against given tests, until a candidate that passes all the test if found.
@@ -63,7 +63,7 @@ Not that, SketchFix explores the search space of repair candidates for each prog
 I have a power point presentation from the secuity group, which might be uselful to go to for further reference.
 
 
-## Feedback-Driven Dynamic Invariant Discovery 
+## Feedback-Driven Dynamic Invariant Discovery - (Invariant Discovery Category)
 This paper is about a tool iDiscovery that utlizes Daikon, SPF and Green to discover invariants. Basically the whole idea is that, given some test cases, the tool uses Daikon to discover invariants, they instruement them into the code, and check their validity with SPF, if they fail, new tests are generated which are used on the original program (without the assertions) to generate the traces to be supplied to Daikon to generate new assertions. Using this loop, assertions can be refined, they stop when Daikon's assertions are fixed, that is they reach a fix point with Daikon's generation of assertions.
 
 The paper proposes two optimizations, (1) assertion restrictions and (2) violation assertions. In the first optimization they focus symbolic exection on checking one assertion at a time. The goal really is to reduce the complexity of the queries generated from adding too many assertions, especially if under the sat of one assertion another is check, that is there is no need need to recheck the previous one, because at that point we know that it is true (sat). For this they use some backtracking primitives supplied by JPF, where inserted assertions are only checked once down one path. The second optimization really generates a counter example of an assertion once, that is if there are multiple paths in which they all hit this assertion, then there is a possibility that a few of them would violate the assertion, for this, they just record the first violation and they do not recheck the assertion on subsequent pathes. 
