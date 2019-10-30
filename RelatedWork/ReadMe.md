@@ -39,6 +39,30 @@ I can't think of how we are better than them, except we are trying to do repair 
 
 ## SketchFix
 
+Sketchfix is about program repair using Sketch approach. They use in the backend SketechEd.
+Their general idea is that "Generate and Validate" type of repair, iteratively generate candidate programs with possible fixes. Validate them against given tests, until a candidate that passes all the test if found.
+problem: large number of candidates, needs to be generated, compiled and tested.
+They propose On-Demand candidate generation through sketching.
+Their key insight is that the space of candidate programs can be pruned substantially by utilizing runtime information and by generating candidates on-demand during test validation. Example, consider trying to fix a faulty condition in a while-loop as well as the body of the loop; if a test execution raises an exception upon evaluating a specific candidate while-loop condition, all candidates of the while-loop body are pruned from search for that choice of the candidate condition expression.
+Thus they do runtime, on-demand, lazy candidate generation.
+SketchFix work as follows:
+Given a suspicious location in the program that needs a repair, SketchFix transforms that location to an AST node-level schema that is made of possible holes.
+The program is then compiled once and the generated Sketch represents a number of valid/possible candidates. 
+Possible candidates are ranked and explored by EdSketch, possibly backtracking and exploring a different choice. 
+SketchFix defines transformation schemas at a fine granularity and prioritizes first the schemas that introduce smaller perturbations to the original program (less # of holes, and keep the main structure). 
+
+After transforming the original faulty program to sketches based on the schemas, SketechFix executes test cases to synthesize sketches with on-demand candidate generation. 
+SketchFix will not generate concrete candidates for a hole until the test execution reaches the hole. 
+The candidates are created based on the runtime information. For instance, no candidates for field dereferences for null variables.
+
+They evaluated SketchFix on the Defect4J, which consists of 357 real defects from 5 open source Java applications. 
+SketchFix uses an existing spectrum-based fault localization technique called Ochiai. The figure shows repair results of SketchFix over top 50 suspicious statements.SketchFix is able to repair 19 out of 357 in average of 23 min.
+
+Not that, SketchFix explores the search space of repair candidates for each program sketch until the space of candidates is exhausted or we find a pre-defined number of repairs that pass all tests. Currently we terminate after finding the first repair yet we set the number of output repairs as configurable. They also used java parser to generate the program sketches.
+
+I have a power point presentation from the secuity group, which might be uselful to go to for further reference.
+
+
 ## Feedback-Driven Dynamic Invariant Discovery 
 This paper is about a tool iDiscovery that utlizes Daikon, SPF and Green to discover invariants. Basically the whole idea is that, given some test cases, the tool uses Daikon to discover invariants, they instruement them into the code, and check their validity with SPF, if they fail, new tests are generated which are used on the original program (without the assertions) to generate the traces to be supplied to Daikon to generate new assertions. Using this loop, assertions can be refined, they stop when Daikon's assertions are fixed, that is they reach a fix point with Daikon's generation of assertions.
 
