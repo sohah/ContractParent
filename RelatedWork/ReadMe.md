@@ -78,3 +78,5 @@ This paper is similar to iDiscovery in someways. It discovers invariants of prog
 symInfer, uses the symbolic state to generate diverse concrete candidates of inputs to DIG, which is used for invariant generation, and it uses the symbolic state as well to refute candidate invariants from DIG.
 
 The main advantage of this paper, is that they are able to produce non-linear invariants by utilizing DIG and by using their symbolic state. The compare themselves with PIE, which they call the state of the art in invariant discovery/inference. PIE uses machine learning, a good next candidate for reading.
+
+We can think of what we are doing is some sort of capture of ths symbolic state, but it is not for the whole program/method instead of a portion of it.
