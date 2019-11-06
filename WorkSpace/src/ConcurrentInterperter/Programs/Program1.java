@@ -11,7 +11,7 @@ import ConcurrentInterperter.Ast.Statements.IfThenElse;
 public class Program1 extends Program {
 
 
-    public Program1(Context locals, Statement statement) {
+    public Program1(Locals locals, Statement statement) {
         super(locals, statement);
     }
 
@@ -33,6 +33,6 @@ public class Program1 extends Program {
 
         Composition composition = new Composition(zEquals3, ifStmt);
 
-        return new Program1(new Context(), composition);
+        return new Program1(new Locals(), composition);
     }
 }

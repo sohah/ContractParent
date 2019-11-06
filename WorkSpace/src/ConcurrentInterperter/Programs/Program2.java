@@ -11,7 +11,7 @@ import ConcurrentInterperter.Ast.Statements.IfThenElse;
 public class Program2 extends Program {
 
 
-    public Program2(Context locals, Statement statement) {
+    public Program2(Locals locals, Statement statement) {
         super(locals, statement);
     }
 
@@ -36,6 +36,6 @@ public class Program2 extends Program {
 
         Composition composition = new Composition(aEquals10, new Composition(bEquals20, ifStmt));
 
-        return new Program2(new Context(), composition);
+        return new Program2(new Locals(), composition);
     }
 }
