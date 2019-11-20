@@ -37,7 +37,7 @@ public class CollectGoTo extends ClassVisitor {
     }
 
 
-    public static byte[] execute(byte[] b) {
+    public static Pair<Boolean, Byte[]> execute(byte[] b) {
         ClassReader classReader = new ClassReader(b);
         final ClassWriter cw = new ClassWriter(classReader, ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
         CollectGoTo firstPassClassVisitor = new CollectGoTo(cw);
@@ -65,23 +65,28 @@ public class CollectGoTo extends ClassVisitor {
                     .COMPUTE_MAXS);
             CollectGoTo secPassClassVisitor = new CollectGoTo(newcw, collectedJumpInstructions, backEdgeTargetLabels);
             newClassReader.accept(secPassClassVisitor, ClassReader.EXPAND_FRAMES);
-            return newcw.toByteArray();
+            Byte[] newBytes = TransformerUtil.toObjects(newcw.toByteArray());
+            return new Pair<Boolean, Byte[]>(ModifiedGoTo.conditionFound, newBytes);
 
-        } else
-            return cw.toByteArray();
+        } else{
+            Byte[] newBytes = TransformerUtil.toObjects(cw.toByteArray());
+            assert !ModifiedGoTo.conditionFound;
+            return new Pair<Boolean, Byte[]>(ModifiedGoTo.conditionFound, newBytes);
+        }
     }
 
 
     @Override
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         MethodVisitor v = super.visitMethod(access, name, desc, signature, exceptions);
+        String methodFullName = name+desc;
         if (visitorPass == VisitorPass.READINGPASS) {
             v = new InstructionCollector(v, access, name, desc, signature, exceptions);
-            ArrayList<InstructionCollector> instructionCollectors = CollectGoTo.methodInstHashMap.get(name);
+            ArrayList<InstructionCollector> instructionCollectors = CollectGoTo.methodInstHashMap.get(methodFullName);
             if (instructionCollectors == null) {
                 instructionCollectors = new ArrayList<>();
                 instructionCollectors.add((InstructionCollector) v);
-                methodInstHashMap.put(name, instructionCollectors);
+                methodInstHashMap.put(methodFullName, instructionCollectors);
             } else
                 instructionCollectors.add((InstructionCollector) v);
         } else { //writing pass

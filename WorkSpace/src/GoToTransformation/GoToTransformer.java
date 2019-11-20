@@ -1,5 +1,7 @@
 package GoToTransformation;
 
+import javafx.util.Pair;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -25,10 +27,9 @@ public class GoToTransformer {
 
                     byte[] classByteRead = Files.readAllBytes(pathRead);
 
-                    byte[] classByteWrite = CollectGoTo.execute(classByteRead);
+                    Pair<Boolean, Byte[]> classByteWritePair = CollectGoTo.execute(classByteRead);
 
-
-                    Files.write(pathWrite, classByteWrite);
+                    Files.write(pathWrite, TransformerUtil.toPrimitives(classByteWritePair.getValue()));
                 }
             }
         }
