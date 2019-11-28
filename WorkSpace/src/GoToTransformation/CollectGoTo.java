@@ -26,6 +26,7 @@ public class CollectGoTo extends ClassVisitor {
     public CollectGoTo(ClassVisitor cv) {
         super(Opcodes.ASM5, cv);
         this.visitorPass = VisitorPass.READINGPASS;
+        methodInstHashMap = new HashMap<>();
     }
 
 
@@ -54,8 +55,10 @@ public class CollectGoTo extends ClassVisitor {
             Map.Entry<String, ArrayList<InstructionCollector>> entry = methodInstItr.next();
             String methodName = entry.getKey();
             for (InstructionCollector instructionCollector : entry.getValue()) {
-                collectedJumpInstructions.put(methodName, instructionCollector.collectedJumpInstructions);
-                backEdgeTargetLabels.put(methodName, instructionCollector.backEdgeTargetLabel);
+                if (instructionCollector.backEdgeTargetLabel.size() > 0) {
+                    collectedJumpInstructions.put(methodName, instructionCollector.collectedJumpInstructions);
+                    backEdgeTargetLabels.put(methodName, instructionCollector.backEdgeTargetLabel);
+                }
             }
         }
         if (backEdgeTargetLabels.size() > 0) { // discovered backedge in the method, try to rewrite.
@@ -68,7 +71,7 @@ public class CollectGoTo extends ClassVisitor {
             Byte[] newBytes = TransformerUtil.toObjects(newcw.toByteArray());
             return new Pair<Boolean, Byte[]>(ModifiedGoTo.conditionFound, newBytes);
 
-        } else{
+        } else {
             Byte[] newBytes = TransformerUtil.toObjects(cw.toByteArray());
             assert !ModifiedGoTo.conditionFound;
             return new Pair<Boolean, Byte[]>(ModifiedGoTo.conditionFound, newBytes);
@@ -79,7 +82,7 @@ public class CollectGoTo extends ClassVisitor {
     @Override
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         MethodVisitor v = super.visitMethod(access, name, desc, signature, exceptions);
-        String methodFullName = name+desc;
+        String methodFullName = name + desc;
         if (visitorPass == VisitorPass.READINGPASS) {
             v = new InstructionCollector(v, access, name, desc, signature, exceptions);
             ArrayList<InstructionCollector> instructionCollectors = CollectGoTo.methodInstHashMap.get(methodFullName);
