@@ -27,9 +27,16 @@ public class GoToTransformer {
 
                     byte[] classByteRead = Files.readAllBytes(pathRead);
 
-                    Pair<Boolean, Byte[]> classByteWritePair = CollectGoTo.execute(classByteRead);
+                    try {
+                        Pair<Boolean, Byte[]> classByteWritePair = CollectGoTo.execute(classByteRead);
+                        Files.write(pathWrite, TransformerUtil.toPrimitives(classByteWritePair.getValue()));
 
-                    Files.write(pathWrite, TransformerUtil.toPrimitives(classByteWritePair.getValue()));
+                        System.out.println("finished rewriting class " + currentName + " with result = " +
+                                classByteWritePair.getKey());
+                    } catch (TypeNotPresentException e) {
+                        System.out.println("Problem encountered during rewriting: " + e.toString());
+                    }
+
                 }
             }
         }

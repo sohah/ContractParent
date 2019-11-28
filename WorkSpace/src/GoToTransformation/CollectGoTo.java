@@ -91,7 +91,8 @@ public class CollectGoTo extends ClassVisitor {
                 instructionCollectors.add((InstructionCollector) v);
         } else { //writing pass
             assert (visitorPass == VisitorPass.WRITINGPASS);
-            Pair<ArrayList<Label>, HashMap<Integer, ModifiedGoTo>> newGoToAndLabelsPair = newGoToAndLabelsPairMap.get(name);
+            Pair<ArrayList<Label>, HashMap<Integer, ModifiedGoTo>> newGoToAndLabelsPair = newGoToAndLabelsPairMap.get
+                    (methodFullName);
             methodNewLabelArr = newGoToAndLabelsPair.getKey();
             methodGoToInsHashMap = newGoToAndLabelsPair.getValue();
             v = new GoToWriter(v, access, name, desc, signature, exceptions);
