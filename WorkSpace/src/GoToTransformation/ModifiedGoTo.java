@@ -28,6 +28,7 @@ public class ModifiedGoTo {
         this.jumpLabel = jumpLabel;
         this.isLastGoTo = isLastGoTo;
     }
+
     /**
      * This method iterates over all methods for which we have collected a backedge and tries to create the right
      * label set for it.
@@ -51,9 +52,13 @@ public class ModifiedGoTo {
 
             ArrayList<Label> backEdgeLabel = methodBackEdgeTargetLabels.get(methodName);
 
-            Pair newGoToPair = createForMethod(collectedJmpInst, backEdgeLabel);
+            Pair<ArrayList<Label>, HashMap<Integer, ModifiedGoTo>> newGoToPair = createForMethod(collectedJmpInst, backEdgeLabel);
 
-            newMethodGoToMap.put(methodName, newGoToPair);
+            if (newGoToPair.getKey().size() > 0) { //if there is one label changed then there must exist its new
+                // change in the hashmap.
+                assert newGoToPair.getValue().size() > 0;
+                newMethodGoToMap.put(methodName, newGoToPair);
+            }
         }
 
         return newMethodGoToMap;

@@ -39,6 +39,7 @@ public class CollectGoTo extends ClassVisitor {
 
 
     public static Pair<Boolean, Byte[]> execute(byte[] b) {
+        ModifiedGoTo.conditionFound = false;
         ClassReader classReader = new ClassReader(b);
         final ClassWriter cw = new ClassWriter(classReader, ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
         CollectGoTo firstPassClassVisitor = new CollectGoTo(cw);
@@ -90,15 +91,19 @@ public class CollectGoTo extends ClassVisitor {
                 instructionCollectors = new ArrayList<>();
                 instructionCollectors.add((InstructionCollector) v);
                 methodInstHashMap.put(methodFullName, instructionCollectors);
-            } else
-                instructionCollectors.add((InstructionCollector) v);
+            } else {
+                assert false;
+                //instructionCollectors.add((InstructionCollector) v);
+            }
         } else { //writing pass
             assert (visitorPass == VisitorPass.WRITINGPASS);
             Pair<ArrayList<Label>, HashMap<Integer, ModifiedGoTo>> newGoToAndLabelsPair = newGoToAndLabelsPairMap.get
                     (methodFullName);
-            methodNewLabelArr = newGoToAndLabelsPair.getKey();
-            methodGoToInsHashMap = newGoToAndLabelsPair.getValue();
-            v = new GoToWriter(v, access, name, desc, signature, exceptions);
+            if (newGoToAndLabelsPair != null) {
+                methodNewLabelArr = newGoToAndLabelsPair.getKey();
+                methodGoToInsHashMap = newGoToAndLabelsPair.getValue();
+                v = new GoToWriter(v, access, name, desc, signature, exceptions);
+            }
         }
         return v;
     }
