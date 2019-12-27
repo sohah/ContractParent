@@ -80,3 +80,24 @@ symInfer, uses the symbolic state to generate diverse concrete candidates of inp
 The main advantage of this paper, is that they are able to produce non-linear invariants by utilizing DIG and by using their symbolic state. The compare themselves with PIE, which they call the state of the art in invariant discovery/inference. PIE uses machine learning, a good next candidate for reading.
 
 We can think of what we are doing is some sort of capture of ths symbolic state, but it is not for the whole program/method instead of a portion of it.
+
+
+## Data-Driven Precondition Inference with Learned Features - (Invariant Discovery) PLDI'16
+
+This paper presents PIE that uses test cases and a program to find preconditions. PIE learns features automatically as opposed to other systems taht needs to have the features to be manually entered. PIE can also be used to infer loop invariants. 
+PIE takes three inputs, (1) the function that we want to find the preconditions for, (2) test input, and (3) postcondition, which is a function that would take categorize every result/output to ether true or false to distinguish a good from bad test case where a good test case is a passing test case and where a bad test case is a test case that has resulted in an exception being raised. 
+
+PIE employes the following:
+1. PIE learns features via Program Synthesis. The intution behind learning is that whenever two tests conflict, that is they overlap in the set of features yet one test case is in the good pile and the other is in the bad pile, then these test cases must have different preconditions. The goal then becomes to learn a new feature that would distinguish the difference between the two test cases, i.e., enable the seperation between the good and the bad test cases. PIE's feature learner uses a form of search-based program synthesis to generate a feature that resolves all conflicts in a given "conflict group", where a conflict group is a set of tests that induce teh same feature vector and participate in the conflict, i.e., at least one test in G and one in B. Given a set of consants and operations for each type of data in the tests, the feature learner enumeartes candidate boolean expressions in order of increasing size until it finds one that seperates the good and he bad tests in the given conflict group. 
+2. So this is for learning features, by PIE too needs to generate boolean predicates as preconditions, to do that, PIE employes some machine learning algorithm that creates the smallest (in size) and weakest precondition in CNF form (conjunction of disjunction). 
+3. PIE can be used as a subroutine to discover loop invariants, and by loop invariants they mean that the genrated invariant must satisfy three conditions: (a) it must be valid initially, (b) it is inductive, and (3) it should be enough to prove the assertion inside the loop body. 
+
+The novality of the approach is to combine the good things from the two worlds, program synthesis over constants and operations on the type can grow exponentialy, but can be reasonable to synthesis a feature rather than the invariant for the whole program, and data-driven precondition inference, which can be used to infer the precondition easily but has the limitation of having to supply the fixed features to learn the precondition from. By combining learning of features via program synthesis and learning of boolean CNF formulas, PIE has combined the good things from the two worlds.
+
+Evaluation of PIE was 
+1. to learn preconditions of some OCaml functions and compare them to the documentation. 
+2. they had an experement that shows the two parameters the PIE deployed, the maximum number of test cases and the maximum number of conflict (conflict group size in terms of the test cases that it contains). PIE's point for the later is to show that if we are trying to synthesis a feature where all the test cases are in conflict then the synthesis for features is overly used and can quickly hit resource limit.
+3. They presented PIE results when running it on 3 benchmarks, including linear arithmetic, non-linear arithmetic and strings.
+
+Weaknes: general weakness from having to use data-driven approach because it is restricted to the number of test cases given. 
+They have also reported 14 cases where PIE either failed due to time or memory or it produced incorrect or incomplete preconditions due to some tool limitations.
