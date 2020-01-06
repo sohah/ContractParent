@@ -1,6 +1,5 @@
 package GoToTransformation;
 
-import javafx.util.Pair;
 import org.objectweb.asm.Label;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ public class ModifiedGoTo {
     //indicates whether the rewrite had encountered the backend condition or not for that class.
 
     public static boolean conditionFound = false;
+    private static boolean methodConditionFound = false;
 
 
     public ModifiedGoTo(Integer goToPosition, Label jumpLabel, boolean isLastGoTo) {
@@ -51,9 +51,12 @@ public class ModifiedGoTo {
             ArrayList<Pair<Integer, Label>> collectedJmpInst = entry.getValue();
 
             ArrayList<Label> backEdgeLabel = methodBackEdgeTargetLabels.get(methodName);
-
+            methodConditionFound = false;
             Pair<ArrayList<Label>, HashMap<Integer, ModifiedGoTo>> newGoToPair = createForMethod(collectedJmpInst, backEdgeLabel);
 
+            if(methodConditionFound){
+                System.out.println("GoTo condition was found and applied on method "+ methodName);
+            }
             if (newGoToPair.getKey().size() > 0) { //if there is one label changed then there must exist its new
                 // change in the hashmap.
                 assert newGoToPair.getValue().size() > 0;
@@ -77,6 +80,7 @@ public class ModifiedGoTo {
             ArrayList<Pair<Integer, Label>> relatedGoToIns = getRelatedGoToInst(backLabel, collectedJumpInstructions);
             if (relatedGoToIns.size() >= 2) {// three or more goTos are going to the same back edge label, then this is where we want to change
                 conditionFound = true;
+                methodConditionFound = true;
                 Label newLabel = new Label();
                 newLabels.add(newLabel);
                 for (int i = 0; i <= relatedGoToIns.size() - 2; i++) { //change all of them to a new label except for
