@@ -105,13 +105,20 @@ They have also reported 14 cases where PIE either failed due to time or memory o
 
 ## Symbolic Repairs for GR(1) Specifications - ICSE'19
 In this paper the authors suggest repairing GR(1) unrealizable specifications, where GR(1) is a fragment of assume-guarantee fragment of LTL, and the unrealizability is defined as "there exists an environment that satisfy all the assumptions while FORCING the system to violate its guarantees. The paper has 3 key contributions, they suggest two symbolic approaches for repair (thus they promote it as efficient) and the third is that they introduce the notion of repair core. 
-The first approach is based on JVTS, which is a name that they give to symbolic counter example. The approach uses counter example of unrealizable system and generates symbolic counter example from it, then it tries to avoid it by adding the right assumption, that invalidates certain states or certain transitions. Iterating that provides a repair.
 
-The second approach is not based on counter example, instead it is based on the specification. The approach computes safety assumptions that ensures the safety guarantees can be satisfied, a justice assumption for each justice guarantee and an initial assumption to prevent losing initial states.
+The example they provide is not realizable because the enviroment can always choose c to be true and therefore the system will not be able to make the 'just' rule realizable.
+
+The first approach is based on JVTS, which is a name that they give to symbolic counter example. The approach uses counter example of unrealizable system and generates symbolic counter example from it, then it tries to avoid it by adding the right assumption, that invalidates certain states or certain transitions. The paper uses two repair algorithms for JVTS, one that generates the assumptions from the JVTS and another that uses the assumptions in a breadth-first search to check if the specification is realizable under the assumptions generated from JVTS>
+
+The second approach is not based on counter example, instead it is based on the specification. The approach computes safety assumptions that ensures the safety guarantees can be satisfied, a justice assumption for each justice guarantee and an initial assumption to prevent losing initial states. It computes that by first collecting all states that the enviroment and system initial assumptions, transitions, safety, and justice agree. It then tries to find states where environment was holding but the system justice was not, finally it tries to find the winning states of the system and allow only inital states that match them. It finally returns the new initial assumptions, safety assumptions, and justice assumptions.
 
 Their third contribution is that they provide a repair core, which is a locally minimal subset of a repair that is already a repair. To find that they apply delta debugging algorithm which involves multiple calls to check realizability, each with different subset of addditional assumptions.
 
-The difference between this work and ours is mainly addressing two different problems, while this work is trying to find assumptions to make an unrealizable specification realizable, we try to repair a specification to some realizable implementation. 
-The notion of repair core in their terms is trying to find the "smalles set of assumptions to add", is similar to our notion of finding tigher and then minimal repair.
-We tend to think about keeping the structure of the specification and make smallest internal changes, this can be by adding or r modifying existing parts of the specification. Their specification has a specific form of assume-guarantee and they look for adding minimal assumptions.
+- The difference between this work and ours is mainly addressing two different problems, while this work is trying to find assumptions to make an unrealizable specification realizable, we try to repair a specification to some realizable implementation. 
+- The notion of repair core in their terms is trying to find the "smalles set of assumptions to add", their notion is rather syntactic, that is they true to find the smallest subset of assumptions in the already discovered assumptions that repairs the spec. In our work however, we were looking for the smallest semantic rathere than syntactic repair. 
+- One important note is that both algorithm assumes a gamma-sat spec, that is there exists some satisfaiblity to all the assumptions and guarantees for them to be able to repair. So, that means that they are unable to repair a and !a.
+- Does not repair everything by definition of gamma-sat.
+- Redundancy in spec after repair: “although given the suggested repair, some assumptions that appear already in the original specification may become unnecessary for realizability, we choose not to remove any assumptions but only to suggest new ones to add.”
+- Addition of free unconstrained free variables have quiet overhead.
+Q: still not sure if both JVTS is incomplete besides losing on repairs that yields gamma-unsat.?
 
