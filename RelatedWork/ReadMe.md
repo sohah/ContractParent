@@ -122,3 +122,16 @@ Their third contribution is that they provide a repair core, which is a locally 
 - Addition of free unconstrained free variables have quiet overhead.
 Q: still not sure if both JVTS is incomplete besides losing on repairs that yields gamma-unsat.?
 
+### Question of Measuring Quality
+Combinatorial Sketch for finite programs addressed that by showing on case study AES cipher implementation using sketch. They showed that sketch was able to synthesis the most difficult part of AES implementation and they showed why it is an efficient implementation by comparing its run against and open SSL implementation.
+
+## Symbolic Repairs for GR(1) Specifications
+they have not discussed quality of the repairs, instead they focused on correctness and performance of their tool. They mentioned though the fact that their JVTS can provide multiple repair suggestions, the question of which repair to be used in terms of quality to future work. 
+Important information though is that it seems that the notion of quality that they want to use is defined using the "size of the omega-language statisfying an LTL formula"
+
+## SemFix: 
+For SemFix the evaluation used only the success-rate of repairting and the performance as a measurement against another system that used genetic programming technique for repair.
+
+
+
+
