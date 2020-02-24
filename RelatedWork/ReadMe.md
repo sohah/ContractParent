@@ -122,7 +122,7 @@ Their third contribution is that they provide a repair core, which is a locally 
 - Addition of free unconstrained free variables have quiet overhead.
 Q: still not sure if both JVTS is incomplete besides losing on repairs that yields gamma-unsat.?
 
-### Question of Measuring Quality
+# Question of Measuring Quality
 Combinatorial Sketch for finite programs addressed that by showing on case study AES cipher implementation using sketch. They showed that sketch was able to synthesis the most difficult part of AES implementation and they showed why it is an efficient implementation by comparing its run against and open SSL implementation.
 
 ## Symbolic Repairs for GR(1) Specifications
