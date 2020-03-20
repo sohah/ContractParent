@@ -1,0 +1,147 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><link rel="stylesheet" type="text/css" href="rtwreport.css" /><script language="JavaScript" type="text/javascript">function rtwTableShrink(o) {var t = o.nextSibling;if (t.nodeType != 1) {t = t.nextSibling;}if (t.style.display == "none") {t.style.display = "";o.innerHTML = "[-]"} else {t.style.display = "none";o.innerHTML = "[+] ... "}}</script><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Code Interface Report for GPCA_SW_Functional</title>
+</head>
+<body ONLOAD="try {if (top) {if (top.rtwPageOnLoad) top.rtwPageOnLoad('rtwIdCodeInterface'); else local_onload();}} catch(err) {};"><h1>Code Interface Report for GPCA_SW_Functional</h1>
+<h3>Table of Contents</h3>
+<ul><li><a href="#sec_Entry_Point_Functions">Entry Point Functions</a>
+</li>
+<li><a href="#sec_Inports">Inports</a>
+</li>
+<li><a href="#sec_Outports">Outports</a>
+</li>
+<li><a href="#sec_Interface_Parameters">Interface Parameters</a>
+</li>
+<li><a href="#sec_Data_Stores">Data Stores</a>
+</li>
+</ul>
+<h3><a name="sec_Entry_Point_Functions">Entry Point Functions</a>
+</h3>
+<p align="left">Function: <a href="GPCA_SW_Functional_c.html#fcn_GPCA_SW_Functional_initialize">GPCA_SW_Functional_initialize</a></p>
+<table width="100%" class="AltRow" cellspacing="0"><tr class="even"><td width="25%" align="left">Prototype</td>
+<td width="75%" align="left"><b>void GPCA_SW_Functional_initialize(void)</b>
+</td>
+</tr>
+<tr class="odd"><td width="25%" align="left">Description</td>
+<td width="75%" align="left">Initialization entry point of generated code</td>
+</tr>
+<tr class="even"><td width="25%" align="left">Timing</td>
+<td width="75%" align="left">Called once</td>
+</tr>
+<tr class="odd"><td width="25%" align="left">Arguments</td>
+<td width="75%" align="left">None</td>
+</tr>
+<tr class="even"><td width="25%" align="left">Return value</td>
+<td width="75%" align="left">None</td>
+</tr>
+<tr class="odd"><td width="25%" align="left">Header file</td>
+<td width="75%" align="left"><a href="GPCA_SW_Functional_h.html">GPCA_SW_Functional.h</a></td>
+</tr>
+</table>
+<p align="left">Function: <a href="GPCA_SW_Functional_c.html#fcn_GPCA_SW_Functional_step">GPCA_SW_Functional_step</a></p>
+<table width="100%" class="AltRow" cellspacing="0"><tr class="even"><td width="25%" align="left">Prototype</td>
+<td width="75%" align="left"><b>void GPCA_SW_Functional_step(void)</b>
+</td>
+</tr>
+<tr class="odd"><td width="25%" align="left">Description</td>
+<td width="75%" align="left">Output entry point of generated code</td>
+</tr>
+<tr class="even"><td width="25%" align="left">Timing</td>
+<td width="75%" align="left">Called periodically, every 1 second</td>
+</tr>
+<tr class="odd"><td width="25%" align="left">Arguments</td>
+<td width="75%" align="left">None</td>
+</tr>
+<tr class="even"><td width="25%" align="left">Return value</td>
+<td width="75%" align="left">None</td>
+</tr>
+<tr class="odd"><td width="25%" align="left">Header file</td>
+<td width="75%" align="left"><a href="GPCA_SW_Functional_h.html">GPCA_SW_Functional.h</a></td>
+</tr>
+</table>
+<p align="left">Function: <a href="GPCA_SW_Functional_c.html#fcn_GPCA_SW_Functional_terminate">GPCA_SW_Functional_terminate</a></p>
+<table width="100%" class="AltRow" cellspacing="0"><tr class="even"><td width="25%" align="left">Prototype</td>
+<td width="75%" align="left"><b>void GPCA_SW_Functional_terminate(void)</b>
+</td>
+</tr>
+<tr class="odd"><td width="25%" align="left">Description</td>
+<td width="75%" align="left">Termination entry point of generated code</td>
+</tr>
+<tr class="even"><td width="25%" align="left">Timing</td>
+<td width="75%" align="left">Called once</td>
+</tr>
+<tr class="odd"><td width="25%" align="left">Arguments</td>
+<td width="75%" align="left">None</td>
+</tr>
+<tr class="even"><td width="25%" align="left">Return value</td>
+<td width="75%" align="left">None</td>
+</tr>
+<tr class="odd"><td width="25%" align="left">Header file</td>
+<td width="75%" align="left"><a href="GPCA_SW_Functional_h.html">GPCA_SW_Functional.h</a></td>
+</tr>
+</table>
+<h3><a name="sec_Inports">Inports</a>
+</h3>
+<span title="Click to shrink or expand table" onclick="rtwTableShrink(this)">[-]</span><table width="100%" class="AltRow FirstColumn" cellspacing="0"><tr class="heading"><td width="40%" align="left"><b>Block Name</b>
+</td>
+<td width="25%" align="left"><b>Code Identifier</b>
+</td>
+<td width="25%" align="left"><b>Data Type</b>
+</td>
+<td width="10%" align="right"><b>Dimension</b>
+</td>
+</tr>
+<tr class="even"><td width="40%" align="left">&lt;Root&gt;/SENSOR_IN</td>
+<td width="25%" align="left">GPCA_SW_Functional_U.SENSOR_IN</td>
+<td width="25%" align="left">Device_Sensor_Inputs</td>
+<td width="10%" align="right">1</td>
+</tr>
+<tr class="odd"><td width="40%" align="left">&lt;Root&gt;/CONST_IN</td>
+<td width="25%" align="left">GPCA_SW_Functional_U.CONST_IN</td>
+<td width="25%" align="left">Device_Configuration_Inputs</td>
+<td width="10%" align="right">1</td>
+</tr>
+<tr class="even"><td width="40%" align="left">&lt;Root&gt;/OP_CMD_IN</td>
+<td width="25%" align="left">GPCA_SW_Functional_U.OP_CMD_IN</td>
+<td width="25%" align="left">Operator_Commands</td>
+<td width="10%" align="right">1</td>
+</tr>
+<tr class="odd"><td width="40%" align="left">&lt;Root&gt;/DB_IN</td>
+<td width="25%" align="left">GPCA_SW_Functional_U.DB_IN</td>
+<td width="25%" align="left">Drug_Database_Inputs</td>
+<td width="10%" align="right">1</td>
+</tr>
+<tr class="even"><td width="40%" align="left">&lt;Root&gt;/PRES_IN</td>
+<td width="25%" align="left">GPCA_SW_Functional_U.PRES_IN</td>
+<td width="25%" align="left">Prescription_Inputs</td>
+<td width="10%" align="right">1</td>
+</tr>
+<tr class="odd"><td width="40%" align="left">&lt;Root&gt;/PATIENT_IN</td>
+<td width="25%" align="left">GPCA_SW_Functional_U.PATIENT_IN</td>
+<td width="25%" align="left">Patient_Inputs</td>
+<td width="10%" align="right">1</td>
+</tr>
+</table>
+<h3><a name="sec_Outports">Outports</a>
+</h3>
+<table width="100%" class="AltRow FirstColumn" cellspacing="0"><tr class="heading"><td width="40%" align="left"><b>Block Name</b>
+</td>
+<td width="25%" align="left"><b>Code Identifier</b>
+</td>
+<td width="25%" align="left"><b>Data Type</b>
+</td>
+<td width="10%" align="right"><b>Dimension</b>
+</td>
+</tr>
+<tr class="even"><td width="40%" align="left">&lt;Root&gt;/GPCA_SW_OUT</td>
+<td width="25%" align="left">GPCA_SW_Functional_Y.GPCA_SW_OUT</td>
+<td width="25%" align="left">GPCA_SW_Outputs</td>
+<td width="10%" align="right">1</td>
+</tr>
+</table>
+<h3><a name="sec_Interface_Parameters">Interface Parameters</a>
+</h3>
+<p align="left">No interface/tunable parameters in model.</p>
+<h3><a name="sec_Data_Stores">Data Stores</a>
+</h3>
+<p align="left">No data stores in the model; note that this report lists only data stores with non-auto storage class and global data stores</p>
+</body>
+</html>

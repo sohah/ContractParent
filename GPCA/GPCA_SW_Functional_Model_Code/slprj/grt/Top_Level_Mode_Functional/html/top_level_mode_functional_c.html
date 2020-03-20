@@ -1,0 +1,259 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - Top_Level_Mode_Functional.c</title>
+<style> .LN { font-style: italic; color: #888888 } </style>
+<style> .CT { font-style: italic; color: #117755 } </style>
+<style> .PP { font-style: bold;   color: #992211 } </style>
+<style> .KW { font-style: bold;   color: #112266 } </style>
+<style> .DT { font-style: bold;   color: #112266 } </style>
+<link rel="stylesheet" type="text/css" href="rtwreport.css"></link><script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<SCRIPT type="text/javascript" src="rtwannotate.js"></SCRIPT>
+</head>
+<body bgcolor="#eeeeee" text="#1122aa" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};if (typeof rtwannotate === 'function') {rtwannotate('Top_Level_Mode_Functional_c_cov.xml');}">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../Top_Level_Mode_Functional.c" target="rtwreport_document_frame" id="linkToText_plain">Top_Level_Mode_Functional.c</a></h4>
+<pre id="RTWcode">
+<span><a class="LN" name="1">    1   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="2">    2   </a><span class="CT"> * Code generation for system model 'Top_Level_Mode_Functional'</span>
+</span><span><a class="LN" name="3">    3   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="4">    4   </a><span class="CT"> * Model                      : Top_Level_Mode_Functional</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> * Model version              : 1.1167</span>
+</span><span><a class="LN" name="6">    6   </a><span class="CT"> * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013</span>
+</span><span><a class="LN" name="7">    7   </a><span class="CT"> * C source code generated on : Thu Sep 12 09:50:34 2013</span>
+</span><span><a class="LN" name="8">    8   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="9">    9   </a><span class="CT"> * Note that the functions contained in this file are part of a Simulink</span>
+</span><span><a class="LN" name="10">   10   </a><span class="CT"> * model, and are not self-contained algorithms.</span>
+</span><span><a class="LN" name="11">   11   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="12">   12   </a>
+</span><span><a class="LN" name="13">   13   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;Top_Level_Mode_Functional.h&quot;</font>
+</span><span><a class="LN" name="14">   14   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;Top_Level_Mode_Functional_private.h&quot;</font>
+</span><span><a class="LN" name="15">   15   </a>
+</span><span><a class="LN" name="16">   16   </a><span class="CT">/* Named constants for Chart: '&lt;Root&gt;/Top Level Mode Sub-System' */</span>
+</span><span><a class="LN" name="17">   17   </a><font color="#992211">#</font><span class="PP">define</span> Top_Level_Mode_Functional_IN_Confirm_Stop ((uint8_T)1U)
+</span><span><a class="LN" name="18">   18   </a><font color="#992211">#</font><span class="PP">define</span> Top_Level_Mode_Functional_IN_NOT_ON ((uint8_T)1U)
+</span><span><a class="LN" name="19">   19   </a><font color="#992211">#</font><span class="PP">define</span> Top_Level_Mode_Functional_IN_NO_ACTIVE_CHILD ((uint8_T)0U)
+</span><span><a class="LN" name="20">   20   </a><font color="#992211">#</font><span class="PP">define</span> Top_Level_Mode_Functional_IN_OFF ((uint8_T)1U)
+</span><span><a class="LN" name="21">   21   </a><font color="#992211">#</font><span class="PP">define</span> Top_Level_Mode_Functional_IN_ON ((uint8_T)2U)
+</span><span><a class="LN" name="22">   22   </a><font color="#992211">#</font><span class="PP">define</span> Top_Level_Mode_Functional_IN_TOP_Level_Mode ((uint8_T)2U)
+</span><span><a class="LN" name="23">   23   </a>
+</span><span><a class="LN" name="24">   24   </a><span class="CT">/* Forward declaration for local functions */</span>
+</span><span><a class="LN" name="25">   25   </a><span class="DT">static</span> <span class="DT">void</span> <a href="#fcn_Top_Level_Mode_Functional_writeLog" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_Top_Level_Mode_Functional_writeLog');" target="rtwreport_document_frame"><font color="#1122aa">Top_Level_Mode_Functional_writeLog</font></a>(uint8_T logEvent,
+</span><span><a class="LN" name="26">   26   </a>  <a href="Top_Level_Mode_Functional_h.html#type_B_Top_Level_Mode_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_Top_Level_Mode_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_Top_Level_Mode_Functional_c_T</font></a> *localB);
+</span><span><a class="LN" name="27">   27   </a><span class="DT">static</span> real_T <a href="#fcn_Top_Level_Mode_Functional_Step_Scaling_Factor" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_Top_Level_Mode_Functional_Step_Scaling_Factor');" target="rtwreport_document_frame"><font color="#1122aa">Top_Level_Mode_Functional_Step_Scaling_Factor</font></a>(uint8_T inputVal);
+</span><span><a class="LN" name="28">   28   </a>
+</span><span><a class="LN" name="29">   29   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Top Level Mode Sub-System' */</span>
+</span><span><a class="LN" name="30">   30   </a><span class="DT">static</span> <span class="DT">void</span> <a name="fcn_Top_Level_Mode_Functional_writeLog">Top_Level_Mode_Functional_writeLog</a>(uint8_T logEvent,
+</span><span><a class="LN" name="31">   31   </a>  <a href="Top_Level_Mode_Functional_h.html#type_B_Top_Level_Mode_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_Top_Level_Mode_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_Top_Level_Mode_Functional_c_T</font></a> *localB)
+</span><span><a class="LN" name="32">   32   </a><b>{</b>
+</span><span><a class="LN" name="33">   33   </a>  <span class="CT">/* Graphical Function 'writeLog': '&lt;S1&gt;:4072' */</span>
+</span><span><a class="LN" name="34">   34   </a>  <span class="CT">/* Transition: '&lt;S1&gt;:4065' */</span>
+</span><span><a class="LN" name="35">   35   </a>  localB-&gt;TLM_MODE_OUT_Log_Message_ID = logEvent;
+</span><span><a class="LN" name="36">   36   </a><b>}</b>
+</span><span><a class="LN" name="37">   37   </a>
+</span><span><a class="LN" name="38">   38   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Top Level Mode Sub-System' */</span>
+</span><span><a class="LN" name="39">   39   </a><span class="DT">static</span> real_T <a name="fcn_Top_Level_Mode_Functional_Step_Scaling_Factor">Top_Level_Mode_Functional_Step_Scaling_Factor</a>(uint8_T inputVal)
+</span><span><a class="LN" name="40">   40   </a><b>{</b>
+</span><span><a class="LN" name="41">   41   </a>  <span class="CT">/* Graphical Function 'Step_Scaling_Factor': '&lt;S1&gt;:4070' */</span>
+</span><span><a class="LN" name="42">   42   </a>  <span class="CT">/* Transition: '&lt;S1&gt;:4064' */</span>
+</span><span><a class="LN" name="43">   43   </a>  <span class="KW">return</span> inputVal;
+</span><span><a class="LN" name="44">   44   </a><b>}</b>
+</span><span><a class="LN" name="45">   45   </a>
+</span><span><a class="LN" name="46">   46   </a><span class="CT">/* Initial conditions for referenced model: 'Top_Level_Mode_Functional' */</span>
+</span><span><a class="LN" name="47">   47   </a><span class="DT">void</span> <a name="fcn_Top_Level_Mode_Functional_Init">Top_Level_Mode_Functional_Init</a>(<a href="Top_Level_Mode_Functional_h.html#type_B_Top_Level_Mode_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_Top_Level_Mode_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_Top_Level_Mode_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="48">   48   </a>  <a href="Top_Level_Mode_Functional_h.html#type_DW_Top_Level_Mode_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_Top_Level_Mode_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_Top_Level_Mode_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="49">   49   </a><b>{</b>
+</span><span><a class="LN" name="50">   50   </a>  <span class="CT">/* InitializeConditions for Chart: '&lt;Root&gt;/Top Level Mode Sub-System' */</span>
+</span><span><a class="LN" name="51">   51   </a>  localDW-&gt;is_TOP_Level_Mode = Top_Level_Mode_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="52">   52   </a>  localDW-&gt;is_Confirm_Stop = Top_Level_Mode_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="53">   53   </a>  localDW-&gt;is_active_c2_Top_Level_Mode_Functional = 0U;
+</span><span><a class="LN" name="54">   54   </a>  localDW-&gt;is_c2_Top_Level_Mode_Functional =
+</span><span><a class="LN" name="55">   55   </a>    Top_Level_Mode_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="56">   56   </a>  localDW-&gt;confirmStopTimer = 0.0;
+</span><span><a class="LN" name="57">   57   </a>  localB-&gt;TLM_MODE_OUT_Request_Confirm_Stop = FALSE;
+</span><span><a class="LN" name="58">   58   </a>  localB-&gt;TLM_MODE_OUT_Log_Message_ID = 0U;
+</span><span><a class="LN" name="59">   59   </a><b>}</b>
+</span><span><a class="LN" name="60">   60   </a>
+</span><span><a class="LN" name="61">   61   </a><span class="CT">/* Output and update for referenced model: 'Top_Level_Mode_Functional' */</span>
+</span><span><a class="LN" name="62">   62   </a><span class="DT">void</span> <a name="fcn_Top_Level_Mode_Functional">Top_Level_Mode_Functional</a>(<span class="DT">const</span> <a href="Top_Level_Mode_Functional_types_h.html#type_Operator_Commands" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Operator_Commands');" target="rtwreport_document_frame"><font color="#1122aa">Operator_Commands</font></a> *rtu_OP_CMD_IN, <span class="DT">const</span>
+</span><span><a class="LN" name="63">   63   </a>  <a href="Top_Level_Mode_Functional_types_h.html#type_Device_Configuration_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Device_Configuration_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Device_Configuration_Inputs</font></a> *rtu_CONST_IN, <a href="Top_Level_Mode_Functional_types_h.html#type_Top_Level_Mode_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Top_Level_Mode_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Top_Level_Mode_Outputs</font></a>
+</span><span><a class="LN" name="64">   64   </a>  *rty_TLM_MODE_OUT, <a href="Top_Level_Mode_Functional_h.html#type_B_Top_Level_Mode_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_Top_Level_Mode_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_Top_Level_Mode_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="65">   65   </a>  <a href="Top_Level_Mode_Functional_h.html#type_DW_Top_Level_Mode_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_Top_Level_Mode_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_Top_Level_Mode_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="66">   66   </a><b>{</b>
+</span><span><a class="LN" name="67">   67   </a>  boolean_T System_Stop;
+</span><span><a class="LN" name="68">   68   </a>  boolean_T Cancel;
+</span><span><a class="LN" name="69">   69   </a>  boolean_T TLM_MODE_OUT_System_On;
+</span><span><a class="LN" name="70">   70   </a>
+</span><span><a class="LN" name="71">   71   </a>  <span class="CT">/* BusSelector: '&lt;Root&gt;/BusConversion_InsertedFor_OP_CMD_IN_at_outport_0' */</span>
+</span><span><a class="LN" name="72">   72   </a>  System_Stop = rtu_OP_CMD_IN-&gt;System_Stop;
+</span><span><a class="LN" name="73">   73   </a>  Cancel = rtu_OP_CMD_IN-&gt;Cancel;
+</span><span><a class="LN" name="74">   74   </a>
+</span><span><a class="LN" name="75">   75   </a>  <span class="CT">/* Chart: '&lt;Root&gt;/Top Level Mode Sub-System' incorporates:</span>
+</span><span><a class="LN" name="76">   76   </a><span class="CT">   *  BusSelector: '&lt;Root&gt;/BusConversion_InsertedFor_CONST_IN_at_outport_0'</span>
+</span><span><a class="LN" name="77">   77   </a><span class="CT">   *  BusSelector: '&lt;Root&gt;/BusConversion_InsertedFor_OP_CMD_IN_at_outport_0'</span>
+</span><span><a class="LN" name="78">   78   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="79">   79   </a>  <span class="CT">/* Gateway: Top Level Mode Sub-System */</span>
+</span><span><a class="LN" name="80">   80   </a>  <span class="CT">/* During: Top Level Mode Sub-System */</span>
+</span><span><a class="LN" name="81">   81   </a>  <span class="KW">if</span> (localDW-&gt;is_active_c2_Top_Level_Mode_Functional == 0U) <b>{</b>
+</span><span><a class="LN" name="82">   82   </a>    <span class="CT">/* Entry: Top Level Mode Sub-System */</span>
+</span><span><a class="LN" name="83">   83   </a>    localDW-&gt;is_active_c2_Top_Level_Mode_Functional = 1U;
+</span><span><a class="LN" name="84">   84   </a>
+</span><span><a class="LN" name="85">   85   </a>    <span class="CT">/* Entry Internal: Top Level Mode Sub-System */</span>
+</span><span><a class="LN" name="86">   86   </a>    <span class="KW">if</span> (rtu_OP_CMD_IN-&gt;System_Start) <b>{</b>
+</span><span><a class="LN" name="87">   87   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4040' */</span>
+</span><span><a class="LN" name="88">   88   </a>      localDW-&gt;is_c2_Top_Level_Mode_Functional =
+</span><span><a class="LN" name="89">   89   </a>        Top_Level_Mode_Functional_IN_TOP_Level_Mode;
+</span><span><a class="LN" name="90">   90   </a>
+</span><span><a class="LN" name="91">   91   </a>      <span class="CT">/* Entry 'TOP_Level_Mode': '&lt;S1&gt;:4024' */</span>
+</span><span><a class="LN" name="92">   92   </a>      TLM_MODE_OUT_System_On = TRUE;
+</span><span><a class="LN" name="93">   93   </a>
+</span><span><a class="LN" name="94">   94   </a>      <span class="CT">/* Entry Internal 'TOP_Level_Mode': '&lt;S1&gt;:4024' */</span>
+</span><span><a class="LN" name="95">   95   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4056' */</span>
+</span><span><a class="LN" name="96">   96   </a>      localDW-&gt;is_TOP_Level_Mode = Top_Level_Mode_Functional_IN_Confirm_Stop;
+</span><span><a class="LN" name="97">   97   </a>
+</span><span><a class="LN" name="98">   98   </a>      <span class="CT">/* Entry Internal 'Confirm_Stop': '&lt;S1&gt;:4050' */</span>
+</span><span><a class="LN" name="99">   99   </a>      <span class="KW">if</span> (rtu_OP_CMD_IN-&gt;System_Stop) <b>{</b>
+</span><span><a class="LN" name="100">  100   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4057' */</span>
+</span><span><a class="LN" name="101">  101   </a>        localDW-&gt;is_Confirm_Stop = Top_Level_Mode_Functional_IN_ON;
+</span><span><a class="LN" name="102">  102   </a>
+</span><span><a class="LN" name="103">  103   </a>        <span class="CT">/* Entry 'ON': '&lt;S1&gt;:4055' */</span>
+</span><span><a class="LN" name="104">  104   </a>        localB-&gt;TLM_MODE_OUT_Request_Confirm_Stop = TRUE;
+</span><span><a class="LN" name="105">  105   </a>        localDW-&gt;confirmStopTimer++;
+</span><span><a class="LN" name="106">  106   </a>      <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="107">  107   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4051' */</span>
+</span><span><a class="LN" name="108">  108   </a>        localDW-&gt;is_Confirm_Stop = Top_Level_Mode_Functional_IN_OFF;
+</span><span><a class="LN" name="109">  109   </a>
+</span><span><a class="LN" name="110">  110   </a>        <span class="CT">/* Entry 'OFF': '&lt;S1&gt;:4054' */</span>
+</span><span><a class="LN" name="111">  111   </a>        localB-&gt;TLM_MODE_OUT_Request_Confirm_Stop = FALSE;
+</span><span><a class="LN" name="112">  112   </a>        localDW-&gt;confirmStopTimer = 0.0;
+</span><span><a class="LN" name="113">  113   </a>      <b>}</b>
+</span><span><a class="LN" name="114">  114   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="115">  115   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4038' */</span>
+</span><span><a class="LN" name="116">  116   </a>      localDW-&gt;is_c2_Top_Level_Mode_Functional =
+</span><span><a class="LN" name="117">  117   </a>        Top_Level_Mode_Functional_IN_NOT_ON;
+</span><span><a class="LN" name="118">  118   </a>
+</span><span><a class="LN" name="119">  119   </a>      <span class="CT">/* Entry 'NOT_ON': '&lt;S1&gt;:4034' */</span>
+</span><span><a class="LN" name="120">  120   </a>      TLM_MODE_OUT_System_On = FALSE;
+</span><span><a class="LN" name="121">  121   </a>    <b>}</b>
+</span><span><a class="LN" name="122">  122   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (localDW-&gt;is_c2_Top_Level_Mode_Functional ==
+</span><span><a class="LN" name="123">  123   </a>             Top_Level_Mode_Functional_IN_NOT_ON) <b>{</b>
+</span><span><a class="LN" name="124">  124   </a>    <span class="CT">/* During 'NOT_ON': '&lt;S1&gt;:4034' */</span>
+</span><span><a class="LN" name="125">  125   </a>    <span class="KW">if</span> (rtu_OP_CMD_IN-&gt;System_Start) <b>{</b>
+</span><span><a class="LN" name="126">  126   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4042' */</span>
+</span><span><a class="LN" name="127">  127   </a>      <a href="#fcn_Top_Level_Mode_Functional_writeLog" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_Top_Level_Mode_Functional_writeLog');" target="rtwreport_document_frame"><font color="#1122aa">Top_Level_Mode_Functional_writeLog</font></a>(1U, localB);
+</span><span><a class="LN" name="128">  128   </a>
+</span><span><a class="LN" name="129">  129   </a>      <span class="CT">/* Exit 'NOT_ON': '&lt;S1&gt;:4034' */</span>
+</span><span><a class="LN" name="130">  130   </a>      localDW-&gt;is_c2_Top_Level_Mode_Functional =
+</span><span><a class="LN" name="131">  131   </a>        Top_Level_Mode_Functional_IN_TOP_Level_Mode;
+</span><span><a class="LN" name="132">  132   </a>
+</span><span><a class="LN" name="133">  133   </a>      <span class="CT">/* Entry 'TOP_Level_Mode': '&lt;S1&gt;:4024' */</span>
+</span><span><a class="LN" name="134">  134   </a>      TLM_MODE_OUT_System_On = TRUE;
+</span><span><a class="LN" name="135">  135   </a>
+</span><span><a class="LN" name="136">  136   </a>      <span class="CT">/* Entry Internal 'TOP_Level_Mode': '&lt;S1&gt;:4024' */</span>
+</span><span><a class="LN" name="137">  137   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4056' */</span>
+</span><span><a class="LN" name="138">  138   </a>      localDW-&gt;is_TOP_Level_Mode = Top_Level_Mode_Functional_IN_Confirm_Stop;
+</span><span><a class="LN" name="139">  139   </a>
+</span><span><a class="LN" name="140">  140   </a>      <span class="CT">/* Entry Internal 'Confirm_Stop': '&lt;S1&gt;:4050' */</span>
+</span><span><a class="LN" name="141">  141   </a>      <span class="KW">if</span> (System_Stop) <b>{</b>
+</span><span><a class="LN" name="142">  142   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4057' */</span>
+</span><span><a class="LN" name="143">  143   </a>        localDW-&gt;is_Confirm_Stop = Top_Level_Mode_Functional_IN_ON;
+</span><span><a class="LN" name="144">  144   </a>
+</span><span><a class="LN" name="145">  145   </a>        <span class="CT">/* Entry 'ON': '&lt;S1&gt;:4055' */</span>
+</span><span><a class="LN" name="146">  146   </a>        localB-&gt;TLM_MODE_OUT_Request_Confirm_Stop = TRUE;
+</span><span><a class="LN" name="147">  147   </a>        localDW-&gt;confirmStopTimer++;
+</span><span><a class="LN" name="148">  148   </a>      <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="149">  149   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4051' */</span>
+</span><span><a class="LN" name="150">  150   </a>        localDW-&gt;is_Confirm_Stop = Top_Level_Mode_Functional_IN_OFF;
+</span><span><a class="LN" name="151">  151   </a>
+</span><span><a class="LN" name="152">  152   </a>        <span class="CT">/* Entry 'OFF': '&lt;S1&gt;:4054' */</span>
+</span><span><a class="LN" name="153">  153   </a>        localB-&gt;TLM_MODE_OUT_Request_Confirm_Stop = FALSE;
+</span><span><a class="LN" name="154">  154   </a>        localDW-&gt;confirmStopTimer = 0.0;
+</span><span><a class="LN" name="155">  155   </a>      <b>}</b>
+</span><span><a class="LN" name="156">  156   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="157">  157   </a>      TLM_MODE_OUT_System_On = FALSE;
+</span><span><a class="LN" name="158">  158   </a>    <b>}</b>
+</span><span><a class="LN" name="159">  159   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="160">  160   </a>    <span class="CT">/* During 'TOP_Level_Mode': '&lt;S1&gt;:4024' */</span>
+</span><span><a class="LN" name="161">  161   </a>    TLM_MODE_OUT_System_On = TRUE;
+</span><span><a class="LN" name="162">  162   </a>
+</span><span><a class="LN" name="163">  163   </a>    <span class="CT">/* During 'Confirm_Stop': '&lt;S1&gt;:4050' */</span>
+</span><span><a class="LN" name="164">  164   </a>    <span class="KW">if</span> (localDW-&gt;is_Confirm_Stop == Top_Level_Mode_Functional_IN_OFF) <b>{</b>
+</span><span><a class="LN" name="165">  165   </a>      <span class="CT">/* During 'OFF': '&lt;S1&gt;:4054' */</span>
+</span><span><a class="LN" name="166">  166   </a>      <span class="KW">if</span> (rtu_OP_CMD_IN-&gt;System_Stop) <b>{</b>
+</span><span><a class="LN" name="167">  167   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4052' */</span>
+</span><span><a class="LN" name="168">  168   </a>        localDW-&gt;is_Confirm_Stop = Top_Level_Mode_Functional_IN_ON;
+</span><span><a class="LN" name="169">  169   </a>
+</span><span><a class="LN" name="170">  170   </a>        <span class="CT">/* Entry 'ON': '&lt;S1&gt;:4055' */</span>
+</span><span><a class="LN" name="171">  171   </a>        localB-&gt;TLM_MODE_OUT_Request_Confirm_Stop = TRUE;
+</span><span><a class="LN" name="172">  172   </a>        localDW-&gt;confirmStopTimer++;
+</span><span><a class="LN" name="173">  173   </a>      <b>}</b>
+</span><span><a class="LN" name="174">  174   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="175">  175   </a>      <span class="CT">/* During 'ON': '&lt;S1&gt;:4055' */</span>
+</span><span><a class="LN" name="176">  176   </a>      <span class="KW">if</span> (!rtu_OP_CMD_IN-&gt;System_Start) <b>{</b>
+</span><span><a class="LN" name="177">  177   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4039' */</span>
+</span><span><a class="LN" name="178">  178   </a>        <a href="#fcn_Top_Level_Mode_Functional_writeLog" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_Top_Level_Mode_Functional_writeLog');" target="rtwreport_document_frame"><font color="#1122aa">Top_Level_Mode_Functional_writeLog</font></a>(2U, localB);
+</span><span><a class="LN" name="179">  179   </a>
+</span><span><a class="LN" name="180">  180   </a>        <span class="CT">/* Exit Internal 'TOP_Level_Mode': '&lt;S1&gt;:4024' */</span>
+</span><span><a class="LN" name="181">  181   </a>        <span class="CT">/* Exit Internal 'Confirm_Stop': '&lt;S1&gt;:4050' */</span>
+</span><span><a class="LN" name="182">  182   </a>        localDW-&gt;is_Confirm_Stop = Top_Level_Mode_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="183">  183   </a>        localDW-&gt;is_TOP_Level_Mode =
+</span><span><a class="LN" name="184">  184   </a>          Top_Level_Mode_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="185">  185   </a>
+</span><span><a class="LN" name="186">  186   </a>        <span class="CT">/* Exit 'TOP_Level_Mode': '&lt;S1&gt;:4024' */</span>
+</span><span><a class="LN" name="187">  187   </a>        localDW-&gt;is_c2_Top_Level_Mode_Functional =
+</span><span><a class="LN" name="188">  188   </a>          Top_Level_Mode_Functional_IN_NOT_ON;
+</span><span><a class="LN" name="189">  189   </a>
+</span><span><a class="LN" name="190">  190   </a>        <span class="CT">/* Entry 'NOT_ON': '&lt;S1&gt;:4034' */</span>
+</span><span><a class="LN" name="191">  191   </a>        TLM_MODE_OUT_System_On = FALSE;
+</span><span><a class="LN" name="192">  192   </a>      <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="193">  193   </a>        <span class="KW">if</span> (Cancel || (localDW-&gt;confirmStopTimer &gt;
+</span><span><a class="LN" name="194">  194   </a>                       <a href="#fcn_Top_Level_Mode_Functional_Step_Scaling_Factor" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_Top_Level_Mode_Functional_Step_Scaling_Factor');" target="rtwreport_document_frame"><font color="#1122aa">Top_Level_Mode_Functional_Step_Scaling_Factor</font></a>
+</span><span><a class="LN" name="195">  195   </a>                       (rtu_CONST_IN-&gt;Max_Confirm_Stop_Duration))) <b>{</b>
+</span><span><a class="LN" name="196">  196   </a>          <span class="CT">/* Transition: '&lt;S1&gt;:4053' */</span>
+</span><span><a class="LN" name="197">  197   </a>          localDW-&gt;is_Confirm_Stop = Top_Level_Mode_Functional_IN_OFF;
+</span><span><a class="LN" name="198">  198   </a>
+</span><span><a class="LN" name="199">  199   </a>          <span class="CT">/* Entry 'OFF': '&lt;S1&gt;:4054' */</span>
+</span><span><a class="LN" name="200">  200   </a>          localB-&gt;TLM_MODE_OUT_Request_Confirm_Stop = FALSE;
+</span><span><a class="LN" name="201">  201   </a>          localDW-&gt;confirmStopTimer = 0.0;
+</span><span><a class="LN" name="202">  202   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="203">  203   </a>          localDW-&gt;confirmStopTimer++;
+</span><span><a class="LN" name="204">  204   </a>        <b>}</b>
+</span><span><a class="LN" name="205">  205   </a>      <b>}</b>
+</span><span><a class="LN" name="206">  206   </a>    <b>}</b>
+</span><span><a class="LN" name="207">  207   </a>  <b>}</b>
+</span><span><a class="LN" name="208">  208   </a>
+</span><span><a class="LN" name="209">  209   </a>  <span class="CT">/* End of Chart: '&lt;Root&gt;/Top Level Mode Sub-System' */</span>
+</span><span><a class="LN" name="210">  210   </a>
+</span><span><a class="LN" name="211">  211   </a>  <span class="CT">/* BusCreator: '&lt;Root&gt;/BusConversion_InsertedFor_TLM_MODE_OUT_at_inport_0' */</span>
+</span><span><a class="LN" name="212">  212   </a>  rty_TLM_MODE_OUT-&gt;System_On = TLM_MODE_OUT_System_On;
+</span><span><a class="LN" name="213">  213   </a>  rty_TLM_MODE_OUT-&gt;Request_Confirm_Stop =
+</span><span><a class="LN" name="214">  214   </a>    localB-&gt;TLM_MODE_OUT_Request_Confirm_Stop;
+</span><span><a class="LN" name="215">  215   </a>  rty_TLM_MODE_OUT-&gt;Log_Message_ID = localB-&gt;TLM_MODE_OUT_Log_Message_ID;
+</span><span><a class="LN" name="216">  216   </a><b>}</b>
+</span><span><a class="LN" name="217">  217   </a>
+</span><span><a class="LN" name="218">  218   </a><span class="CT">/* Model initialize function */</span>
+</span><span><a class="LN" name="219">  219   </a><span class="DT">void</span> <a name="fcn_Top_Level_Mode_Functional_initialize">Top_Level_Mode_Functional_initialize</a>(<span class="DT">const</span> char_T **rt_errorStatus,
+</span><span><a class="LN" name="220">  220   </a>  <a href="Top_Level_Mode_Functional_types_h.html#type_RT_MODEL_Top_Level_Mode_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_Top_Level_Mode_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">RT_MODEL_Top_Level_Mode_Functional_T</font></a> *<span class="DT">const</span> Top_Level_Mode_Functional_M,
+</span><span><a class="LN" name="221">  221   </a>  <a href="Top_Level_Mode_Functional_h.html#type_B_Top_Level_Mode_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_Top_Level_Mode_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_Top_Level_Mode_Functional_c_T</font></a> *localB, <a href="Top_Level_Mode_Functional_h.html#type_DW_Top_Level_Mode_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_Top_Level_Mode_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_Top_Level_Mode_Functional_f_T</font></a>
+</span><span><a class="LN" name="222">  222   </a>  *localDW)
+</span><span><a class="LN" name="223">  223   </a><b>{</b>
+</span><span><a class="LN" name="224">  224   </a>  <span class="CT">/* Registration code */</span>
+</span><span><a class="LN" name="225">  225   </a>
+</span><span><a class="LN" name="226">  226   </a>  <span class="CT">/* initialize error status */</span>
+</span><span><a class="LN" name="227">  227   </a>  rtmSetErrorStatusPointer(Top_Level_Mode_Functional_M, rt_errorStatus);
+</span><span><a class="LN" name="228">  228   </a>
+</span><span><a class="LN" name="229">  229   </a>  <span class="CT">/* block I/O */</span>
+</span><span><a class="LN" name="230">  230   </a>  (<span class="DT">void</span>) memset(((<span class="DT">void</span> *) localB), 0,
+</span><span><a class="LN" name="231">  231   </a>                <span class="KW">sizeof</span>(<a href="Top_Level_Mode_Functional_h.html#type_B_Top_Level_Mode_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_Top_Level_Mode_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_Top_Level_Mode_Functional_c_T</font></a>));
+</span><span><a class="LN" name="232">  232   </a>
+</span><span><a class="LN" name="233">  233   </a>  <span class="CT">/* states (dwork) */</span>
+</span><span><a class="LN" name="234">  234   </a>  (<span class="DT">void</span>) memset((<span class="DT">void</span> *)localDW, 0,
+</span><span><a class="LN" name="235">  235   </a>                <span class="KW">sizeof</span>(<a href="Top_Level_Mode_Functional_h.html#type_DW_Top_Level_Mode_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_Top_Level_Mode_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_Top_Level_Mode_Functional_f_T</font></a>));
+</span><span><a class="LN" name="236">  236   </a><b>}</b>
+</span><span><a class="LN" name="237">  237   </a>
+</span></pre>
+</td></tr></table>
+</p>
+</body>
+</html>

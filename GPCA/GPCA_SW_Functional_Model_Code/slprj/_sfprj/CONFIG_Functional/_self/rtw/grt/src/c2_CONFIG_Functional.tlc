@@ -1,0 +1,168 @@
+%implements "chartSource" "C"
+%function ChartConfig(block, system) void
+  %createrecord chartConfiguration { ...
+          executeAtInitialization  0 ...
+  }
+  %return chartConfiguration
+%endfunction
+%function ChartDataMap(block, system) void
+  %createrecord ChartDataElements {\
+    NumChartData   25 \
+    ChartDataDefaults {\
+      RecordType   "ChartData"\
+      Dimensions   []\
+      IsTestPoint  0\
+    }\
+    ChartData {\
+      Name         "is_active_c2_CONFIG_Functional"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "is_c2_CONFIG_Functional"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "is_Configuration"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Configuration"\
+    }\
+    ChartData {\
+      Name         "is_Prescription_Config"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Configuration.Prescription_Config"\
+    }\
+    ChartData {\
+      Name         "is_Patient_Drug_info"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Configuration.Prescription_Config.Patient_Drug_info"\
+    }\
+    ChartData {\
+      Name         "is_Infusion_info"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Configuration.Prescription_Config.Infusion_info"\
+    }\
+    ChartData {\
+      Name         "t_DrugConcentration"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_DrugConcentration"\
+    }\
+    ChartData {\
+      Name         "t_DrugName"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_DrugName"\
+    }\
+    ChartData {\
+      Name         "t_Duration_pbolus"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_Duration_pbolus"\
+    }\
+    ChartData {\
+      Name         "t_Duration_sbolus"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_Duration_sbolus"\
+    }\
+    ChartData {\
+      Name         "t_Duration_total"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_Duration_total"\
+    }\
+    ChartData {\
+      Name         "t_FlowRate_basal"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_FlowRate_basal"\
+    }\
+    ChartData {\
+      Name         "t_FlowRate_kvo"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_FlowRate_kvo"\
+    }\
+    ChartData {\
+      Name         "t_FlowRate_pbolus"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_FlowRate_pbolus"\
+    }\
+    ChartData {\
+      Name         "t_FlowRate_sbolus"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_FlowRate_sbolus"\
+    }\
+    ChartData {\
+      Name         "t_Interval_sbolus"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_Interval_sbolus"\
+    }\
+    ChartData {\
+      Name         "t_LockOutPeriod_pbolus"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_LockOutPeriod_pbolus"\
+    }\
+    ChartData {\
+      Name         "t_NumberMax_pbolus"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_NumberMax_pbolus"\
+    }\
+    ChartData {\
+      Name         "t_PatientID"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_PatientID"\
+    }\
+    ChartData {\
+      Name         "t_EnteredReservoirVolume"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_EnteredReservoirVolume"\
+    }\
+    ChartData {\
+      Name         "t_VTBI_total"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "t_VTBI_total"\
+    }\
+    ChartData {\
+      Name         "validate"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "validate"\
+    }\
+    ChartData {\
+      Name         "value"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "value"\
+    }\
+    ChartData {\
+      Name         "New_Configuration"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "New_Configuration"\
+    }\
+    ChartData {\
+      Name         "Selected_Config_Type"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "Selected_Config_Type"\
+    }\
+  }
+  %return ChartDataElements
+%endfunction

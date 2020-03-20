@@ -1,0 +1,910 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - CONFIG_Functional.c</title>
+<style> .LN { font-style: italic; color: #888888 } </style>
+<style> .CT { font-style: italic; color: #117755 } </style>
+<style> .PP { font-style: bold;   color: #992211 } </style>
+<style> .KW { font-style: bold;   color: #112266 } </style>
+<style> .DT { font-style: bold;   color: #112266 } </style>
+<link rel="stylesheet" type="text/css" href="rtwreport.css"></link><script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<SCRIPT type="text/javascript" src="rtwannotate.js"></SCRIPT>
+</head>
+<body bgcolor="#eeeeee" text="#1122aa" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};if (typeof rtwannotate === 'function') {rtwannotate('CONFIG_Functional_c_cov.xml');}">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../CONFIG_Functional.c" target="rtwreport_document_frame" id="linkToText_plain">CONFIG_Functional.c</a></h4>
+<pre id="RTWcode">
+<span><a class="LN" name="1">    1   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="2">    2   </a><span class="CT"> * Code generation for system model 'CONFIG_Functional'</span>
+</span><span><a class="LN" name="3">    3   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="4">    4   </a><span class="CT"> * Model                      : CONFIG_Functional</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> * Model version              : 1.1164</span>
+</span><span><a class="LN" name="6">    6   </a><span class="CT"> * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013</span>
+</span><span><a class="LN" name="7">    7   </a><span class="CT"> * C source code generated on : Thu Sep 12 09:49:47 2013</span>
+</span><span><a class="LN" name="8">    8   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="9">    9   </a><span class="CT"> * Note that the functions contained in this file are part of a Simulink</span>
+</span><span><a class="LN" name="10">   10   </a><span class="CT"> * model, and are not self-contained algorithms.</span>
+</span><span><a class="LN" name="11">   11   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="12">   12   </a>
+</span><span><a class="LN" name="13">   13   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;CONFIG_Functional.h&quot;</font>
+</span><span><a class="LN" name="14">   14   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;CONFIG_Functional_private.h&quot;</font>
+</span><span><a class="LN" name="15">   15   </a>
+</span><span><a class="LN" name="16">   16   </a><span class="CT">/* Named constants for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="17">   17   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_Configuration ((uint8_T)1U)
+</span><span><a class="LN" name="18">   18   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_ConfirmInfusionInitation ((uint8_T)1U)
+</span><span><a class="LN" name="19">   19   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_DisplayErrorMessage ((uint8_T)1U)
+</span><span><a class="LN" name="20">   20   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_DisplayParam ((uint8_T)2U)
+</span><span><a class="LN" name="21">   21   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_GetDrugSafeValues ((uint8_T)3U)
+</span><span><a class="LN" name="22">   22   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_GetInfusionParam ((uint8_T)1U)
+</span><span><a class="LN" name="23">   23   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_GetParam  ((uint8_T)4U)
+</span><span><a class="LN" name="24">   24   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_Infusion_info ((uint8_T)2U)
+</span><span><a class="LN" name="25">   25   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_MAIN      ((uint8_T)1U)
+</span><span><a class="LN" name="26">   26   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_NOT_ON    ((uint8_T)2U)
+</span><span><a class="LN" name="27">   27   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_NO_ACTIVE_CHILD ((uint8_T)0U)
+</span><span><a class="LN" name="28">   28   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_Patient_Drug_info ((uint8_T)3U)
+</span><span><a class="LN" name="29">   29   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_Prescription_Config ((uint8_T)2U)
+</span><span><a class="LN" name="30">   30   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_RequestInfusionParam ((uint8_T)2U)
+</span><span><a class="LN" name="31">   31   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_SelectType ((uint8_T)4U)
+</span><span><a class="LN" name="32">   32   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_ValidateInfusionParam ((uint8_T)3U)
+</span><span><a class="LN" name="33">   33   </a><font color="#992211">#</font><span class="PP">define</span> CONFIG_Functional_IN_ValidateParam ((uint8_T)5U)
+</span><span><a class="LN" name="34">   34   </a>
+</span><span><a class="LN" name="35">   35   </a><span class="CT">/* Forward declaration for local functions */</span>
+</span><span><a class="LN" name="36">   36   </a><span class="DT">static</span> real_T <a href="#fcn_CONFIG_Functional_Step_Scaling_Factor" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_Step_Scaling_Factor');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_Step_Scaling_Factor</font></a>(uint8_T inputVal);
+</span><span><a class="LN" name="37">   37   </a><span class="DT">static</span> <span class="DT">void</span> <a href="#fcn_CONFIG_Functional_writeLog" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_writeLog');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_writeLog</font></a>(uint8_T logEvent, <a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a>
+</span><span><a class="LN" name="38">   38   </a>  *localB);
+</span><span><a class="LN" name="39">   39   </a><span class="DT">static</span> <span class="DT">void</span> <a href="#fcn_CONFIG_Functional_cancelConfigValues" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_cancelConfigValues');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_cancelConfigValues</font></a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="40">   40   </a>  <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="41">   41   </a><span class="DT">static</span> <span class="DT">void</span> <a href="#fcn_CONFIG_Functional_checkIfPrescriptionAvailable" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkIfPrescriptionAvailable');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkIfPrescriptionAvailable</font></a>
+</span><span><a class="LN" name="42">   42   </a>  (<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *localB, <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="43">   43   </a><span class="DT">static</span> <span class="DT">void</span> <a href="#fcn_CONFIG_Functional_saveConfigValues" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_saveConfigValues');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_saveConfigValues</font></a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="44">   44   </a>  <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="45">   45   </a><span class="DT">static</span> <span class="DT">void</span> <a href="#fcn_CONFIG_Functional_copyCurrentValuesToTemp" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_copyCurrentValuesToTemp');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_copyCurrentValuesToTemp</font></a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a>
+</span><span><a class="LN" name="46">   46   </a>  *localB, <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="47">   47   </a><span class="DT">static</span> <span class="DT">void</span> <a href="#fcn_CONFIG_Functional_setReservoirVolume" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_setReservoirVolume');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_setReservoirVolume</font></a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="48">   48   </a>  <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="49">   49   </a><span class="DT">static</span> real_T <a href="#fcn_CONFIG_Functional_checkPatient_DrugParam" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkPatient_DrugParam');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkPatient_DrugParam</font></a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a>
+</span><span><a class="LN" name="50">   50   </a>  *localB, <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="51">   51   </a><span class="DT">static</span> real_T <a href="#fcn_CONFIG_Functional_checkInfusionParam" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkInfusionParam');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkInfusionParam</font></a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a>
+</span><span><a class="LN" name="52">   52   </a>  *localB, <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="53">   53   </a><span class="DT">static</span> real_T <a href="#fcn_CONFIG_Functional_CheckDrugName" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_CheckDrugName');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_CheckDrugName</font></a>(real_T z, <a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *
+</span><span><a class="LN" name="54">   54   </a>  localB);
+</span><span><a class="LN" name="55">   55   </a><span class="DT">static</span> <span class="DT">void</span> <a href="#fcn_CONFIG_Functional_Prescription_Config" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_Prescription_Config');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_Prescription_Config</font></a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a>
+</span><span><a class="LN" name="56">   56   </a>  *localB, <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="57">   57   </a>
+</span><span><a class="LN" name="58">   58   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="59">   59   </a><span class="DT">static</span> real_T <a name="fcn_CONFIG_Functional_Step_Scaling_Factor">CONFIG_Functional_Step_Scaling_Factor</a>(uint8_T inputVal)
+</span><span><a class="LN" name="60">   60   </a><b>{</b>
+</span><span><a class="LN" name="61">   61   </a>  <span class="CT">/* Graphical Function 'Step_Scaling_Factor': '&lt;S1&gt;:4565' */</span>
+</span><span><a class="LN" name="62">   62   </a>  <span class="CT">/* Transition: '&lt;S1&gt;:4566' */</span>
+</span><span><a class="LN" name="63">   63   </a>  <span class="KW">return</span> inputVal;
+</span><span><a class="LN" name="64">   64   </a><b>}</b>
+</span><span><a class="LN" name="65">   65   </a>
+</span><span><a class="LN" name="66">   66   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="67">   67   </a><span class="DT">static</span> <span class="DT">void</span> <a name="fcn_CONFIG_Functional_writeLog">CONFIG_Functional_writeLog</a>(uint8_T logEvent, <a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a>
+</span><span><a class="LN" name="68">   68   </a>  *localB)
+</span><span><a class="LN" name="69">   69   </a><b>{</b>
+</span><span><a class="LN" name="70">   70   </a>  <span class="CT">/* Graphical Function 'writeLog': '&lt;S1&gt;:4537' */</span>
+</span><span><a class="LN" name="71">   71   </a>  <span class="CT">/* Transition: '&lt;S1&gt;:4539' */</span>
+</span><span><a class="LN" name="72">   72   </a>  localB-&gt;CONFIG_OUT_Log_Message_ID = logEvent;
+</span><span><a class="LN" name="73">   73   </a><b>}</b>
+</span><span><a class="LN" name="74">   74   </a>
+</span><span><a class="LN" name="75">   75   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="76">   76   </a><span class="DT">static</span> <span class="DT">void</span> <a name="fcn_CONFIG_Functional_cancelConfigValues">CONFIG_Functional_cancelConfigValues</a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="77">   77   </a>  <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="78">   78   </a><b>{</b>
+</span><span><a class="LN" name="79">   79   </a>  <span class="CT">/* Graphical Function 'cancelConfigValues': '&lt;S1&gt;:4522' */</span>
+</span><span><a class="LN" name="80">   80   </a>  <span class="CT">/* Transition: '&lt;S1&gt;:4524' */</span>
+</span><span><a class="LN" name="81">   81   </a>  localDW-&gt;t_PatientID = 0U;
+</span><span><a class="LN" name="82">   82   </a>  localDW-&gt;t_DrugName = 0U;
+</span><span><a class="LN" name="83">   83   </a>  localDW-&gt;t_DrugConcentration = 0U;
+</span><span><a class="LN" name="84">   84   </a>  localDW-&gt;t_EnteredReservoirVolume = 0U;
+</span><span><a class="LN" name="85">   85   </a>  localDW-&gt;t_VTBI_total = 0U;
+</span><span><a class="LN" name="86">   86   </a>  localDW-&gt;t_Duration_total = 0U;
+</span><span><a class="LN" name="87">   87   </a>  localDW-&gt;t_FlowRate_basal = 0U;
+</span><span><a class="LN" name="88">   88   </a>  localDW-&gt;t_FlowRate_sbolus = 0U;
+</span><span><a class="LN" name="89">   89   </a>  localDW-&gt;t_FlowRate_pbolus = 0U;
+</span><span><a class="LN" name="90">   90   </a>  localDW-&gt;t_FlowRate_kvo = 0U;
+</span><span><a class="LN" name="91">   91   </a>  localDW-&gt;t_Duration_sbolus = 0U;
+</span><span><a class="LN" name="92">   92   </a>  localDW-&gt;t_Duration_pbolus = 0U;
+</span><span><a class="LN" name="93">   93   </a>  localDW-&gt;t_LockOutPeriod_pbolus = 0U;
+</span><span><a class="LN" name="94">   94   </a>  localDW-&gt;t_NumberMax_pbolus = 0U;
+</span><span><a class="LN" name="95">   95   </a>  localDW-&gt;t_Interval_sbolus = 0U;
+</span><span><a class="LN" name="96">   96   </a>  <a href="#fcn_CONFIG_Functional_writeLog" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_writeLog');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_writeLog</font></a>(2U, localB);
+</span><span><a class="LN" name="97">   97   </a><b>}</b>
+</span><span><a class="LN" name="98">   98   </a>
+</span><span><a class="LN" name="99">   99   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="100">  100   </a><span class="DT">static</span> <span class="DT">void</span> <a name="fcn_CONFIG_Functional_checkIfPrescriptionAvailable">CONFIG_Functional_checkIfPrescriptionAvailable</a>
+</span><span><a class="LN" name="101">  101   </a>  (<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *localB, <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="102">  102   </a><b>{</b>
+</span><span><a class="LN" name="103">  103   </a>  <span class="CT">/* Graphical Function 'checkIfPrescriptionAvailable': '&lt;S1&gt;:4573' */</span>
+</span><span><a class="LN" name="104">  104   </a>  <span class="CT">/* Transition: '&lt;S1&gt;:4584' */</span>
+</span><span><a class="LN" name="105">  105   </a>  <span class="KW">if</span> (!localDW-&gt;New_Configuration) <b>{</b>
+</span><span><a class="LN" name="106">  106   </a>    <span class="CT">/* Transition: '&lt;S1&gt;:4581' */</span>
+</span><span><a class="LN" name="107">  107   </a>    <span class="KW">if</span> ((localB-&gt;CONFIG_OUT_Patient_ID &gt; 0) &amp;&amp; (localB-&gt;CONFIG_OUT_Drug_Name &gt; 0)
+</span><span><a class="LN" name="108">  108   </a>        &amp;&amp; (localB-&gt;CONFIG_OUT_Drug_Concentration &gt; 0) &amp;&amp;
+</span><span><a class="LN" name="109">  109   </a>        (localB-&gt;CONFIG_OUT_Vtbi_Total &gt; 0) &amp;&amp;
+</span><span><a class="LN" name="110">  110   </a>        (localB-&gt;CONFIG_OUT_Infusion_Total_Duration &gt; 0) &amp;&amp;
+</span><span><a class="LN" name="111">  111   </a>        (localB-&gt;CONFIG_OUT_Flow_Rate_Basal &gt; 0)) <b>{</b>
+</span><span><a class="LN" name="112">  112   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4575' */</span>
+</span><span><a class="LN" name="113">  113   </a>      localB-&gt;CONFIG_OUT_Configured = 3U;
+</span><span><a class="LN" name="114">  114   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="115">  115   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4582' */</span>
+</span><span><a class="LN" name="116">  116   </a>      localB-&gt;CONFIG_OUT_Configured = 0U;
+</span><span><a class="LN" name="117">  117   </a>    <b>}</b>
+</span><span><a class="LN" name="118">  118   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="119">  119   </a>    <span class="CT">/* Transition: '&lt;S1&gt;:4586' */</span>
+</span><span><a class="LN" name="120">  120   </a>    localDW-&gt;New_Configuration = FALSE;
+</span><span><a class="LN" name="121">  121   </a>  <b>}</b>
+</span><span><a class="LN" name="122">  122   </a><b>}</b>
+</span><span><a class="LN" name="123">  123   </a>
+</span><span><a class="LN" name="124">  124   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="125">  125   </a><span class="DT">static</span> <span class="DT">void</span> <a name="fcn_CONFIG_Functional_saveConfigValues">CONFIG_Functional_saveConfigValues</a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="126">  126   </a>  <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="127">  127   </a><b>{</b>
+</span><span><a class="LN" name="128">  128   </a>  <span class="CT">/* Graphical Function 'saveConfigValues': '&lt;S1&gt;:4519' */</span>
+</span><span><a class="LN" name="129">  129   </a>  <span class="CT">/* Transition: '&lt;S1&gt;:4521' */</span>
+</span><span><a class="LN" name="130">  130   </a>  localB-&gt;CONFIG_OUT_Patient_ID = localDW-&gt;t_PatientID;
+</span><span><a class="LN" name="131">  131   </a>  localB-&gt;CONFIG_OUT_Drug_Name = localDW-&gt;t_DrugName;
+</span><span><a class="LN" name="132">  132   </a>  localB-&gt;CONFIG_OUT_Drug_Concentration = localDW-&gt;t_DrugConcentration;
+</span><span><a class="LN" name="133">  133   </a>  localB-&gt;CONFIG_OUT_Entered_Reservoir_Volume =
+</span><span><a class="LN" name="134">  134   </a>    localDW-&gt;t_EnteredReservoirVolume;
+</span><span><a class="LN" name="135">  135   </a>  localB-&gt;CONFIG_OUT_Vtbi_Total = localDW-&gt;t_VTBI_total;
+</span><span><a class="LN" name="136">  136   </a>  localB-&gt;CONFIG_OUT_Infusion_Total_Duration = localDW-&gt;t_Duration_total;
+</span><span><a class="LN" name="137">  137   </a>  localB-&gt;CONFIG_OUT_Flow_Rate_Basal = localDW-&gt;t_FlowRate_basal;
+</span><span><a class="LN" name="138">  138   </a>  localB-&gt;CONFIG_OUT_Flow_Rate_Intermittent_bolus = localDW-&gt;t_FlowRate_sbolus;
+</span><span><a class="LN" name="139">  139   </a>  localB-&gt;CONFIG_OUT_Flow_Rate_Patient_bolus = localDW-&gt;t_FlowRate_pbolus;
+</span><span><a class="LN" name="140">  140   </a>  localB-&gt;CONFIG_OUT_Flow_Rate_KVO = localDW-&gt;t_FlowRate_kvo;
+</span><span><a class="LN" name="141">  141   </a>  localB-&gt;CONFIG_OUT_Intermittent_Bolus_Duration = localDW-&gt;t_Duration_sbolus;
+</span><span><a class="LN" name="142">  142   </a>  localB-&gt;CONFIG_OUT_Patient_bolus_Duration = localDW-&gt;t_Duration_pbolus;
+</span><span><a class="LN" name="143">  143   </a>  localB-&gt;CONFIG_OUT_Lock_Out_Duration = localDW-&gt;t_LockOutPeriod_pbolus;
+</span><span><a class="LN" name="144">  144   </a>  localB-&gt;CONFIG_OUT_Max_Patient_bolus = localDW-&gt;t_NumberMax_pbolus;
+</span><span><a class="LN" name="145">  145   </a>  localB-&gt;CONFIG_OUT_Interval_Intermittent_bolus = localDW-&gt;t_Interval_sbolus;
+</span><span><a class="LN" name="146">  146   </a>  localB-&gt;CONFIG_OUT_Reservoir_Volume =
+</span><span><a class="LN" name="147">  147   </a>    localB-&gt;CONFIG_OUT_Entered_Reservoir_Volume;
+</span><span><a class="LN" name="148">  148   </a>  localB-&gt;CONFIG_OUT_Configured = localDW-&gt;Selected_Config_Type;
+</span><span><a class="LN" name="149">  149   </a>  localDW-&gt;New_Configuration = TRUE;
+</span><span><a class="LN" name="150">  150   </a>  <a href="#fcn_CONFIG_Functional_cancelConfigValues" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_cancelConfigValues');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_cancelConfigValues</font></a>(localB, localDW);
+</span><span><a class="LN" name="151">  151   </a>  <a href="#fcn_CONFIG_Functional_writeLog" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_writeLog');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_writeLog</font></a>(1U, localB);
+</span><span><a class="LN" name="152">  152   </a><b>}</b>
+</span><span><a class="LN" name="153">  153   </a>
+</span><span><a class="LN" name="154">  154   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="155">  155   </a><span class="DT">static</span> <span class="DT">void</span> <a name="fcn_CONFIG_Functional_copyCurrentValuesToTemp">CONFIG_Functional_copyCurrentValuesToTemp</a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a>
+</span><span><a class="LN" name="156">  156   </a>  *localB, <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="157">  157   </a><b>{</b>
+</span><span><a class="LN" name="158">  158   </a>  <span class="CT">/* Graphical Function 'copyCurrentValuesToTemp': '&lt;S1&gt;:4592' */</span>
+</span><span><a class="LN" name="159">  159   </a>  <span class="CT">/* Transition: '&lt;S1&gt;:4594' */</span>
+</span><span><a class="LN" name="160">  160   </a>  localDW-&gt;t_PatientID = localB-&gt;CONFIG_OUT_Patient_ID;
+</span><span><a class="LN" name="161">  161   </a>  localDW-&gt;t_DrugName = localB-&gt;CONFIG_OUT_Drug_Name;
+</span><span><a class="LN" name="162">  162   </a>  localDW-&gt;t_DrugConcentration = localB-&gt;CONFIG_OUT_Drug_Concentration;
+</span><span><a class="LN" name="163">  163   </a>  localDW-&gt;t_VTBI_total = localB-&gt;CONFIG_OUT_Vtbi_Total;
+</span><span><a class="LN" name="164">  164   </a>  localDW-&gt;t_Duration_total = localB-&gt;CONFIG_OUT_Infusion_Total_Duration;
+</span><span><a class="LN" name="165">  165   </a>  localDW-&gt;t_FlowRate_basal = localB-&gt;CONFIG_OUT_Flow_Rate_Basal;
+</span><span><a class="LN" name="166">  166   </a>  localDW-&gt;t_FlowRate_sbolus = localB-&gt;CONFIG_OUT_Flow_Rate_Intermittent_bolus;
+</span><span><a class="LN" name="167">  167   </a>  localDW-&gt;t_FlowRate_pbolus = localB-&gt;CONFIG_OUT_Flow_Rate_Patient_bolus;
+</span><span><a class="LN" name="168">  168   </a>  localDW-&gt;t_FlowRate_kvo = localB-&gt;CONFIG_OUT_Flow_Rate_KVO;
+</span><span><a class="LN" name="169">  169   </a>  localDW-&gt;t_Duration_sbolus = localB-&gt;CONFIG_OUT_Intermittent_Bolus_Duration;
+</span><span><a class="LN" name="170">  170   </a>  localDW-&gt;t_Duration_pbolus = localB-&gt;CONFIG_OUT_Patient_bolus_Duration;
+</span><span><a class="LN" name="171">  171   </a>  localDW-&gt;t_LockOutPeriod_pbolus = localB-&gt;CONFIG_OUT_Lock_Out_Duration;
+</span><span><a class="LN" name="172">  172   </a>  localDW-&gt;t_NumberMax_pbolus = localB-&gt;CONFIG_OUT_Max_Patient_bolus;
+</span><span><a class="LN" name="173">  173   </a>  localDW-&gt;t_Interval_sbolus = localB-&gt;CONFIG_OUT_Interval_Intermittent_bolus;
+</span><span><a class="LN" name="174">  174   </a>  localDW-&gt;t_EnteredReservoirVolume =
+</span><span><a class="LN" name="175">  175   </a>    localB-&gt;CONFIG_OUT_Entered_Reservoir_Volume;
+</span><span><a class="LN" name="176">  176   </a><b>}</b>
+</span><span><a class="LN" name="177">  177   </a>
+</span><span><a class="LN" name="178">  178   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="179">  179   </a><span class="DT">static</span> <span class="DT">void</span> <a name="fcn_CONFIG_Functional_setReservoirVolume">CONFIG_Functional_setReservoirVolume</a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="180">  180   </a>  <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="181">  181   </a><b>{</b>
+</span><span><a class="LN" name="182">  182   </a>  <span class="CT">/* Graphical Function 'setReservoirVolume': '&lt;S1&gt;:4596' */</span>
+</span><span><a class="LN" name="183">  183   </a>  <span class="KW">if</span> (!localDW-&gt;New_Configuration) <b>{</b>
+</span><span><a class="LN" name="184">  184   </a>    <span class="CT">/* Transition: '&lt;S1&gt;:4603' */</span>
+</span><span><a class="LN" name="185">  185   </a>    localB-&gt;CONFIG_OUT_Reservoir_Volume = localB-&gt;Reservoir_Volume;
+</span><span><a class="LN" name="186">  186   </a>  <b>}</b>
+</span><span><a class="LN" name="187">  187   </a><b>}</b>
+</span><span><a class="LN" name="188">  188   </a>
+</span><span><a class="LN" name="189">  189   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="190">  190   </a><span class="DT">static</span> real_T <a name="fcn_CONFIG_Functional_checkPatient_DrugParam">CONFIG_Functional_checkPatient_DrugParam</a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a>
+</span><span><a class="LN" name="191">  191   </a>  *localB, <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="192">  192   </a><b>{</b>
+</span><span><a class="LN" name="193">  193   </a>  real_T v;
+</span><span><a class="LN" name="194">  194   </a>
+</span><span><a class="LN" name="195">  195   </a>  <span class="CT">/* Graphical Function 'checkPatient_DrugParam': '&lt;S1&gt;:4472' */</span>
+</span><span><a class="LN" name="196">  196   </a>  <span class="CT">/* Transition: '&lt;S1&gt;:4476' */</span>
+</span><span><a class="LN" name="197">  197   </a>  v = 1.0;
+</span><span><a class="LN" name="198">  198   </a>  <span class="KW">if</span> ((localDW-&gt;t_DrugConcentration &lt; localB-&gt;Drug_Concentration_Low) ||
+</span><span><a class="LN" name="199">  199   </a>      (localDW-&gt;t_DrugConcentration &gt; localB-&gt;Drug_Concentration_High)) <b>{</b>
+</span><span><a class="LN" name="200">  200   </a>    <span class="CT">/* Transition: '&lt;S1&gt;:4477' */</span>
+</span><span><a class="LN" name="201">  201   </a>    v = 0.0;
+</span><span><a class="LN" name="202">  202   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="203">  203   </a>    <span class="KW">if</span> (localDW-&gt;t_EnteredReservoirVolume &lt; localB-&gt;Empty_Reservoir) <b>{</b>
+</span><span><a class="LN" name="204">  204   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4478' */</span>
+</span><span><a class="LN" name="205">  205   </a>      v = 0.0;
+</span><span><a class="LN" name="206">  206   </a>    <b>}</b>
+</span><span><a class="LN" name="207">  207   </a>  <b>}</b>
+</span><span><a class="LN" name="208">  208   </a>
+</span><span><a class="LN" name="209">  209   </a>  <span class="KW">return</span> v;
+</span><span><a class="LN" name="210">  210   </a><b>}</b>
+</span><span><a class="LN" name="211">  211   </a>
+</span><span><a class="LN" name="212">  212   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="213">  213   </a><span class="DT">static</span> real_T <a name="fcn_CONFIG_Functional_checkInfusionParam">CONFIG_Functional_checkInfusionParam</a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a>
+</span><span><a class="LN" name="214">  214   </a>  *localB, <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="215">  215   </a><b>{</b>
+</span><span><a class="LN" name="216">  216   </a>  real_T vi;
+</span><span><a class="LN" name="217">  217   </a>
+</span><span><a class="LN" name="218">  218   </a>  <span class="CT">/* Graphical Function 'checkInfusionParam': '&lt;S1&gt;:4498' */</span>
+</span><span><a class="LN" name="219">  219   </a>  <span class="CT">/* Transition: '&lt;S1&gt;:4508' */</span>
+</span><span><a class="LN" name="220">  220   </a>  vi = 1.0;
+</span><span><a class="LN" name="221">  221   </a>  <span class="KW">if</span> ((localDW-&gt;t_VTBI_total &gt; localB-&gt;VTBI_High) || (localDW-&gt;t_VTBI_total &lt;
+</span><span><a class="LN" name="222">  222   </a>       localB-&gt;VTBI_Low)) <b>{</b>
+</span><span><a class="LN" name="223">  223   </a>    <span class="CT">/* Transition: '&lt;S1&gt;:4509' */</span>
+</span><span><a class="LN" name="224">  224   </a>    vi = 0.0;
+</span><span><a class="LN" name="225">  225   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> ((localDW-&gt;t_FlowRate_basal &lt; localB-&gt;Flow_Rate_Low) ||
+</span><span><a class="LN" name="226">  226   </a>             (localDW-&gt;t_FlowRate_basal &gt; localB-&gt;Flow_Rate_High)) <b>{</b>
+</span><span><a class="LN" name="227">  227   </a>    <span class="CT">/* Transition: '&lt;S1&gt;:4510' */</span>
+</span><span><a class="LN" name="228">  228   </a>    vi = 0.0;
+</span><span><a class="LN" name="229">  229   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> ((localDW-&gt;t_FlowRate_sbolus &lt; localB-&gt;Flow_Rate_Low) ||
+</span><span><a class="LN" name="230">  230   </a>             (localDW-&gt;t_FlowRate_sbolus &gt; localB-&gt;Flow_Rate_High)) <b>{</b>
+</span><span><a class="LN" name="231">  231   </a>    <span class="CT">/* Transition: '&lt;S1&gt;:4511' */</span>
+</span><span><a class="LN" name="232">  232   </a>    vi = 0.0;
+</span><span><a class="LN" name="233">  233   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> ((localDW-&gt;t_FlowRate_pbolus &lt; localB-&gt;Flow_Rate_Low) ||
+</span><span><a class="LN" name="234">  234   </a>             (localDW-&gt;t_FlowRate_pbolus &gt; localB-&gt;Flow_Rate_High)) <b>{</b>
+</span><span><a class="LN" name="235">  235   </a>    <span class="CT">/* Transition: '&lt;S1&gt;:4512' */</span>
+</span><span><a class="LN" name="236">  236   </a>    vi = 0.0;
+</span><span><a class="LN" name="237">  237   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (localDW-&gt;t_Duration_sbolus &gt; localDW-&gt;t_Interval_sbolus) <b>{</b>
+</span><span><a class="LN" name="238">  238   </a>    <span class="CT">/* Transition: '&lt;S1&gt;:4513' */</span>
+</span><span><a class="LN" name="239">  239   </a>    vi = 0.0;
+</span><span><a class="LN" name="240">  240   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (localDW-&gt;t_NumberMax_pbolus &gt; localB-&gt;Number_Max_Patient_Bolus) <b>{</b>
+</span><span><a class="LN" name="241">  241   </a>    <span class="CT">/* Transition: '&lt;S1&gt;:4515' */</span>
+</span><span><a class="LN" name="242">  242   </a>    vi = 0.0;
+</span><span><a class="LN" name="243">  243   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="244">  244   </a>    <span class="KW">if</span> ((localDW-&gt;t_FlowRate_pbolus &lt; localDW-&gt;t_FlowRate_basal) ||
+</span><span><a class="LN" name="245">  245   </a>        (localDW-&gt;t_FlowRate_sbolus &lt; localDW-&gt;t_FlowRate_basal)) <b>{</b>
+</span><span><a class="LN" name="246">  246   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4514' */</span>
+</span><span><a class="LN" name="247">  247   </a>      vi = 0.0;
+</span><span><a class="LN" name="248">  248   </a>    <b>}</b>
+</span><span><a class="LN" name="249">  249   </a>  <b>}</b>
+</span><span><a class="LN" name="250">  250   </a>
+</span><span><a class="LN" name="251">  251   </a>  <span class="KW">return</span> vi;
+</span><span><a class="LN" name="252">  252   </a><b>}</b>
+</span><span><a class="LN" name="253">  253   </a>
+</span><span><a class="LN" name="254">  254   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="255">  255   </a><span class="DT">static</span> real_T <a name="fcn_CONFIG_Functional_CheckDrugName">CONFIG_Functional_CheckDrugName</a>(real_T z, <a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *
+</span><span><a class="LN" name="256">  256   </a>  localB)
+</span><span><a class="LN" name="257">  257   </a><b>{</b>
+</span><span><a class="LN" name="258">  258   </a>  real_T y;
+</span><span><a class="LN" name="259">  259   </a>
+</span><span><a class="LN" name="260">  260   </a>  <span class="CT">/* Graphical Function 'CheckDrugName': '&lt;S1&gt;:4481' */</span>
+</span><span><a class="LN" name="261">  261   </a>  <span class="CT">/* Transition: '&lt;S1&gt;:4484' */</span>
+</span><span><a class="LN" name="262">  262   </a>  y = 1.0;
+</span><span><a class="LN" name="263">  263   </a>  <span class="KW">if</span> (z != localB-&gt;Drug_Name_d) <b>{</b>
+</span><span><a class="LN" name="264">  264   </a>    <span class="CT">/* Transition: '&lt;S1&gt;:4485' */</span>
+</span><span><a class="LN" name="265">  265   </a>    y = 0.0;
+</span><span><a class="LN" name="266">  266   </a>  <b>}</b>
+</span><span><a class="LN" name="267">  267   </a>
+</span><span><a class="LN" name="268">  268   </a>  <span class="KW">return</span> y;
+</span><span><a class="LN" name="269">  269   </a><b>}</b>
+</span><span><a class="LN" name="270">  270   </a>
+</span><span><a class="LN" name="271">  271   </a><span class="CT">/* Function for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="272">  272   </a><span class="DT">static</span> <span class="DT">void</span> <a name="fcn_CONFIG_Functional_Prescription_Config">CONFIG_Functional_Prescription_Config</a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a>
+</span><span><a class="LN" name="273">  273   </a>  *localB, <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="274">  274   </a><b>{</b>
+</span><span><a class="LN" name="275">  275   </a>  <span class="CT">/* During 'Prescription_Config': '&lt;S1&gt;:4445' */</span>
+</span><span><a class="LN" name="276">  276   </a>  <span class="KW">if</span> (((real_T)localB-&gt;CONFIG_OUT_Config_Timer &gt;
+</span><span><a class="LN" name="277">  277   </a>       <a href="#fcn_CONFIG_Functional_Step_Scaling_Factor" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_Step_Scaling_Factor');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_Step_Scaling_Factor</font></a>(localB-&gt;Max_Config_Duration)) ||
+</span><span><a class="LN" name="278">  278   </a>      localB-&gt;Cancel) <b>{</b>
+</span><span><a class="LN" name="279">  279   </a>    <span class="CT">/* Transition: '&lt;S1&gt;:4443' */</span>
+</span><span><a class="LN" name="280">  280   </a>    <a href="#fcn_CONFIG_Functional_cancelConfigValues" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_cancelConfigValues');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_cancelConfigValues</font></a>(localB, localDW);
+</span><span><a class="LN" name="281">  281   </a>
+</span><span><a class="LN" name="282">  282   </a>    <span class="CT">/* Exit Internal 'Prescription_Config': '&lt;S1&gt;:4445' */</span>
+</span><span><a class="LN" name="283">  283   </a>    <span class="KW">switch</span> (localDW-&gt;is_Prescription_Config) <b>{</b>
+</span><span><a class="LN" name="284">  284   </a>     <span class="KW">case</span> CONFIG_Functional_IN_Infusion_info:
+</span><span><a class="LN" name="285">  285   </a>      <span class="CT">/* Exit Internal 'Infusion_info': '&lt;S1&gt;:4487' */</span>
+</span><span><a class="LN" name="286">  286   </a>      localDW-&gt;is_Infusion_info = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="287">  287   </a>
+</span><span><a class="LN" name="288">  288   </a>      <span class="CT">/* Exit 'Infusion_info': '&lt;S1&gt;:4487' */</span>
+</span><span><a class="LN" name="289">  289   </a>      localB-&gt;CONFIG_OUT_Config_Mode = 4U;
+</span><span><a class="LN" name="290">  290   </a>      localDW-&gt;is_Prescription_Config = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="291">  291   </a>      <span class="KW">break</span>;
+</span><span><a class="LN" name="292">  292   </a>
+</span><span><a class="LN" name="293">  293   </a>     <span class="KW">case</span> CONFIG_Functional_IN_Patient_Drug_info:
+</span><span><a class="LN" name="294">  294   </a>      <span class="CT">/* Exit Internal 'Patient_Drug_info': '&lt;S1&gt;:4456' */</span>
+</span><span><a class="LN" name="295">  295   </a>      localDW-&gt;is_Patient_Drug_info = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="296">  296   </a>
+</span><span><a class="LN" name="297">  297   </a>      <span class="CT">/* Exit 'Patient_Drug_info': '&lt;S1&gt;:4456' */</span>
+</span><span><a class="LN" name="298">  298   </a>      localB-&gt;CONFIG_OUT_Config_Mode = 3U;
+</span><span><a class="LN" name="299">  299   </a>      localDW-&gt;is_Prescription_Config = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="300">  300   </a>      <span class="KW">break</span>;
+</span><span><a class="LN" name="301">  301   </a>
+</span><span><a class="LN" name="302">  302   </a>     <span class="KW">default</span>:
+</span><span><a class="LN" name="303">  303   </a>      localDW-&gt;is_Prescription_Config = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="304">  304   </a>      <span class="KW">break</span>;
+</span><span><a class="LN" name="305">  305   </a>    <b>}</b>
+</span><span><a class="LN" name="306">  306   </a>
+</span><span><a class="LN" name="307">  307   </a>    <span class="CT">/* Exit 'Prescription_Config': '&lt;S1&gt;:4445' */</span>
+</span><span><a class="LN" name="308">  308   </a>    localDW-&gt;is_Configuration = CONFIG_Functional_IN_MAIN;
+</span><span><a class="LN" name="309">  309   </a>
+</span><span><a class="LN" name="310">  310   </a>    <span class="CT">/* Entry 'MAIN': '&lt;S1&gt;:4518' */</span>
+</span><span><a class="LN" name="311">  311   </a>    localB-&gt;CONFIG_OUT_Config_Mode = 1U;
+</span><span><a class="LN" name="312">  312   </a>    localB-&gt;CONFIG_OUT_Config_Timer = 0U;
+</span><span><a class="LN" name="313">  313   </a>    <a href="#fcn_CONFIG_Functional_setReservoirVolume" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_setReservoirVolume');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_setReservoirVolume</font></a>(localB, localDW);
+</span><span><a class="LN" name="314">  314   </a>    <a href="#fcn_CONFIG_Functional_checkIfPrescriptionAvailable" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkIfPrescriptionAvailable');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkIfPrescriptionAvailable</font></a>(localB, localDW);
+</span><span><a class="LN" name="315">  315   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="316">  316   </a>    localB-&gt;CONFIG_OUT_Config_Timer++;
+</span><span><a class="LN" name="317">  317   </a>    localB-&gt;CONFIG_OUT_Reservoir_Volume = localB-&gt;Reservoir_Volume;
+</span><span><a class="LN" name="318">  318   </a>    <a href="#fcn_CONFIG_Functional_checkIfPrescriptionAvailable" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkIfPrescriptionAvailable');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkIfPrescriptionAvailable</font></a>(localB, localDW);
+</span><span><a class="LN" name="319">  319   </a>    <span class="KW">switch</span> (localDW-&gt;is_Prescription_Config) <b>{</b>
+</span><span><a class="LN" name="320">  320   </a>     <span class="KW">case</span> CONFIG_Functional_IN_ConfirmInfusionInitation:
+</span><span><a class="LN" name="321">  321   </a>      <span class="CT">/* During 'ConfirmInfusionInitation': '&lt;S1&gt;:4517' */</span>
+</span><span><a class="LN" name="322">  322   </a>      <span class="KW">if</span> (localB-&gt;Infusion_Initiate) <b>{</b>
+</span><span><a class="LN" name="323">  323   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4444' */</span>
+</span><span><a class="LN" name="324">  324   </a>        localB-&gt;CONFIG_OUT_Request_Confirm_Infusion_Initiate = FALSE;
+</span><span><a class="LN" name="325">  325   </a>        <a href="#fcn_CONFIG_Functional_saveConfigValues" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_saveConfigValues');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_saveConfigValues</font></a>(localB, localDW);
+</span><span><a class="LN" name="326">  326   </a>        localDW-&gt;is_Prescription_Config = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="327">  327   </a>
+</span><span><a class="LN" name="328">  328   </a>        <span class="CT">/* Exit 'Prescription_Config': '&lt;S1&gt;:4445' */</span>
+</span><span><a class="LN" name="329">  329   </a>        localDW-&gt;is_Configuration = CONFIG_Functional_IN_MAIN;
+</span><span><a class="LN" name="330">  330   </a>
+</span><span><a class="LN" name="331">  331   </a>        <span class="CT">/* Entry 'MAIN': '&lt;S1&gt;:4518' */</span>
+</span><span><a class="LN" name="332">  332   </a>        localB-&gt;CONFIG_OUT_Config_Mode = 1U;
+</span><span><a class="LN" name="333">  333   </a>        localB-&gt;CONFIG_OUT_Config_Timer = 0U;
+</span><span><a class="LN" name="334">  334   </a>        <a href="#fcn_CONFIG_Functional_setReservoirVolume" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_setReservoirVolume');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_setReservoirVolume</font></a>(localB, localDW);
+</span><span><a class="LN" name="335">  335   </a>        <a href="#fcn_CONFIG_Functional_checkIfPrescriptionAvailable" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkIfPrescriptionAvailable');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkIfPrescriptionAvailable</font></a>(localB, localDW);
+</span><span><a class="LN" name="336">  336   </a>      <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="337">  337   </a>        localB-&gt;CONFIG_OUT_Request_Confirm_Infusion_Initiate = TRUE;
+</span><span><a class="LN" name="338">  338   </a>      <b>}</b>
+</span><span><a class="LN" name="339">  339   </a>      <span class="KW">break</span>;
+</span><span><a class="LN" name="340">  340   </a>
+</span><span><a class="LN" name="341">  341   </a>     <span class="KW">case</span> CONFIG_Functional_IN_Infusion_info:
+</span><span><a class="LN" name="342">  342   </a>      <span class="CT">/* During 'Infusion_info': '&lt;S1&gt;:4487' */</span>
+</span><span><a class="LN" name="343">  343   </a>      <span class="KW">if</span> (localB-&gt;Back &amp;&amp; (!localB-&gt;In_Therapy)) <b>{</b>
+</span><span><a class="LN" name="344">  344   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4450' */</span>
+</span><span><a class="LN" name="345">  345   </a>        <span class="CT">/* Exit Internal 'Infusion_info': '&lt;S1&gt;:4487' */</span>
+</span><span><a class="LN" name="346">  346   </a>        localDW-&gt;is_Infusion_info = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="347">  347   </a>
+</span><span><a class="LN" name="348">  348   </a>        <span class="CT">/* Exit 'Infusion_info': '&lt;S1&gt;:4487' */</span>
+</span><span><a class="LN" name="349">  349   </a>        localDW-&gt;is_Prescription_Config = CONFIG_Functional_IN_Patient_Drug_info;
+</span><span><a class="LN" name="350">  350   </a>
+</span><span><a class="LN" name="351">  351   </a>        <span class="CT">/* Entry 'Patient_Drug_info': '&lt;S1&gt;:4456' */</span>
+</span><span><a class="LN" name="352">  352   </a>        localB-&gt;CONFIG_OUT_Config_Mode = 3U;
+</span><span><a class="LN" name="353">  353   </a>
+</span><span><a class="LN" name="354">  354   </a>        <span class="CT">/* Entry Internal 'Patient_Drug_info': '&lt;S1&gt;:4456' */</span>
+</span><span><a class="LN" name="355">  355   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4459' */</span>
+</span><span><a class="LN" name="356">  356   </a>        localDW-&gt;is_Patient_Drug_info = CONFIG_Functional_IN_DisplayParam;
+</span><span><a class="LN" name="357">  357   </a>
+</span><span><a class="LN" name="358">  358   </a>        <span class="CT">/* Entry 'DisplayParam': '&lt;S1&gt;:4466' */</span>
+</span><span><a class="LN" name="359">  359   </a>        localB-&gt;CONFIG_OUT_Request_Patient_Drug_Info = TRUE;
+</span><span><a class="LN" name="360">  360   </a>        localDW-&gt;validate = 0U;
+</span><span><a class="LN" name="361">  361   </a>      <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="362">  362   </a>        localB-&gt;CONFIG_OUT_Config_Mode = 4U;
+</span><span><a class="LN" name="363">  363   </a>        <span class="KW">switch</span> (localDW-&gt;is_Infusion_info) <b>{</b>
+</span><span><a class="LN" name="364">  364   </a>         <span class="KW">case</span> CONFIG_Functional_IN_GetInfusionParam:
+</span><span><a class="LN" name="365">  365   </a>          <span class="CT">/* During 'GetInfusionParam': '&lt;S1&gt;:4495' */</span>
+</span><span><a class="LN" name="366">  366   </a>          <span class="KW">if</span> (localB-&gt;Next == 1) <b>{</b>
+</span><span><a class="LN" name="367">  367   </a>            <span class="CT">/* Transition: '&lt;S1&gt;:4491' */</span>
+</span><span><a class="LN" name="368">  368   </a>            localDW-&gt;is_Infusion_info =
+</span><span><a class="LN" name="369">  369   </a>              CONFIG_Functional_IN_ValidateInfusionParam;
+</span><span><a class="LN" name="370">  370   </a>
+</span><span><a class="LN" name="371">  371   </a>            <span class="CT">/* Entry 'ValidateInfusionParam': '&lt;S1&gt;:4496' */</span>
+</span><span><a class="LN" name="372">  372   </a>            localDW-&gt;validate = (uint8_T)<a href="#fcn_CONFIG_Functional_checkInfusionParam" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkInfusionParam');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkInfusionParam</font></a>
+</span><span><a class="LN" name="373">  373   </a>              (localB, localDW);
+</span><span><a class="LN" name="374">  374   </a>          <b>}</b>
+</span><span><a class="LN" name="375">  375   </a>          <span class="KW">break</span>;
+</span><span><a class="LN" name="376">  376   </a>
+</span><span><a class="LN" name="377">  377   </a>         <span class="KW">case</span> CONFIG_Functional_IN_RequestInfusionParam:
+</span><span><a class="LN" name="378">  378   </a>          <span class="CT">/* During 'RequestInfusionParam': '&lt;S1&gt;:4494' */</span>
+</span><span><a class="LN" name="379">  379   </a>          <span class="KW">if</span> (localB-&gt;Next == 1) <b>{</b>
+</span><span><a class="LN" name="380">  380   </a>            <span class="CT">/* Transition: '&lt;S1&gt;:4488' */</span>
+</span><span><a class="LN" name="381">  381   </a>            localDW-&gt;is_Infusion_info = CONFIG_Functional_IN_GetInfusionParam;
+</span><span><a class="LN" name="382">  382   </a>
+</span><span><a class="LN" name="383">  383   </a>            <span class="CT">/* Entry 'GetInfusionParam': '&lt;S1&gt;:4495' */</span>
+</span><span><a class="LN" name="384">  384   </a>            localDW-&gt;t_VTBI_total = localB-&gt;VTBI_Total;
+</span><span><a class="LN" name="385">  385   </a>            localDW-&gt;t_Duration_total = localB-&gt;Total_Duration;
+</span><span><a class="LN" name="386">  386   </a>            localDW-&gt;t_FlowRate_basal = localB-&gt;Flow_Rate_Basal;
+</span><span><a class="LN" name="387">  387   </a>            localDW-&gt;t_FlowRate_sbolus = localB-&gt;Flow_Rate_Intermittent_Bolus;
+</span><span><a class="LN" name="388">  388   </a>            localDW-&gt;t_FlowRate_pbolus = localB-&gt;Flow_Rate_Patient_Bolus;
+</span><span><a class="LN" name="389">  389   </a>            localDW-&gt;t_Duration_sbolus = localB-&gt;Duration_Intermittent_Bolus;
+</span><span><a class="LN" name="390">  390   </a>            localDW-&gt;t_Duration_pbolus = localB-&gt;Duration_Patient_Bolus;
+</span><span><a class="LN" name="391">  391   </a>            localDW-&gt;t_LockOutPeriod_pbolus =
+</span><span><a class="LN" name="392">  392   </a>              localB-&gt;Lockout_Period_Patient_Bolus;
+</span><span><a class="LN" name="393">  393   </a>            localDW-&gt;t_NumberMax_pbolus = localB-&gt;Max_Number_of_Patient_Bolus;
+</span><span><a class="LN" name="394">  394   </a>            localDW-&gt;t_Interval_sbolus = localB-&gt;Interval_Intermittent_Bolus;
+</span><span><a class="LN" name="395">  395   </a>            localDW-&gt;t_FlowRate_kvo = localB-&gt;Flow_Rate_KVO;
+</span><span><a class="LN" name="396">  396   </a>            localB-&gt;CONFIG_OUT_Request_Infusion_Info = FALSE;
+</span><span><a class="LN" name="397">  397   </a>          <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="398">  398   </a>            <span class="KW">if</span> (localB-&gt;Next == 1) <b>{</b>
+</span><span><a class="LN" name="399">  399   </a>              <span class="CT">/* Transition: '&lt;S1&gt;:4490' */</span>
+</span><span><a class="LN" name="400">  400   </a>              localDW-&gt;is_Infusion_info =
+</span><span><a class="LN" name="401">  401   </a>                CONFIG_Functional_IN_ValidateInfusionParam;
+</span><span><a class="LN" name="402">  402   </a>
+</span><span><a class="LN" name="403">  403   </a>              <span class="CT">/* Entry 'ValidateInfusionParam': '&lt;S1&gt;:4496' */</span>
+</span><span><a class="LN" name="404">  404   </a>              localDW-&gt;validate = (uint8_T)<a href="#fcn_CONFIG_Functional_checkInfusionParam" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkInfusionParam');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkInfusionParam</font></a>
+</span><span><a class="LN" name="405">  405   </a>                (localB, localDW);
+</span><span><a class="LN" name="406">  406   </a>            <b>}</b>
+</span><span><a class="LN" name="407">  407   </a>          <b>}</b>
+</span><span><a class="LN" name="408">  408   </a>          <span class="KW">break</span>;
+</span><span><a class="LN" name="409">  409   </a>
+</span><span><a class="LN" name="410">  410   </a>         <span class="KW">default</span>:
+</span><span><a class="LN" name="411">  411   </a>          <span class="CT">/* During 'ValidateInfusionParam': '&lt;S1&gt;:4496' */</span>
+</span><span><a class="LN" name="412">  412   </a>          <span class="KW">if</span> (!(localDW-&gt;validate != 0)) <b>{</b>
+</span><span><a class="LN" name="413">  413   </a>            <span class="CT">/* Transition: '&lt;S1&gt;:4492' */</span>
+</span><span><a class="LN" name="414">  414   </a>            localDW-&gt;is_Infusion_info =
+</span><span><a class="LN" name="415">  415   </a>              CONFIG_Functional_IN_RequestInfusionParam;
+</span><span><a class="LN" name="416">  416   </a>
+</span><span><a class="LN" name="417">  417   </a>            <span class="CT">/* Entry 'RequestInfusionParam': '&lt;S1&gt;:4494' */</span>
+</span><span><a class="LN" name="418">  418   </a>            localB-&gt;CONFIG_OUT_Request_Infusion_Info = TRUE;
+</span><span><a class="LN" name="419">  419   </a>            localDW-&gt;validate = 0U;
+</span><span><a class="LN" name="420">  420   </a>          <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="421">  421   </a>            <span class="CT">/* Transition: '&lt;S1&gt;:4493' */</span>
+</span><span><a class="LN" name="422">  422   </a>            localDW-&gt;is_Infusion_info = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="423">  423   </a>
+</span><span><a class="LN" name="424">  424   </a>            <span class="CT">/* Exit 'Infusion_info': '&lt;S1&gt;:4487' */</span>
+</span><span><a class="LN" name="425">  425   </a>            localB-&gt;CONFIG_OUT_Config_Mode = 4U;
+</span><span><a class="LN" name="426">  426   </a>            localDW-&gt;is_Prescription_Config =
+</span><span><a class="LN" name="427">  427   </a>              CONFIG_Functional_IN_ConfirmInfusionInitation;
+</span><span><a class="LN" name="428">  428   </a>
+</span><span><a class="LN" name="429">  429   </a>            <span class="CT">/* Entry 'ConfirmInfusionInitation': '&lt;S1&gt;:4517' */</span>
+</span><span><a class="LN" name="430">  430   </a>            localB-&gt;CONFIG_OUT_Request_Confirm_Infusion_Initiate = TRUE;
+</span><span><a class="LN" name="431">  431   </a>          <b>}</b>
+</span><span><a class="LN" name="432">  432   </a>          <span class="KW">break</span>;
+</span><span><a class="LN" name="433">  433   </a>        <b>}</b>
+</span><span><a class="LN" name="434">  434   </a>      <b>}</b>
+</span><span><a class="LN" name="435">  435   </a>      <span class="KW">break</span>;
+</span><span><a class="LN" name="436">  436   </a>
+</span><span><a class="LN" name="437">  437   </a>     <span class="KW">case</span> CONFIG_Functional_IN_Patient_Drug_info:
+</span><span><a class="LN" name="438">  438   </a>      <span class="CT">/* During 'Patient_Drug_info': '&lt;S1&gt;:4456' */</span>
+</span><span><a class="LN" name="439">  439   </a>      localB-&gt;CONFIG_OUT_Config_Mode = 3U;
+</span><span><a class="LN" name="440">  440   </a>      <span class="KW">switch</span> (localDW-&gt;is_Patient_Drug_info) <b>{</b>
+</span><span><a class="LN" name="441">  441   </a>       <span class="KW">case</span> CONFIG_Functional_IN_DisplayErrorMessage:
+</span><span><a class="LN" name="442">  442   </a>        <span class="CT">/* During 'DisplayErrorMessage': '&lt;S1&gt;:4468' */</span>
+</span><span><a class="LN" name="443">  443   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4460' */</span>
+</span><span><a class="LN" name="444">  444   </a>        localDW-&gt;is_Patient_Drug_info = CONFIG_Functional_IN_DisplayParam;
+</span><span><a class="LN" name="445">  445   </a>
+</span><span><a class="LN" name="446">  446   </a>        <span class="CT">/* Entry 'DisplayParam': '&lt;S1&gt;:4466' */</span>
+</span><span><a class="LN" name="447">  447   </a>        localB-&gt;CONFIG_OUT_Request_Patient_Drug_Info = TRUE;
+</span><span><a class="LN" name="448">  448   </a>        localDW-&gt;validate = 0U;
+</span><span><a class="LN" name="449">  449   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="450">  450   </a>
+</span><span><a class="LN" name="451">  451   </a>       <span class="KW">case</span> CONFIG_Functional_IN_DisplayParam:
+</span><span><a class="LN" name="452">  452   </a>        <span class="CT">/* During 'DisplayParam': '&lt;S1&gt;:4466' */</span>
+</span><span><a class="LN" name="453">  453   </a>        <span class="KW">if</span> (localB-&gt;Next == 1) <b>{</b>
+</span><span><a class="LN" name="454">  454   </a>          <span class="CT">/* Transition: '&lt;S1&gt;:4457' */</span>
+</span><span><a class="LN" name="455">  455   </a>          localDW-&gt;is_Patient_Drug_info = CONFIG_Functional_IN_GetParam;
+</span><span><a class="LN" name="456">  456   </a>
+</span><span><a class="LN" name="457">  457   </a>          <span class="CT">/* Entry 'GetParam': '&lt;S1&gt;:4467' */</span>
+</span><span><a class="LN" name="458">  458   </a>          localDW-&gt;t_PatientID = localB-&gt;Patient_ID;
+</span><span><a class="LN" name="459">  459   </a>          localDW-&gt;t_DrugName = localB-&gt;Drug_Name;
+</span><span><a class="LN" name="460">  460   </a>          localDW-&gt;t_DrugConcentration = localB-&gt;Drug_Concentration;
+</span><span><a class="LN" name="461">  461   </a>          localDW-&gt;t_EnteredReservoirVolume = localB-&gt;Entered_Reservoir_Volume;
+</span><span><a class="LN" name="462">  462   </a>          localB-&gt;CONFIG_OUT_Request_Patient_Drug_Info = FALSE;
+</span><span><a class="LN" name="463">  463   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="464">  464   </a>          <span class="KW">if</span> (localB-&gt;Next == 1) <b>{</b>
+</span><span><a class="LN" name="465">  465   </a>            <span class="CT">/* Transition: '&lt;S1&gt;:4461' */</span>
+</span><span><a class="LN" name="466">  466   </a>            localDW-&gt;is_Patient_Drug_info = CONFIG_Functional_IN_ValidateParam;
+</span><span><a class="LN" name="467">  467   </a>
+</span><span><a class="LN" name="468">  468   </a>            <span class="CT">/* Entry 'ValidateParam': '&lt;S1&gt;:4470' */</span>
+</span><span><a class="LN" name="469">  469   </a>            localDW-&gt;validate = (uint8_T)
+</span><span><a class="LN" name="470">  470   </a>              <a href="#fcn_CONFIG_Functional_checkPatient_DrugParam" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkPatient_DrugParam');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkPatient_DrugParam</font></a>(localB, localDW);
+</span><span><a class="LN" name="471">  471   </a>            localB-&gt;CONFIG_OUT_Request_Patient_Drug_Info = FALSE;
+</span><span><a class="LN" name="472">  472   </a>            localDW-&gt;value = 0U;
+</span><span><a class="LN" name="473">  473   </a>          <b>}</b>
+</span><span><a class="LN" name="474">  474   </a>        <b>}</b>
+</span><span><a class="LN" name="475">  475   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="476">  476   </a>
+</span><span><a class="LN" name="477">  477   </a>       <span class="KW">case</span> CONFIG_Functional_IN_GetDrugSafeValues:
+</span><span><a class="LN" name="478">  478   </a>        <span class="CT">/* During 'GetDrugSafeValues': '&lt;S1&gt;:4469' */</span>
+</span><span><a class="LN" name="479">  479   </a>        <span class="KW">if</span> (localDW-&gt;value != 0) <b>{</b>
+</span><span><a class="LN" name="480">  480   </a>          <span class="CT">/* Transition: '&lt;S1&gt;:4464' */</span>
+</span><span><a class="LN" name="481">  481   </a>          localDW-&gt;is_Patient_Drug_info = CONFIG_Functional_IN_ValidateParam;
+</span><span><a class="LN" name="482">  482   </a>
+</span><span><a class="LN" name="483">  483   </a>          <span class="CT">/* Entry 'ValidateParam': '&lt;S1&gt;:4470' */</span>
+</span><span><a class="LN" name="484">  484   </a>          localDW-&gt;validate = (uint8_T)<a href="#fcn_CONFIG_Functional_checkPatient_DrugParam" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkPatient_DrugParam');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkPatient_DrugParam</font></a>
+</span><span><a class="LN" name="485">  485   </a>            (localB, localDW);
+</span><span><a class="LN" name="486">  486   </a>          localB-&gt;CONFIG_OUT_Request_Patient_Drug_Info = FALSE;
+</span><span><a class="LN" name="487">  487   </a>          localDW-&gt;value = 0U;
+</span><span><a class="LN" name="488">  488   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="489">  489   </a>          <span class="CT">/* Transition: '&lt;S1&gt;:4462' */</span>
+</span><span><a class="LN" name="490">  490   </a>          localDW-&gt;is_Patient_Drug_info =
+</span><span><a class="LN" name="491">  491   </a>            CONFIG_Functional_IN_DisplayErrorMessage;
+</span><span><a class="LN" name="492">  492   </a>
+</span><span><a class="LN" name="493">  493   </a>          <span class="CT">/* Entry 'DisplayErrorMessage': '&lt;S1&gt;:4468' */</span>
+</span><span><a class="LN" name="494">  494   </a>          localB-&gt;CONFIG_OUT_Error_Message_ID = 5U;
+</span><span><a class="LN" name="495">  495   </a>        <b>}</b>
+</span><span><a class="LN" name="496">  496   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="497">  497   </a>
+</span><span><a class="LN" name="498">  498   </a>       <span class="KW">case</span> CONFIG_Functional_IN_GetParam:
+</span><span><a class="LN" name="499">  499   </a>        <span class="CT">/* During 'GetParam': '&lt;S1&gt;:4467' */</span>
+</span><span><a class="LN" name="500">  500   </a>        <span class="KW">if</span> (localB-&gt;Next == 1) <b>{</b>
+</span><span><a class="LN" name="501">  501   </a>          <span class="CT">/* Transition: '&lt;S1&gt;:4458' */</span>
+</span><span><a class="LN" name="502">  502   </a>          localDW-&gt;value = 0U;
+</span><span><a class="LN" name="503">  503   </a>          localDW-&gt;is_Patient_Drug_info = CONFIG_Functional_IN_GetDrugSafeValues;
+</span><span><a class="LN" name="504">  504   </a>
+</span><span><a class="LN" name="505">  505   </a>          <span class="CT">/* Entry 'GetDrugSafeValues': '&lt;S1&gt;:4469' */</span>
+</span><span><a class="LN" name="506">  506   </a>          localB-&gt;CONFIG_OUT_Drug_Name = localDW-&gt;t_DrugName;
+</span><span><a class="LN" name="507">  507   </a>          localDW-&gt;value = (uint8_T)<a href="#fcn_CONFIG_Functional_CheckDrugName" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_CheckDrugName');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_CheckDrugName</font></a>((real_T)
+</span><span><a class="LN" name="508">  508   </a>            localDW-&gt;t_DrugName, localB);
+</span><span><a class="LN" name="509">  509   </a>        <b>}</b>
+</span><span><a class="LN" name="510">  510   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="511">  511   </a>
+</span><span><a class="LN" name="512">  512   </a>       <span class="KW">default</span>:
+</span><span><a class="LN" name="513">  513   </a>        <span class="CT">/* During 'ValidateParam': '&lt;S1&gt;:4470' */</span>
+</span><span><a class="LN" name="514">  514   </a>        <span class="KW">if</span> (!(localDW-&gt;validate != 0)) <b>{</b>
+</span><span><a class="LN" name="515">  515   </a>          <span class="CT">/* Transition: '&lt;S1&gt;:4463' */</span>
+</span><span><a class="LN" name="516">  516   </a>          localDW-&gt;is_Patient_Drug_info =
+</span><span><a class="LN" name="517">  517   </a>            CONFIG_Functional_IN_DisplayErrorMessage;
+</span><span><a class="LN" name="518">  518   </a>
+</span><span><a class="LN" name="519">  519   </a>          <span class="CT">/* Entry 'DisplayErrorMessage': '&lt;S1&gt;:4468' */</span>
+</span><span><a class="LN" name="520">  520   </a>          localB-&gt;CONFIG_OUT_Error_Message_ID = 5U;
+</span><span><a class="LN" name="521">  521   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="522">  522   </a>          <span class="CT">/* Transition: '&lt;S1&gt;:4465' */</span>
+</span><span><a class="LN" name="523">  523   </a>          localDW-&gt;is_Patient_Drug_info = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="524">  524   </a>
+</span><span><a class="LN" name="525">  525   </a>          <span class="CT">/* Exit 'Patient_Drug_info': '&lt;S1&gt;:4456' */</span>
+</span><span><a class="LN" name="526">  526   </a>          localDW-&gt;is_Prescription_Config = CONFIG_Functional_IN_Infusion_info;
+</span><span><a class="LN" name="527">  527   </a>
+</span><span><a class="LN" name="528">  528   </a>          <span class="CT">/* Entry 'Infusion_info': '&lt;S1&gt;:4487' */</span>
+</span><span><a class="LN" name="529">  529   </a>          localB-&gt;CONFIG_OUT_Config_Mode = 4U;
+</span><span><a class="LN" name="530">  530   </a>
+</span><span><a class="LN" name="531">  531   </a>          <span class="CT">/* Entry Internal 'Infusion_info': '&lt;S1&gt;:4487' */</span>
+</span><span><a class="LN" name="532">  532   </a>          <span class="CT">/* Transition: '&lt;S1&gt;:4489' */</span>
+</span><span><a class="LN" name="533">  533   </a>          localDW-&gt;is_Infusion_info = CONFIG_Functional_IN_RequestInfusionParam;
+</span><span><a class="LN" name="534">  534   </a>
+</span><span><a class="LN" name="535">  535   </a>          <span class="CT">/* Entry 'RequestInfusionParam': '&lt;S1&gt;:4494' */</span>
+</span><span><a class="LN" name="536">  536   </a>          localB-&gt;CONFIG_OUT_Request_Infusion_Info = TRUE;
+</span><span><a class="LN" name="537">  537   </a>          localDW-&gt;validate = 0U;
+</span><span><a class="LN" name="538">  538   </a>        <b>}</b>
+</span><span><a class="LN" name="539">  539   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="540">  540   </a>      <b>}</b>
+</span><span><a class="LN" name="541">  541   </a>      <span class="KW">break</span>;
+</span><span><a class="LN" name="542">  542   </a>
+</span><span><a class="LN" name="543">  543   </a>     <span class="KW">default</span>:
+</span><span><a class="LN" name="544">  544   </a>      <span class="CT">/* During 'SelectType': '&lt;S1&gt;:4486' */</span>
+</span><span><a class="LN" name="545">  545   </a>      <span class="KW">if</span> (localB-&gt;Configuration_Type &gt; 0) <b>{</b>
+</span><span><a class="LN" name="546">  546   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4451' */</span>
+</span><span><a class="LN" name="547">  547   </a>        localB-&gt;CONFIG_OUT_Request_Configuration_Type = FALSE;
+</span><span><a class="LN" name="548">  548   </a>        localDW-&gt;Selected_Config_Type = localB-&gt;Configuration_Type;
+</span><span><a class="LN" name="549">  549   </a>        <a href="#fcn_CONFIG_Functional_copyCurrentValuesToTemp" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_copyCurrentValuesToTemp');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_copyCurrentValuesToTemp</font></a>(localB, localDW);
+</span><span><a class="LN" name="550">  550   </a>        <span class="KW">if</span> (localB-&gt;In_Therapy) <b>{</b>
+</span><span><a class="LN" name="551">  551   </a>          <span class="CT">/* Transition: '&lt;S1&gt;:4452' */</span>
+</span><span><a class="LN" name="552">  552   </a>          localDW-&gt;is_Prescription_Config = CONFIG_Functional_IN_Infusion_info;
+</span><span><a class="LN" name="553">  553   </a>
+</span><span><a class="LN" name="554">  554   </a>          <span class="CT">/* Entry 'Infusion_info': '&lt;S1&gt;:4487' */</span>
+</span><span><a class="LN" name="555">  555   </a>          localB-&gt;CONFIG_OUT_Config_Mode = 4U;
+</span><span><a class="LN" name="556">  556   </a>
+</span><span><a class="LN" name="557">  557   </a>          <span class="CT">/* Entry Internal 'Infusion_info': '&lt;S1&gt;:4487' */</span>
+</span><span><a class="LN" name="558">  558   </a>          <span class="CT">/* Transition: '&lt;S1&gt;:4489' */</span>
+</span><span><a class="LN" name="559">  559   </a>          localDW-&gt;is_Infusion_info = CONFIG_Functional_IN_RequestInfusionParam;
+</span><span><a class="LN" name="560">  560   </a>
+</span><span><a class="LN" name="561">  561   </a>          <span class="CT">/* Entry 'RequestInfusionParam': '&lt;S1&gt;:4494' */</span>
+</span><span><a class="LN" name="562">  562   </a>          localB-&gt;CONFIG_OUT_Request_Infusion_Info = TRUE;
+</span><span><a class="LN" name="563">  563   </a>          localDW-&gt;validate = 0U;
+</span><span><a class="LN" name="564">  564   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="565">  565   </a>          <span class="CT">/* Transition: '&lt;S1&gt;:4447' */</span>
+</span><span><a class="LN" name="566">  566   </a>          localDW-&gt;is_Prescription_Config =
+</span><span><a class="LN" name="567">  567   </a>            CONFIG_Functional_IN_Patient_Drug_info;
+</span><span><a class="LN" name="568">  568   </a>
+</span><span><a class="LN" name="569">  569   </a>          <span class="CT">/* Entry 'Patient_Drug_info': '&lt;S1&gt;:4456' */</span>
+</span><span><a class="LN" name="570">  570   </a>          localB-&gt;CONFIG_OUT_Config_Mode = 3U;
+</span><span><a class="LN" name="571">  571   </a>
+</span><span><a class="LN" name="572">  572   </a>          <span class="CT">/* Entry Internal 'Patient_Drug_info': '&lt;S1&gt;:4456' */</span>
+</span><span><a class="LN" name="573">  573   </a>          <span class="CT">/* Transition: '&lt;S1&gt;:4459' */</span>
+</span><span><a class="LN" name="574">  574   </a>          localDW-&gt;is_Patient_Drug_info = CONFIG_Functional_IN_DisplayParam;
+</span><span><a class="LN" name="575">  575   </a>
+</span><span><a class="LN" name="576">  576   </a>          <span class="CT">/* Entry 'DisplayParam': '&lt;S1&gt;:4466' */</span>
+</span><span><a class="LN" name="577">  577   </a>          localB-&gt;CONFIG_OUT_Request_Patient_Drug_Info = TRUE;
+</span><span><a class="LN" name="578">  578   </a>          localDW-&gt;validate = 0U;
+</span><span><a class="LN" name="579">  579   </a>        <b>}</b>
+</span><span><a class="LN" name="580">  580   </a>      <b>}</b>
+</span><span><a class="LN" name="581">  581   </a>      <span class="KW">break</span>;
+</span><span><a class="LN" name="582">  582   </a>    <b>}</b>
+</span><span><a class="LN" name="583">  583   </a>  <b>}</b>
+</span><span><a class="LN" name="584">  584   </a><b>}</b>
+</span><span><a class="LN" name="585">  585   </a>
+</span><span><a class="LN" name="586">  586   </a><span class="CT">/* Initial conditions for referenced model: 'CONFIG_Functional' */</span>
+</span><span><a class="LN" name="587">  587   </a><span class="DT">void</span> <a name="fcn_CONFIG_Functional_Init">CONFIG_Functional_Init</a>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="588">  588   </a>  <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="589">  589   </a><b>{</b>
+</span><span><a class="LN" name="590">  590   </a>  <span class="CT">/* InitializeConditions for Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="591">  591   </a>  localDW-&gt;is_Configuration = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="592">  592   </a>  localDW-&gt;is_Prescription_Config = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="593">  593   </a>  localDW-&gt;is_Infusion_info = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="594">  594   </a>  localDW-&gt;is_Patient_Drug_info = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="595">  595   </a>  localDW-&gt;is_active_c2_CONFIG_Functional = 0U;
+</span><span><a class="LN" name="596">  596   </a>  localDW-&gt;is_c2_CONFIG_Functional = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="597">  597   </a>  localDW-&gt;t_DrugConcentration = 0U;
+</span><span><a class="LN" name="598">  598   </a>  localDW-&gt;t_DrugName = 0U;
+</span><span><a class="LN" name="599">  599   </a>  localDW-&gt;t_Duration_pbolus = 0U;
+</span><span><a class="LN" name="600">  600   </a>  localDW-&gt;t_Duration_sbolus = 0U;
+</span><span><a class="LN" name="601">  601   </a>  localDW-&gt;t_Duration_total = 0U;
+</span><span><a class="LN" name="602">  602   </a>  localDW-&gt;t_FlowRate_basal = 0U;
+</span><span><a class="LN" name="603">  603   </a>  localDW-&gt;t_FlowRate_kvo = 0U;
+</span><span><a class="LN" name="604">  604   </a>  localDW-&gt;t_FlowRate_pbolus = 0U;
+</span><span><a class="LN" name="605">  605   </a>  localDW-&gt;t_FlowRate_sbolus = 0U;
+</span><span><a class="LN" name="606">  606   </a>  localDW-&gt;t_Interval_sbolus = 0U;
+</span><span><a class="LN" name="607">  607   </a>  localDW-&gt;t_LockOutPeriod_pbolus = 0U;
+</span><span><a class="LN" name="608">  608   </a>  localDW-&gt;t_NumberMax_pbolus = 0U;
+</span><span><a class="LN" name="609">  609   </a>  localDW-&gt;t_PatientID = 0U;
+</span><span><a class="LN" name="610">  610   </a>  localDW-&gt;t_EnteredReservoirVolume = 0U;
+</span><span><a class="LN" name="611">  611   </a>  localDW-&gt;t_VTBI_total = 0U;
+</span><span><a class="LN" name="612">  612   </a>  localDW-&gt;validate = 0U;
+</span><span><a class="LN" name="613">  613   </a>  localDW-&gt;value = 0U;
+</span><span><a class="LN" name="614">  614   </a>  localDW-&gt;New_Configuration = FALSE;
+</span><span><a class="LN" name="615">  615   </a>  localDW-&gt;Selected_Config_Type = 0U;
+</span><span><a class="LN" name="616">  616   </a>  localB-&gt;CONFIG_OUT_Patient_ID = 0U;
+</span><span><a class="LN" name="617">  617   </a>  localB-&gt;CONFIG_OUT_Drug_Name = 0U;
+</span><span><a class="LN" name="618">  618   </a>  localB-&gt;CONFIG_OUT_Drug_Concentration = 0U;
+</span><span><a class="LN" name="619">  619   </a>  localB-&gt;CONFIG_OUT_Infusion_Total_Duration = 0U;
+</span><span><a class="LN" name="620">  620   </a>  localB-&gt;CONFIG_OUT_Vtbi_Total = 0U;
+</span><span><a class="LN" name="621">  621   </a>  localB-&gt;CONFIG_OUT_Flow_Rate_Basal = 0U;
+</span><span><a class="LN" name="622">  622   </a>  localB-&gt;CONFIG_OUT_Flow_Rate_Intermittent_bolus = 0U;
+</span><span><a class="LN" name="623">  623   </a>  localB-&gt;CONFIG_OUT_Intermittent_Bolus_Duration = 0U;
+</span><span><a class="LN" name="624">  624   </a>  localB-&gt;CONFIG_OUT_Interval_Intermittent_bolus = 0U;
+</span><span><a class="LN" name="625">  625   </a>  localB-&gt;CONFIG_OUT_Flow_Rate_Patient_bolus = 0U;
+</span><span><a class="LN" name="626">  626   </a>  localB-&gt;CONFIG_OUT_Patient_bolus_Duration = 0U;
+</span><span><a class="LN" name="627">  627   </a>  localB-&gt;CONFIG_OUT_Lock_Out_Duration = 0U;
+</span><span><a class="LN" name="628">  628   </a>  localB-&gt;CONFIG_OUT_Max_Patient_bolus = 0U;
+</span><span><a class="LN" name="629">  629   </a>  localB-&gt;CONFIG_OUT_Flow_Rate_KVO = 0U;
+</span><span><a class="LN" name="630">  630   </a>  localB-&gt;CONFIG_OUT_Entered_Reservoir_Volume = 0U;
+</span><span><a class="LN" name="631">  631   </a>  localB-&gt;CONFIG_OUT_Reservoir_Volume = 0U;
+</span><span><a class="LN" name="632">  632   </a>  localB-&gt;CONFIG_OUT_Configured = 0U;
+</span><span><a class="LN" name="633">  633   </a>  localB-&gt;CONFIG_OUT_Error_Message_ID = 0U;
+</span><span><a class="LN" name="634">  634   </a>  localB-&gt;CONFIG_OUT_Request_Configuration_Type = FALSE;
+</span><span><a class="LN" name="635">  635   </a>  localB-&gt;CONFIG_OUT_Request_Confirm_Infusion_Initiate = FALSE;
+</span><span><a class="LN" name="636">  636   </a>  localB-&gt;CONFIG_OUT_Request_Patient_Drug_Info = FALSE;
+</span><span><a class="LN" name="637">  637   </a>  localB-&gt;CONFIG_OUT_Request_Infusion_Info = FALSE;
+</span><span><a class="LN" name="638">  638   </a>  localB-&gt;CONFIG_OUT_Log_Message_ID = 0U;
+</span><span><a class="LN" name="639">  639   </a>  localB-&gt;CONFIG_OUT_Config_Timer = 0U;
+</span><span><a class="LN" name="640">  640   </a>  localB-&gt;CONFIG_OUT_Config_Mode = 0U;
+</span><span><a class="LN" name="641">  641   </a><b>}</b>
+</span><span><a class="LN" name="642">  642   </a>
+</span><span><a class="LN" name="643">  643   </a><span class="CT">/* Output and update for referenced model: 'CONFIG_Functional' */</span>
+</span><span><a class="LN" name="644">  644   </a><span class="DT">void</span> <a name="fcn_CONFIG_Functional">CONFIG_Functional</a>(<span class="DT">const</span> <a href="CONFIG_Functional_types_h.html#type_Top_Level_Mode_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Top_Level_Mode_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Top_Level_Mode_Outputs</font></a> *rtu_TLM_MODE_IN, <span class="DT">const</span>
+</span><span><a class="LN" name="645">  645   </a>  <a href="CONFIG_Functional_types_h.html#type_Prescription_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Prescription_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Prescription_Inputs</font></a> *rtu_PRES_IN, <span class="DT">const</span> <a href="CONFIG_Functional_types_h.html#type_Operator_Commands" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Operator_Commands');" target="rtwreport_document_frame"><font color="#1122aa">Operator_Commands</font></a> *rtu_OP_CMD_IN,
+</span><span><a class="LN" name="646">  646   </a>  <span class="DT">const</span> <a href="CONFIG_Functional_types_h.html#type_Drug_Database_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Drug_Database_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Drug_Database_Inputs</font></a> *rtu_DB_IN, <span class="DT">const</span> <a href="CONFIG_Functional_types_h.html#type_Device_Configuration_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Device_Configuration_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Device_Configuration_Inputs</font></a>
+</span><span><a class="LN" name="647">  647   </a>  *rtu_CONST_IN, <span class="DT">const</span> <a href="CONFIG_Functional_types_h.html#type_System_Status_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_System_Status_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">System_Status_Outputs</font></a> *rtu_SYS_STAT_IN, <a href="CONFIG_Functional_types_h.html#type_Config_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Config_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Config_Outputs</font></a>
+</span><span><a class="LN" name="648">  648   </a>  *rty_CONFIG_OUT, <a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *localB, <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a>
+</span><span><a class="LN" name="649">  649   </a>  *localDW)
+</span><span><a class="LN" name="650">  650   </a><b>{</b>
+</span><span><a class="LN" name="651">  651   </a>  <span class="CT">/* BusSelector: '&lt;Root&gt;/BusConversion_InsertedFor_PRES_IN_at_outport_0' */</span>
+</span><span><a class="LN" name="652">  652   </a>  localB-&gt;Patient_ID = rtu_PRES_IN-&gt;Patient_ID;
+</span><span><a class="LN" name="653">  653   </a>  localB-&gt;Drug_Name = rtu_PRES_IN-&gt;Drug_Name;
+</span><span><a class="LN" name="654">  654   </a>  localB-&gt;Drug_Concentration = rtu_PRES_IN-&gt;Drug_Concentration;
+</span><span><a class="LN" name="655">  655   </a>  localB-&gt;VTBI_Total = rtu_PRES_IN-&gt;VTBI_Total;
+</span><span><a class="LN" name="656">  656   </a>  localB-&gt;Total_Duration = rtu_PRES_IN-&gt;Total_Duration;
+</span><span><a class="LN" name="657">  657   </a>  localB-&gt;Flow_Rate_Basal = rtu_PRES_IN-&gt;Flow_Rate_Basal;
+</span><span><a class="LN" name="658">  658   </a>  localB-&gt;Flow_Rate_Intermittent_Bolus =
+</span><span><a class="LN" name="659">  659   </a>    rtu_PRES_IN-&gt;Flow_Rate_Intermittent_Bolus;
+</span><span><a class="LN" name="660">  660   </a>  localB-&gt;Duration_Intermittent_Bolus = rtu_PRES_IN-&gt;Duration_Intermittent_Bolus;
+</span><span><a class="LN" name="661">  661   </a>  localB-&gt;Interval_Intermittent_Bolus = rtu_PRES_IN-&gt;Interval_Intermittent_Bolus;
+</span><span><a class="LN" name="662">  662   </a>  localB-&gt;Flow_Rate_Patient_Bolus = rtu_PRES_IN-&gt;Flow_Rate_Patient_Bolus;
+</span><span><a class="LN" name="663">  663   </a>  localB-&gt;Duration_Patient_Bolus = rtu_PRES_IN-&gt;Duration_Patient_Bolus;
+</span><span><a class="LN" name="664">  664   </a>  localB-&gt;Lockout_Period_Patient_Bolus =
+</span><span><a class="LN" name="665">  665   </a>    rtu_PRES_IN-&gt;Lockout_Period_Patient_Bolus;
+</span><span><a class="LN" name="666">  666   </a>  localB-&gt;Max_Number_of_Patient_Bolus = rtu_PRES_IN-&gt;Max_Number_of_Patient_Bolus;
+</span><span><a class="LN" name="667">  667   </a>  localB-&gt;Entered_Reservoir_Volume = rtu_PRES_IN-&gt;Entered_Reservoir_Volume;
+</span><span><a class="LN" name="668">  668   </a>
+</span><span><a class="LN" name="669">  669   </a>  <span class="CT">/* BusSelector: '&lt;Root&gt;/BusConversion_InsertedFor_OP_CMD_IN_at_outport_0' */</span>
+</span><span><a class="LN" name="670">  670   </a>  localB-&gt;Infusion_Initiate = rtu_OP_CMD_IN-&gt;Infusion_Initiate;
+</span><span><a class="LN" name="671">  671   </a>  localB-&gt;Next = rtu_OP_CMD_IN-&gt;Next;
+</span><span><a class="LN" name="672">  672   </a>  localB-&gt;Back = rtu_OP_CMD_IN-&gt;Back;
+</span><span><a class="LN" name="673">  673   </a>  localB-&gt;Cancel = rtu_OP_CMD_IN-&gt;Cancel;
+</span><span><a class="LN" name="674">  674   </a>  localB-&gt;Configuration_Type = rtu_OP_CMD_IN-&gt;Configuration_Type;
+</span><span><a class="LN" name="675">  675   </a>
+</span><span><a class="LN" name="676">  676   </a>  <span class="CT">/* BusSelector: '&lt;Root&gt;/BusConversion_InsertedFor_DB_IN_at_outport_0' */</span>
+</span><span><a class="LN" name="677">  677   </a>  localB-&gt;Drug_Name_d = rtu_DB_IN-&gt;Drug_Name;
+</span><span><a class="LN" name="678">  678   </a>  localB-&gt;Drug_Concentration_High = rtu_DB_IN-&gt;Drug_Concentration_High;
+</span><span><a class="LN" name="679">  679   </a>  localB-&gt;Drug_Concentration_Low = rtu_DB_IN-&gt;Drug_Concentration_Low;
+</span><span><a class="LN" name="680">  680   </a>  localB-&gt;VTBI_High = rtu_DB_IN-&gt;VTBI_High;
+</span><span><a class="LN" name="681">  681   </a>  localB-&gt;VTBI_Low = rtu_DB_IN-&gt;VTBI_Low;
+</span><span><a class="LN" name="682">  682   </a>  localB-&gt;Number_Max_Patient_Bolus = rtu_DB_IN-&gt;Number_Max_Patient_Bolus;
+</span><span><a class="LN" name="683">  683   </a>  localB-&gt;Flow_Rate_KVO = rtu_DB_IN-&gt;Flow_Rate_KVO;
+</span><span><a class="LN" name="684">  684   </a>  localB-&gt;Flow_Rate_High = rtu_DB_IN-&gt;Flow_Rate_High;
+</span><span><a class="LN" name="685">  685   </a>  localB-&gt;Flow_Rate_Low = rtu_DB_IN-&gt;Flow_Rate_Low;
+</span><span><a class="LN" name="686">  686   </a>
+</span><span><a class="LN" name="687">  687   </a>  <span class="CT">/* BusSelector: '&lt;Root&gt;/BusConversion_InsertedFor_CONST_IN_at_outport_0' */</span>
+</span><span><a class="LN" name="688">  688   </a>  localB-&gt;Empty_Reservoir = rtu_CONST_IN-&gt;Empty_Reservoir;
+</span><span><a class="LN" name="689">  689   </a>  localB-&gt;Max_Config_Duration = rtu_CONST_IN-&gt;Max_Config_Duration;
+</span><span><a class="LN" name="690">  690   </a>
+</span><span><a class="LN" name="691">  691   </a>  <span class="CT">/* BusSelector: '&lt;Root&gt;/BusConversion_InsertedFor_SYS_STAT_IN_at_outport_0' */</span>
+</span><span><a class="LN" name="692">  692   </a>  localB-&gt;Reservoir_Volume = rtu_SYS_STAT_IN-&gt;Reservoir_Volume;
+</span><span><a class="LN" name="693">  693   </a>  localB-&gt;In_Therapy = rtu_SYS_STAT_IN-&gt;In_Therapy;
+</span><span><a class="LN" name="694">  694   </a>
+</span><span><a class="LN" name="695">  695   </a>  <span class="CT">/* Chart: '&lt;Root&gt;/Config  Sub-System' incorporates:</span>
+</span><span><a class="LN" name="696">  696   </a><span class="CT">   *  BusSelector: '&lt;Root&gt;/BusConversion_InsertedFor_OP_CMD_IN_at_outport_0'</span>
+</span><span><a class="LN" name="697">  697   </a><span class="CT">   *  BusSelector: '&lt;Root&gt;/BusConversion_InsertedFor_TLM_MODE_IN_at_outport_0'</span>
+</span><span><a class="LN" name="698">  698   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="699">  699   </a>  <span class="CT">/* Gateway: Config  Sub-System */</span>
+</span><span><a class="LN" name="700">  700   </a>  <span class="CT">/* During: Config  Sub-System */</span>
+</span><span><a class="LN" name="701">  701   </a>  <span class="KW">if</span> (localDW-&gt;is_active_c2_CONFIG_Functional == 0U) <b>{</b>
+</span><span><a class="LN" name="702">  702   </a>    <span class="CT">/* Entry: Config  Sub-System */</span>
+</span><span><a class="LN" name="703">  703   </a>    localDW-&gt;is_active_c2_CONFIG_Functional = 1U;
+</span><span><a class="LN" name="704">  704   </a>
+</span><span><a class="LN" name="705">  705   </a>    <span class="CT">/* Entry Internal: Config  Sub-System */</span>
+</span><span><a class="LN" name="706">  706   </a>    <span class="KW">if</span> (rtu_TLM_MODE_IN-&gt;System_On) <b>{</b>
+</span><span><a class="LN" name="707">  707   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4535' */</span>
+</span><span><a class="LN" name="708">  708   </a>      localDW-&gt;is_c2_CONFIG_Functional = CONFIG_Functional_IN_Configuration;
+</span><span><a class="LN" name="709">  709   </a>
+</span><span><a class="LN" name="710">  710   </a>      <span class="CT">/* Entry Internal 'Configuration': '&lt;S1&gt;:4440' */</span>
+</span><span><a class="LN" name="711">  711   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4441' */</span>
+</span><span><a class="LN" name="712">  712   </a>      localDW-&gt;is_Configuration = CONFIG_Functional_IN_MAIN;
+</span><span><a class="LN" name="713">  713   </a>
+</span><span><a class="LN" name="714">  714   </a>      <span class="CT">/* Entry 'MAIN': '&lt;S1&gt;:4518' */</span>
+</span><span><a class="LN" name="715">  715   </a>      localB-&gt;CONFIG_OUT_Config_Mode = 1U;
+</span><span><a class="LN" name="716">  716   </a>      localB-&gt;CONFIG_OUT_Config_Timer = 0U;
+</span><span><a class="LN" name="717">  717   </a>      <a href="#fcn_CONFIG_Functional_setReservoirVolume" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_setReservoirVolume');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_setReservoirVolume</font></a>(localB, localDW);
+</span><span><a class="LN" name="718">  718   </a>      <a href="#fcn_CONFIG_Functional_checkIfPrescriptionAvailable" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkIfPrescriptionAvailable');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkIfPrescriptionAvailable</font></a>(localB, localDW);
+</span><span><a class="LN" name="719">  719   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="720">  720   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4534' */</span>
+</span><span><a class="LN" name="721">  721   </a>      localDW-&gt;is_c2_CONFIG_Functional = CONFIG_Functional_IN_NOT_ON;
+</span><span><a class="LN" name="722">  722   </a>    <b>}</b>
+</span><span><a class="LN" name="723">  723   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (localDW-&gt;is_c2_CONFIG_Functional ==
+</span><span><a class="LN" name="724">  724   </a>             CONFIG_Functional_IN_Configuration) <b>{</b>
+</span><span><a class="LN" name="725">  725   </a>    <span class="CT">/* During 'Configuration': '&lt;S1&gt;:4440' */</span>
+</span><span><a class="LN" name="726">  726   </a>    <span class="KW">if</span> (!rtu_TLM_MODE_IN-&gt;System_On) <b>{</b>
+</span><span><a class="LN" name="727">  727   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4531' */</span>
+</span><span><a class="LN" name="728">  728   </a>      <span class="CT">/* Exit Internal 'Configuration': '&lt;S1&gt;:4440' */</span>
+</span><span><a class="LN" name="729">  729   </a>      <span class="KW">switch</span> (localDW-&gt;is_Configuration) <b>{</b>
+</span><span><a class="LN" name="730">  730   </a>       <span class="KW">case</span> CONFIG_Functional_IN_MAIN:
+</span><span><a class="LN" name="731">  731   </a>        <span class="CT">/* Exit 'MAIN': '&lt;S1&gt;:4518' */</span>
+</span><span><a class="LN" name="732">  732   </a>        localB-&gt;CONFIG_OUT_Config_Mode = 1U;
+</span><span><a class="LN" name="733">  733   </a>        localB-&gt;CONFIG_OUT_Config_Timer = 0U;
+</span><span><a class="LN" name="734">  734   </a>        <a href="#fcn_CONFIG_Functional_setReservoirVolume" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_setReservoirVolume');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_setReservoirVolume</font></a>(localB, localDW);
+</span><span><a class="LN" name="735">  735   </a>        <a href="#fcn_CONFIG_Functional_checkIfPrescriptionAvailable" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkIfPrescriptionAvailable');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkIfPrescriptionAvailable</font></a>(localB, localDW);
+</span><span><a class="LN" name="736">  736   </a>        localDW-&gt;is_Configuration = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="737">  737   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="738">  738   </a>
+</span><span><a class="LN" name="739">  739   </a>       <span class="KW">case</span> CONFIG_Functional_IN_Prescription_Config:
+</span><span><a class="LN" name="740">  740   </a>        <span class="CT">/* Exit Internal 'Prescription_Config': '&lt;S1&gt;:4445' */</span>
+</span><span><a class="LN" name="741">  741   </a>        <span class="KW">switch</span> (localDW-&gt;is_Prescription_Config) <b>{</b>
+</span><span><a class="LN" name="742">  742   </a>         <span class="KW">case</span> CONFIG_Functional_IN_Infusion_info:
+</span><span><a class="LN" name="743">  743   </a>          <span class="CT">/* Exit Internal 'Infusion_info': '&lt;S1&gt;:4487' */</span>
+</span><span><a class="LN" name="744">  744   </a>          localDW-&gt;is_Infusion_info = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="745">  745   </a>
+</span><span><a class="LN" name="746">  746   </a>          <span class="CT">/* Exit 'Infusion_info': '&lt;S1&gt;:4487' */</span>
+</span><span><a class="LN" name="747">  747   </a>          localB-&gt;CONFIG_OUT_Config_Mode = 4U;
+</span><span><a class="LN" name="748">  748   </a>          localDW-&gt;is_Prescription_Config = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="749">  749   </a>          <span class="KW">break</span>;
+</span><span><a class="LN" name="750">  750   </a>
+</span><span><a class="LN" name="751">  751   </a>         <span class="KW">case</span> CONFIG_Functional_IN_Patient_Drug_info:
+</span><span><a class="LN" name="752">  752   </a>          <span class="CT">/* Exit Internal 'Patient_Drug_info': '&lt;S1&gt;:4456' */</span>
+</span><span><a class="LN" name="753">  753   </a>          localDW-&gt;is_Patient_Drug_info = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="754">  754   </a>
+</span><span><a class="LN" name="755">  755   </a>          <span class="CT">/* Exit 'Patient_Drug_info': '&lt;S1&gt;:4456' */</span>
+</span><span><a class="LN" name="756">  756   </a>          localB-&gt;CONFIG_OUT_Config_Mode = 3U;
+</span><span><a class="LN" name="757">  757   </a>          localDW-&gt;is_Prescription_Config = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="758">  758   </a>          <span class="KW">break</span>;
+</span><span><a class="LN" name="759">  759   </a>
+</span><span><a class="LN" name="760">  760   </a>         <span class="KW">default</span>:
+</span><span><a class="LN" name="761">  761   </a>          localDW-&gt;is_Prescription_Config = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="762">  762   </a>          <span class="KW">break</span>;
+</span><span><a class="LN" name="763">  763   </a>        <b>}</b>
+</span><span><a class="LN" name="764">  764   </a>
+</span><span><a class="LN" name="765">  765   </a>        <span class="CT">/* Exit 'Prescription_Config': '&lt;S1&gt;:4445' */</span>
+</span><span><a class="LN" name="766">  766   </a>        localB-&gt;CONFIG_OUT_Config_Timer++;
+</span><span><a class="LN" name="767">  767   </a>        localDW-&gt;is_Configuration = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="768">  768   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="769">  769   </a>
+</span><span><a class="LN" name="770">  770   </a>       <span class="KW">default</span>:
+</span><span><a class="LN" name="771">  771   </a>        localDW-&gt;is_Configuration = CONFIG_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="772">  772   </a>        <span class="KW">break</span>;
+</span><span><a class="LN" name="773">  773   </a>      <b>}</b>
+</span><span><a class="LN" name="774">  774   </a>
+</span><span><a class="LN" name="775">  775   </a>      localDW-&gt;is_c2_CONFIG_Functional = CONFIG_Functional_IN_NOT_ON;
+</span><span><a class="LN" name="776">  776   </a>    <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (localDW-&gt;is_Configuration == CONFIG_Functional_IN_MAIN) <b>{</b>
+</span><span><a class="LN" name="777">  777   </a>      <span class="CT">/* During 'MAIN': '&lt;S1&gt;:4518' */</span>
+</span><span><a class="LN" name="778">  778   </a>      <span class="KW">if</span> (rtu_OP_CMD_IN-&gt;Data_Config || (localB-&gt;Infusion_Initiate &amp;&amp;
+</span><span><a class="LN" name="779">  779   </a>           (localB-&gt;CONFIG_OUT_Configured == 0))) <b>{</b>
+</span><span><a class="LN" name="780">  780   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4442' */</span>
+</span><span><a class="LN" name="781">  781   </a>        <span class="CT">/* Exit 'MAIN': '&lt;S1&gt;:4518' */</span>
+</span><span><a class="LN" name="782">  782   </a>        localB-&gt;CONFIG_OUT_Config_Mode = 1U;
+</span><span><a class="LN" name="783">  783   </a>        localB-&gt;CONFIG_OUT_Config_Timer = 0U;
+</span><span><a class="LN" name="784">  784   </a>        <a href="#fcn_CONFIG_Functional_setReservoirVolume" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_setReservoirVolume');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_setReservoirVolume</font></a>(localB, localDW);
+</span><span><a class="LN" name="785">  785   </a>        <a href="#fcn_CONFIG_Functional_checkIfPrescriptionAvailable" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkIfPrescriptionAvailable');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkIfPrescriptionAvailable</font></a>(localB, localDW);
+</span><span><a class="LN" name="786">  786   </a>        localDW-&gt;is_Configuration = CONFIG_Functional_IN_Prescription_Config;
+</span><span><a class="LN" name="787">  787   </a>
+</span><span><a class="LN" name="788">  788   </a>        <span class="CT">/* Entry 'Prescription_Config': '&lt;S1&gt;:4445' */</span>
+</span><span><a class="LN" name="789">  789   </a>        localB-&gt;CONFIG_OUT_Config_Timer++;
+</span><span><a class="LN" name="790">  790   </a>        localB-&gt;CONFIG_OUT_Reservoir_Volume = localB-&gt;Reservoir_Volume;
+</span><span><a class="LN" name="791">  791   </a>        localB-&gt;CONFIG_OUT_Config_Mode = 2U;
+</span><span><a class="LN" name="792">  792   </a>        <a href="#fcn_CONFIG_Functional_checkIfPrescriptionAvailable" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkIfPrescriptionAvailable');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkIfPrescriptionAvailable</font></a>(localB, localDW);
+</span><span><a class="LN" name="793">  793   </a>
+</span><span><a class="LN" name="794">  794   </a>        <span class="CT">/* Entry Internal 'Prescription_Config': '&lt;S1&gt;:4445' */</span>
+</span><span><a class="LN" name="795">  795   </a>        <span class="CT">/* Transition: '&lt;S1&gt;:4449' */</span>
+</span><span><a class="LN" name="796">  796   </a>        localDW-&gt;is_Prescription_Config = CONFIG_Functional_IN_SelectType;
+</span><span><a class="LN" name="797">  797   </a>
+</span><span><a class="LN" name="798">  798   </a>        <span class="CT">/* Entry 'SelectType': '&lt;S1&gt;:4486' */</span>
+</span><span><a class="LN" name="799">  799   </a>        localB-&gt;CONFIG_OUT_Request_Configuration_Type = TRUE;
+</span><span><a class="LN" name="800">  800   </a>      <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="801">  801   </a>        localB-&gt;CONFIG_OUT_Config_Mode = 1U;
+</span><span><a class="LN" name="802">  802   </a>        localB-&gt;CONFIG_OUT_Config_Timer = 0U;
+</span><span><a class="LN" name="803">  803   </a>        <a href="#fcn_CONFIG_Functional_setReservoirVolume" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_setReservoirVolume');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_setReservoirVolume</font></a>(localB, localDW);
+</span><span><a class="LN" name="804">  804   </a>        <a href="#fcn_CONFIG_Functional_checkIfPrescriptionAvailable" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkIfPrescriptionAvailable');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkIfPrescriptionAvailable</font></a>(localB, localDW);
+</span><span><a class="LN" name="805">  805   </a>      <b>}</b>
+</span><span><a class="LN" name="806">  806   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="807">  807   </a>      <a href="#fcn_CONFIG_Functional_Prescription_Config" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_Prescription_Config');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_Prescription_Config</font></a>(localB, localDW);
+</span><span><a class="LN" name="808">  808   </a>    <b>}</b>
+</span><span><a class="LN" name="809">  809   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="810">  810   </a>    <span class="CT">/* During 'NOT_ON': '&lt;S1&gt;:4532' */</span>
+</span><span><a class="LN" name="811">  811   </a>    <span class="KW">if</span> (rtu_TLM_MODE_IN-&gt;System_On) <b>{</b>
+</span><span><a class="LN" name="812">  812   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4533' */</span>
+</span><span><a class="LN" name="813">  813   </a>      localDW-&gt;is_c2_CONFIG_Functional = CONFIG_Functional_IN_Configuration;
+</span><span><a class="LN" name="814">  814   </a>
+</span><span><a class="LN" name="815">  815   </a>      <span class="CT">/* Entry Internal 'Configuration': '&lt;S1&gt;:4440' */</span>
+</span><span><a class="LN" name="816">  816   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4441' */</span>
+</span><span><a class="LN" name="817">  817   </a>      localDW-&gt;is_Configuration = CONFIG_Functional_IN_MAIN;
+</span><span><a class="LN" name="818">  818   </a>
+</span><span><a class="LN" name="819">  819   </a>      <span class="CT">/* Entry 'MAIN': '&lt;S1&gt;:4518' */</span>
+</span><span><a class="LN" name="820">  820   </a>      localB-&gt;CONFIG_OUT_Config_Mode = 1U;
+</span><span><a class="LN" name="821">  821   </a>      localB-&gt;CONFIG_OUT_Config_Timer = 0U;
+</span><span><a class="LN" name="822">  822   </a>      <a href="#fcn_CONFIG_Functional_setReservoirVolume" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_setReservoirVolume');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_setReservoirVolume</font></a>(localB, localDW);
+</span><span><a class="LN" name="823">  823   </a>      <a href="#fcn_CONFIG_Functional_checkIfPrescriptionAvailable" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_CONFIG_Functional_checkIfPrescriptionAvailable');" target="rtwreport_document_frame"><font color="#1122aa">CONFIG_Functional_checkIfPrescriptionAvailable</font></a>(localB, localDW);
+</span><span><a class="LN" name="824">  824   </a>    <b>}</b>
+</span><span><a class="LN" name="825">  825   </a>  <b>}</b>
+</span><span><a class="LN" name="826">  826   </a>
+</span><span><a class="LN" name="827">  827   </a>  <span class="CT">/* End of Chart: '&lt;Root&gt;/Config  Sub-System' */</span>
+</span><span><a class="LN" name="828">  828   </a>
+</span><span><a class="LN" name="829">  829   </a>  <span class="CT">/* BusCreator: '&lt;Root&gt;/BusConversion_InsertedFor_CONFIG_OUT_at_inport_0' */</span>
+</span><span><a class="LN" name="830">  830   </a>  rty_CONFIG_OUT-&gt;Patient_ID = localB-&gt;CONFIG_OUT_Patient_ID;
+</span><span><a class="LN" name="831">  831   </a>  rty_CONFIG_OUT-&gt;Drug_Name = localB-&gt;CONFIG_OUT_Drug_Name;
+</span><span><a class="LN" name="832">  832   </a>  rty_CONFIG_OUT-&gt;Drug_Concentration = localB-&gt;CONFIG_OUT_Drug_Concentration;
+</span><span><a class="LN" name="833">  833   </a>  rty_CONFIG_OUT-&gt;Infusion_Total_Duration =
+</span><span><a class="LN" name="834">  834   </a>    localB-&gt;CONFIG_OUT_Infusion_Total_Duration;
+</span><span><a class="LN" name="835">  835   </a>  rty_CONFIG_OUT-&gt;VTBI_Total = localB-&gt;CONFIG_OUT_Vtbi_Total;
+</span><span><a class="LN" name="836">  836   </a>  rty_CONFIG_OUT-&gt;Flow_Rate_Basal = localB-&gt;CONFIG_OUT_Flow_Rate_Basal;
+</span><span><a class="LN" name="837">  837   </a>  rty_CONFIG_OUT-&gt;Flow_Rate_Intermittent_Bolus =
+</span><span><a class="LN" name="838">  838   </a>    localB-&gt;CONFIG_OUT_Flow_Rate_Intermittent_bolus;
+</span><span><a class="LN" name="839">  839   </a>  rty_CONFIG_OUT-&gt;Duration_Intermittent_Bolus =
+</span><span><a class="LN" name="840">  840   </a>    localB-&gt;CONFIG_OUT_Intermittent_Bolus_Duration;
+</span><span><a class="LN" name="841">  841   </a>  rty_CONFIG_OUT-&gt;Interval_Intermittent_Bolus =
+</span><span><a class="LN" name="842">  842   </a>    localB-&gt;CONFIG_OUT_Interval_Intermittent_bolus;
+</span><span><a class="LN" name="843">  843   </a>  rty_CONFIG_OUT-&gt;Flow_Rate_Patient_Bolus =
+</span><span><a class="LN" name="844">  844   </a>    localB-&gt;CONFIG_OUT_Flow_Rate_Patient_bolus;
+</span><span><a class="LN" name="845">  845   </a>  rty_CONFIG_OUT-&gt;Duration_Patient_Bolus =
+</span><span><a class="LN" name="846">  846   </a>    localB-&gt;CONFIG_OUT_Patient_bolus_Duration;
+</span><span><a class="LN" name="847">  847   </a>  rty_CONFIG_OUT-&gt;Lockout_Period_Patient_Bolus =
+</span><span><a class="LN" name="848">  848   </a>    localB-&gt;CONFIG_OUT_Lock_Out_Duration;
+</span><span><a class="LN" name="849">  849   </a>  rty_CONFIG_OUT-&gt;Max_Number_of_Patient_Bolus =
+</span><span><a class="LN" name="850">  850   </a>    localB-&gt;CONFIG_OUT_Max_Patient_bolus;
+</span><span><a class="LN" name="851">  851   </a>  rty_CONFIG_OUT-&gt;Flow_Rate_KVO = localB-&gt;CONFIG_OUT_Flow_Rate_KVO;
+</span><span><a class="LN" name="852">  852   </a>  rty_CONFIG_OUT-&gt;Entered_Reservoir_Volume =
+</span><span><a class="LN" name="853">  853   </a>    localB-&gt;CONFIG_OUT_Entered_Reservoir_Volume;
+</span><span><a class="LN" name="854">  854   </a>  rty_CONFIG_OUT-&gt;Reservoir_Volume = localB-&gt;CONFIG_OUT_Reservoir_Volume;
+</span><span><a class="LN" name="855">  855   </a>  rty_CONFIG_OUT-&gt;Configured = localB-&gt;CONFIG_OUT_Configured;
+</span><span><a class="LN" name="856">  856   </a>  rty_CONFIG_OUT-&gt;Error_Message_ID = localB-&gt;CONFIG_OUT_Error_Message_ID;
+</span><span><a class="LN" name="857">  857   </a>  rty_CONFIG_OUT-&gt;Request_Config_Type =
+</span><span><a class="LN" name="858">  858   </a>    localB-&gt;CONFIG_OUT_Request_Configuration_Type;
+</span><span><a class="LN" name="859">  859   </a>  rty_CONFIG_OUT-&gt;Request_Confirm_Infusion_Initiate =
+</span><span><a class="LN" name="860">  860   </a>    localB-&gt;CONFIG_OUT_Request_Confirm_Infusion_Initiate;
+</span><span><a class="LN" name="861">  861   </a>  rty_CONFIG_OUT-&gt;Request_Patient_Drug_Info =
+</span><span><a class="LN" name="862">  862   </a>    localB-&gt;CONFIG_OUT_Request_Patient_Drug_Info;
+</span><span><a class="LN" name="863">  863   </a>  rty_CONFIG_OUT-&gt;Request_Infusion_Info =
+</span><span><a class="LN" name="864">  864   </a>    localB-&gt;CONFIG_OUT_Request_Infusion_Info;
+</span><span><a class="LN" name="865">  865   </a>  rty_CONFIG_OUT-&gt;Log_Message_ID = localB-&gt;CONFIG_OUT_Log_Message_ID;
+</span><span><a class="LN" name="866">  866   </a>  rty_CONFIG_OUT-&gt;Config_Timer = localB-&gt;CONFIG_OUT_Config_Timer;
+</span><span><a class="LN" name="867">  867   </a>  rty_CONFIG_OUT-&gt;Config_Mode = localB-&gt;CONFIG_OUT_Config_Mode;
+</span><span><a class="LN" name="868">  868   </a><b>}</b>
+</span><span><a class="LN" name="869">  869   </a>
+</span><span><a class="LN" name="870">  870   </a><span class="CT">/* Model initialize function */</span>
+</span><span><a class="LN" name="871">  871   </a><span class="DT">void</span> <a name="fcn_CONFIG_Functional_initialize">CONFIG_Functional_initialize</a>(<span class="DT">const</span> char_T **rt_errorStatus,
+</span><span><a class="LN" name="872">  872   </a>  <a href="CONFIG_Functional_types_h.html#type_RT_MODEL_CONFIG_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_CONFIG_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">RT_MODEL_CONFIG_Functional_T</font></a> *<span class="DT">const</span> CONFIG_Functional_M,
+</span><span><a class="LN" name="873">  873   </a>  <a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a> *localB, <a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="874">  874   </a><b>{</b>
+</span><span><a class="LN" name="875">  875   </a>  <span class="CT">/* Registration code */</span>
+</span><span><a class="LN" name="876">  876   </a>
+</span><span><a class="LN" name="877">  877   </a>  <span class="CT">/* initialize error status */</span>
+</span><span><a class="LN" name="878">  878   </a>  rtmSetErrorStatusPointer(CONFIG_Functional_M, rt_errorStatus);
+</span><span><a class="LN" name="879">  879   </a>
+</span><span><a class="LN" name="880">  880   </a>  <span class="CT">/* block I/O */</span>
+</span><span><a class="LN" name="881">  881   </a>  (<span class="DT">void</span>) memset(((<span class="DT">void</span> *) localB), 0,
+</span><span><a class="LN" name="882">  882   </a>                <span class="KW">sizeof</span>(<a href="CONFIG_Functional_h.html#type_B_CONFIG_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_CONFIG_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_CONFIG_Functional_c_T</font></a>));
+</span><span><a class="LN" name="883">  883   </a>
+</span><span><a class="LN" name="884">  884   </a>  <span class="CT">/* states (dwork) */</span>
+</span><span><a class="LN" name="885">  885   </a>  (<span class="DT">void</span>) memset((<span class="DT">void</span> *)localDW, 0,
+</span><span><a class="LN" name="886">  886   </a>                <span class="KW">sizeof</span>(<a href="CONFIG_Functional_h.html#type_DW_CONFIG_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_CONFIG_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_CONFIG_Functional_f_T</font></a>));
+</span><span><a class="LN" name="887">  887   </a><b>}</b>
+</span><span><a class="LN" name="888">  888   </a>
+</span></pre>
+</td></tr></table>
+</p>
+</body>
+</html>

@@ -1,0 +1,384 @@
+%implements "chartSource" "C"
+%function ChartConfig(block, system) void
+  %createrecord chartConfiguration { ...
+          executeAtInitialization  0 ...
+  }
+  %return chartConfiguration
+%endfunction
+%function ChartDataMap(block, system) void
+  %createrecord ChartDataElements {\
+    NumChartData   61 \
+    ChartDataDefaults {\
+      RecordType   "ChartData"\
+      Dimensions   []\
+      IsTestPoint  0\
+    }\
+    ChartData {\
+      Name         "is_active_c2_ALARM_Functional"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "is_c2_ALARM_Functional"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "is_active_Notification"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.Notification"\
+    }\
+    ChartData {\
+      Name         "is_Visual"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.Notification.Visual"\
+    }\
+    ChartData {\
+      Name         "is_active_Visual"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.Notification.Visual"\
+    }\
+    ChartData {\
+      Name         "is_Audio"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.Notification.Audio"\
+    }\
+    ChartData {\
+      Name         "is_active_Audio"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.Notification.Audio"\
+    }\
+    ChartData {\
+      Name         "is_active_CheckAlarm"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm"\
+    }\
+    ChartData {\
+      Name         "is_CancelAlarm"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.CancelAlarm"\
+    }\
+    ChartData {\
+      Name         "is_active_CancelAlarm"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.CancelAlarm"\
+    }\
+    ChartData {\
+      Name         "is_active_SetAlarmStatus"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.SetAlarmStatus"\
+    }\
+    ChartData {\
+      Name         "is_active_Level4"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level4"\
+    }\
+    ChartData {\
+      Name         "is_IsEmptyReservoir"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level4.IsEmptyReservoir"\
+    }\
+    ChartData {\
+      Name         "is_active_IsEmptyReservoir"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level4.IsEmptyReservoir"\
+    }\
+    ChartData {\
+      Name         "is_IsSystemMonitorFailed"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsSystemMonitorFailed"\
+    }\
+    ChartData {\
+      Name         "is_active_IsSystemMonitorFailed"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsSystemMonitorFailed"\
+    }\
+    ChartData {\
+      Name         "is_IsEnviromentalError"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level4.IsEnviromentalError"\
+    }\
+    ChartData {\
+      Name         "is_active_IsEnviromentalError"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level4.IsEnviromentalError"\
+    }\
+    ChartData {\
+      Name         "is_active_Level3"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level3"\
+    }\
+    ChartData {\
+      Name         "is_IsOverInfusionFlowRate"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level3.IsOverInfusionFlowRate"\
+    }\
+    ChartData {\
+      Name         "is_active_IsOverInfusionFlowRate"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level3.IsOverInfusionFlowRate"\
+    }\
+    ChartData {\
+      Name         "is_InfusionNotStartedWarning"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.InfusionNotStartedWarning"\
+    }\
+    ChartData {\
+      Name         "is_active_InfusionNotStartedWarning"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.InfusionNotStartedWarning"\
+    }\
+    ChartData {\
+      Name         "is_IsOverInfusionVTBI"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level3.IsOverInfusionVTBI"\
+    }\
+    ChartData {\
+      Name         "is_active_IsOverInfusionVTBI"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level3.IsOverInfusionVTBI"\
+    }\
+    ChartData {\
+      Name         "is_IsAirInLine"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level3.IsAirInLine"\
+    }\
+    ChartData {\
+      Name         "is_active_IsAirInLine"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level3.IsAirInLine"\
+    }\
+    ChartData {\
+      Name         "is_IsOcclusion"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level3.IsOcclusion"\
+    }\
+    ChartData {\
+      Name         "is_active_IsOcclusion"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level3.IsOcclusion"\
+    }\
+    ChartData {\
+      Name         "is_IsDoorOpen"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level3.IsDoorOpen"\
+    }\
+    ChartData {\
+      Name         "is_active_IsDoorOpen"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level3.IsDoorOpen"\
+    }\
+    ChartData {\
+      Name         "is_active_Level2"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level2"\
+    }\
+    ChartData {\
+      Name         "is_IsLowReservoir"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level2.IsLowReservoir"\
+    }\
+    ChartData {\
+      Name         "is_active_IsLowReservoir"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level2.IsLowReservoir"\
+    }\
+    ChartData {\
+      Name         "is_active_Level1"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1"\
+    }\
+    ChartData {\
+      Name         "is_IsUnderInfusion"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsUnderInfusion"\
+    }\
+    ChartData {\
+      Name         "is_active_IsUnderInfusion"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsUnderInfusion"\
+    }\
+    ChartData {\
+      Name         "is_IsFlowRateNotStable"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsFlowRateNotStable"\
+    }\
+    ChartData {\
+      Name         "is_active_IsFlowRateNotStable"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsFlowRateNotStable"\
+    }\
+    ChartData {\
+      Name         "is_IsIdleTimeExceeded"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsIdleTimeExceeded"\
+    }\
+    ChartData {\
+      Name         "is_active_IsIdleTimeExceeded"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsIdleTimeExceeded"\
+    }\
+    ChartData {\
+      Name         "is_IsPausedTimeExceeded"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsPausedTimeExceeded"\
+    }\
+    ChartData {\
+      Name         "is_active_IsPausedTimeExceeded"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsPausedTimeExceeded"\
+    }\
+    ChartData {\
+      Name         "is_IsConfigTimeWarning"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsConfigTimeWarning"\
+    }\
+    ChartData {\
+      Name         "is_active_IsConfigTimeWarning"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsConfigTimeWarning"\
+    }\
+    ChartData {\
+      Name         "is_IsBatteryError"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsBatteryError"\
+    }\
+    ChartData {\
+      Name         "is_active_IsBatteryError"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsBatteryError"\
+    }\
+    ChartData {\
+      Name         "is_IsPumpHot"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsPumpHot"\
+    }\
+    ChartData {\
+      Name         "is_active_IsPumpHot"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsPumpHot"\
+    }\
+    ChartData {\
+      Name         "is_IsLoggingFailed"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsLoggingFailed"\
+    }\
+    ChartData {\
+      Name         "is_active_IsLoggingFailed"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level1.IsLoggingFailed"\
+    }\
+    ChartData {\
+      Name         "is_IsHardwareError"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level4.IsHardwareError"\
+    }\
+    ChartData {\
+      Name         "is_active_IsHardwareError"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Alarms.CheckAlarm.Level4.IsHardwareError"\
+    }\
+    ChartData {\
+      Name         "overInfusionTimer"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "overInfusionTimer"\
+    }\
+    ChartData {\
+      Name         "underInfusionTimer"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "underInfusionTimer"\
+    }\
+    ChartData {\
+      Name         "currentAlarm"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "currentAlarm"\
+    }\
+    ChartData {\
+      Name         "audioTimer"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "audioTimer"\
+    }\
+    ChartData {\
+      Name         "cancelAlarm"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "cancelAlarm"\
+    }\
+    ChartData {\
+      Name         "Max_Alarm_Level"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "Max_Alarm_Level"\
+    }\
+    ChartData {\
+      Name         "idletimer"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "idletimer"\
+    }\
+    ChartData {\
+      Name         "pausedtimer"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "pausedtimer"\
+    }\
+  }
+  %return ChartDataElements
+%endfunction

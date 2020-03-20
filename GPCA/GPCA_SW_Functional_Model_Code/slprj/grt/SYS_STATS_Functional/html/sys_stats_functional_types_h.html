@@ -1,0 +1,167 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - SYS_STATS_Functional_types.h</title>
+<style> .LN { font-style: italic; color: #888888 } </style>
+<style> .CT { font-style: italic; color: #117755 } </style>
+<style> .PP { font-style: bold;   color: #992211 } </style>
+<style> .KW { font-style: bold;   color: #112266 } </style>
+<style> .DT { font-style: bold;   color: #112266 } </style>
+<link rel="stylesheet" type="text/css" href="rtwreport.css"></link><script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<SCRIPT type="text/javascript" src="rtwannotate.js"></SCRIPT>
+</head>
+<body bgcolor="#eeeeee" text="#1122aa" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};if (typeof rtwannotate === 'function') {rtwannotate('SYS_STATS_Functional_types_h_cov.xml');}">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../SYS_STATS_Functional_types.h" target="rtwreport_document_frame" id="linkToText_plain">SYS_STATS_Functional_types.h</a></h4>
+<pre id="RTWcode">
+<span><a class="LN" name="1">    1   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="2">    2   </a><span class="CT"> * SYS_STATS_Functional_types.h</span>
+</span><span><a class="LN" name="3">    3   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="4">    4   </a><span class="CT"> * Code generation for model "SYS_STATS_Functional".</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="6">    6   </a><span class="CT"> * Model version              : 1.1404</span>
+</span><span><a class="LN" name="7">    7   </a><span class="CT"> * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013</span>
+</span><span><a class="LN" name="8">    8   </a><span class="CT"> * C source code generated on : Thu Sep 12 09:50:15 2013</span>
+</span><span><a class="LN" name="9">    9   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="10">   10   </a><span class="CT"> * Target selection: grt.tlc</span>
+</span><span><a class="LN" name="11">   11   </a><span class="CT"> * Note: GRT includes extra infrastructure and instrumentation for prototyping</span>
+</span><span><a class="LN" name="12">   12   </a><span class="CT"> * Embedded hardware selection: 32-bit Generic</span>
+</span><span><a class="LN" name="13">   13   </a><span class="CT"> * Code generation objective: Debugging</span>
+</span><span><a class="LN" name="14">   14   </a><span class="CT"> * Validation result: Not run</span>
+</span><span><a class="LN" name="15">   15   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="16">   16   </a><font color="#992211">#</font><span class="PP">ifndef</span> RTW_HEADER_SYS_STATS_Functional_types_h_
+</span><span><a class="LN" name="17">   17   </a><font color="#992211">#</font><span class="PP">define</span> RTW_HEADER_SYS_STATS_Functional_types_h_
+</span><span><a class="LN" name="18">   18   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;rtwtypes.h&quot;</font>
+</span><span><a class="LN" name="19">   19   </a><font color="#992211">#</font><span class="PP">ifndef</span> _DEFINED_TYPEDEF_FOR_Infusion_Manager_Outputs_
+</span><span><a class="LN" name="20">   20   </a><font color="#992211">#</font><span class="PP">define</span> _DEFINED_TYPEDEF_FOR_Infusion_Manager_Outputs_
+</span><span><a class="LN" name="21">   21   </a>
+</span><span><a class="LN" name="22">   22   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="23">   23   </a>  uint8_T Commanded_Flow_Rate;
+</span><span><a class="LN" name="24">   24   </a>  uint8_T Current_System_Mode;
+</span><span><a class="LN" name="25">   25   </a>  boolean_T New_Infusion;
+</span><span><a class="LN" name="26">   26   </a>  uint8_T Log_Message_ID;
+</span><span><a class="LN" name="27">   27   </a>  uint8_T Actual_Infusion_Duration;
+</span><span><a class="LN" name="28">   28   </a><b>}</b> <a name="type_Infusion_Manager_Outputs">Infusion_Manager_Outputs</a>;
+</span><span><a class="LN" name="29">   29   </a>
+</span><span><a class="LN" name="30">   30   </a><font color="#992211">#</font><span class="PP">endif</span>
+</span><span><a class="LN" name="31">   31   </a>
+</span><span><a class="LN" name="32">   32   </a><font color="#992211">#</font><span class="PP">ifndef</span> _DEFINED_TYPEDEF_FOR_Top_Level_Mode_Outputs_
+</span><span><a class="LN" name="33">   33   </a><font color="#992211">#</font><span class="PP">define</span> _DEFINED_TYPEDEF_FOR_Top_Level_Mode_Outputs_
+</span><span><a class="LN" name="34">   34   </a>
+</span><span><a class="LN" name="35">   35   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="36">   36   </a>  boolean_T System_On;
+</span><span><a class="LN" name="37">   37   </a>  boolean_T Request_Confirm_Stop;
+</span><span><a class="LN" name="38">   38   </a>  uint8_T Log_Message_ID;
+</span><span><a class="LN" name="39">   39   </a><b>}</b> <a name="type_Top_Level_Mode_Outputs">Top_Level_Mode_Outputs</a>;
+</span><span><a class="LN" name="40">   40   </a>
+</span><span><a class="LN" name="41">   41   </a><font color="#992211">#</font><span class="PP">endif</span>
+</span><span><a class="LN" name="42">   42   </a>
+</span><span><a class="LN" name="43">   43   </a><font color="#992211">#</font><span class="PP">ifndef</span> _DEFINED_TYPEDEF_FOR_Device_Sensor_Inputs_
+</span><span><a class="LN" name="44">   44   </a><font color="#992211">#</font><span class="PP">define</span> _DEFINED_TYPEDEF_FOR_Device_Sensor_Inputs_
+</span><span><a class="LN" name="45">   45   </a>
+</span><span><a class="LN" name="46">   46   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="47">   47   </a>  uint8_T Flow_Rate;
+</span><span><a class="LN" name="48">   48   </a>  boolean_T Flow_Rate_Not_Stable;
+</span><span><a class="LN" name="49">   49   </a>  boolean_T Air_In_Line;
+</span><span><a class="LN" name="50">   50   </a>  boolean_T Occlusion;
+</span><span><a class="LN" name="51">   51   </a>  boolean_T Door_Open;
+</span><span><a class="LN" name="52">   52   </a>  boolean_T Temp;
+</span><span><a class="LN" name="53">   53   </a>  boolean_T Air_Pressure;
+</span><span><a class="LN" name="54">   54   </a>  boolean_T Humidity;
+</span><span><a class="LN" name="55">   55   </a>  boolean_T Battery_Depleted;
+</span><span><a class="LN" name="56">   56   </a>  boolean_T Battery_Low;
+</span><span><a class="LN" name="57">   57   </a>  boolean_T Battery_Unable_To_Charge;
+</span><span><a class="LN" name="58">   58   </a>  boolean_T Supply_Voltage;
+</span><span><a class="LN" name="59">   59   </a>  boolean_T CPU_In_Error;
+</span><span><a class="LN" name="60">   60   </a>  boolean_T RTC_In_Error;
+</span><span><a class="LN" name="61">   61   </a>  boolean_T Watchdog_Interrupted;
+</span><span><a class="LN" name="62">   62   </a>  boolean_T Memory_Corrupted;
+</span><span><a class="LN" name="63">   63   </a>  boolean_T Pump_Too_Hot;
+</span><span><a class="LN" name="64">   64   </a>  boolean_T Pump_Overheated;
+</span><span><a class="LN" name="65">   65   </a>  boolean_T Pump_Primed;
+</span><span><a class="LN" name="66">   66   </a>  boolean_T Post_Successful;
+</span><span><a class="LN" name="67">   67   </a><b>}</b> <a name="type_Device_Sensor_Inputs">Device_Sensor_Inputs</a>;
+</span><span><a class="LN" name="68">   68   </a>
+</span><span><a class="LN" name="69">   69   </a><font color="#992211">#</font><span class="PP">endif</span>
+</span><span><a class="LN" name="70">   70   </a>
+</span><span><a class="LN" name="71">   71   </a><font color="#992211">#</font><span class="PP">ifndef</span> _DEFINED_TYPEDEF_FOR_Device_Configuration_Inputs_
+</span><span><a class="LN" name="72">   72   </a><font color="#992211">#</font><span class="PP">define</span> _DEFINED_TYPEDEF_FOR_Device_Configuration_Inputs_
+</span><span><a class="LN" name="73">   73   </a>
+</span><span><a class="LN" name="74">   74   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="75">   75   </a>  uint8_T Audio_Enable_Duration;
+</span><span><a class="LN" name="76">   76   </a>  uint8_T Audio_Level;
+</span><span><a class="LN" name="77">   77   </a>  uint8_T Config_Warning_Duration;
+</span><span><a class="LN" name="78">   78   </a>  uint8_T Empty_Reservoir;
+</span><span><a class="LN" name="79">   79   </a>  uint8_T Low_Reservoir;
+</span><span><a class="LN" name="80">   80   </a>  uint8_T Max_Config_Duration;
+</span><span><a class="LN" name="81">   81   </a>  uint8_T Max_Duration_Over_Infusion;
+</span><span><a class="LN" name="82">   82   </a>  uint8_T Max_Duration_Under_Infusion;
+</span><span><a class="LN" name="83">   83   </a>  uint8_T Max_Paused_Duration;
+</span><span><a class="LN" name="84">   84   </a>  uint8_T Max_Idle_Duration;
+</span><span><a class="LN" name="85">   85   </a>  uint8_T Tolerance_Max;
+</span><span><a class="LN" name="86">   86   </a>  uint8_T Tolerance_Min;
+</span><span><a class="LN" name="87">   87   </a>  uint8_T Log_Interval;
+</span><span><a class="LN" name="88">   88   </a>  uint8_T System_Test_Interval;
+</span><span><a class="LN" name="89">   89   </a>  uint8_T Max_Display_Duration;
+</span><span><a class="LN" name="90">   90   </a>  uint8_T Max_Confirm_Stop_Duration;
+</span><span><a class="LN" name="91">   91   </a><b>}</b> <a name="type_Device_Configuration_Inputs">Device_Configuration_Inputs</a>;
+</span><span><a class="LN" name="92">   92   </a>
+</span><span><a class="LN" name="93">   93   </a><font color="#992211">#</font><span class="PP">endif</span>
+</span><span><a class="LN" name="94">   94   </a>
+</span><span><a class="LN" name="95">   95   </a><font color="#992211">#</font><span class="PP">ifndef</span> _DEFINED_TYPEDEF_FOR_Config_Outputs_
+</span><span><a class="LN" name="96">   96   </a><font color="#992211">#</font><span class="PP">define</span> _DEFINED_TYPEDEF_FOR_Config_Outputs_
+</span><span><a class="LN" name="97">   97   </a>
+</span><span><a class="LN" name="98">   98   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="99">   99   </a>  uint8_T Patient_ID;
+</span><span><a class="LN" name="100">  100   </a>  uint8_T Drug_Name;
+</span><span><a class="LN" name="101">  101   </a>  uint8_T Drug_Concentration;
+</span><span><a class="LN" name="102">  102   </a>  uint8_T Infusion_Total_Duration;
+</span><span><a class="LN" name="103">  103   </a>  uint8_T VTBI_Total;
+</span><span><a class="LN" name="104">  104   </a>  uint8_T Flow_Rate_Basal;
+</span><span><a class="LN" name="105">  105   </a>  uint8_T Flow_Rate_Intermittent_Bolus;
+</span><span><a class="LN" name="106">  106   </a>  uint8_T Duration_Intermittent_Bolus;
+</span><span><a class="LN" name="107">  107   </a>  uint8_T Interval_Intermittent_Bolus;
+</span><span><a class="LN" name="108">  108   </a>  uint8_T Flow_Rate_Patient_Bolus;
+</span><span><a class="LN" name="109">  109   </a>  uint8_T Duration_Patient_Bolus;
+</span><span><a class="LN" name="110">  110   </a>  uint8_T Lockout_Period_Patient_Bolus;
+</span><span><a class="LN" name="111">  111   </a>  uint8_T Max_Number_of_Patient_Bolus;
+</span><span><a class="LN" name="112">  112   </a>  uint8_T Flow_Rate_KVO;
+</span><span><a class="LN" name="113">  113   </a>  uint8_T Entered_Reservoir_Volume;
+</span><span><a class="LN" name="114">  114   </a>  uint8_T Reservoir_Volume;
+</span><span><a class="LN" name="115">  115   </a>  uint8_T Configured;
+</span><span><a class="LN" name="116">  116   </a>  uint8_T Error_Message_ID;
+</span><span><a class="LN" name="117">  117   </a>  boolean_T Request_Config_Type;
+</span><span><a class="LN" name="118">  118   </a>  boolean_T Request_Confirm_Infusion_Initiate;
+</span><span><a class="LN" name="119">  119   </a>  boolean_T Request_Patient_Drug_Info;
+</span><span><a class="LN" name="120">  120   </a>  boolean_T Request_Infusion_Info;
+</span><span><a class="LN" name="121">  121   </a>  uint8_T Log_Message_ID;
+</span><span><a class="LN" name="122">  122   </a>  uint8_T Config_Timer;
+</span><span><a class="LN" name="123">  123   </a>  uint8_T Config_Mode;
+</span><span><a class="LN" name="124">  124   </a><b>}</b> <a name="type_Config_Outputs">Config_Outputs</a>;
+</span><span><a class="LN" name="125">  125   </a>
+</span><span><a class="LN" name="126">  126   </a><font color="#992211">#</font><span class="PP">endif</span>
+</span><span><a class="LN" name="127">  127   </a>
+</span><span><a class="LN" name="128">  128   </a><font color="#992211">#</font><span class="PP">ifndef</span> _DEFINED_TYPEDEF_FOR_System_Status_Outputs_
+</span><span><a class="LN" name="129">  129   </a><font color="#992211">#</font><span class="PP">define</span> _DEFINED_TYPEDEF_FOR_System_Status_Outputs_
+</span><span><a class="LN" name="130">  130   </a>
+</span><span><a class="LN" name="131">  131   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="132">  132   </a>  boolean_T Reservoir_Empty;
+</span><span><a class="LN" name="133">  133   </a>  uint8_T Reservoir_Volume;
+</span><span><a class="LN" name="134">  134   </a>  uint8_T Volume_Infused;
+</span><span><a class="LN" name="135">  135   </a>  uint8_T Log_Message_ID;
+</span><span><a class="LN" name="136">  136   </a>  boolean_T In_Therapy;
+</span><span><a class="LN" name="137">  137   </a><b>}</b> <a name="type_System_Status_Outputs">System_Status_Outputs</a>;
+</span><span><a class="LN" name="138">  138   </a>
+</span><span><a class="LN" name="139">  139   </a><font color="#992211">#</font><span class="PP">endif</span>
+</span><span><a class="LN" name="140">  140   </a>
+</span><span><a class="LN" name="141">  141   </a><span class="CT">/* Forward declaration for rtModel */</span>
+</span><span><a class="LN" name="142">  142   </a><span class="KW">typedef</span> <span class="KW">struct</span> tag_RTM_SYS_STATS_Functional_T <a name="type_RT_MODEL_SYS_STATS_Functional_T">RT_MODEL_SYS_STATS_Functional_T</a>;
+</span><span><a class="LN" name="143">  143   </a>
+</span><span><a class="LN" name="144">  144   </a><font color="#992211">#</font><span class="PP">endif</span>                                 <span class="CT">/* RTW_HEADER_SYS_STATS_Functional_types_h_ */</span>
+</span><span><a class="LN" name="145">  145   </a>
+</span></pre>
+</td></tr></table>
+</p>
+</body>
+</html>

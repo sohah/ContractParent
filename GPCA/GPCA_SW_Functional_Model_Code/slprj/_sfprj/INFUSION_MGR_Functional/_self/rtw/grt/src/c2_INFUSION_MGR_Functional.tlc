@@ -1,0 +1,168 @@
+%implements "chartSource" "C"
+%function ChartConfig(block, system) void
+  %createrecord chartConfiguration { ...
+          executeAtInitialization  0 ...
+  }
+  %return chartConfiguration
+%endfunction
+%function ChartDataMap(block, system) void
+  %createrecord ChartDataElements {\
+    NumChartData   25 \
+    ChartDataDefaults {\
+      RecordType   "ChartData"\
+      Dimensions   []\
+      IsTestPoint  0\
+    }\
+    ChartData {\
+      Name         "is_active_c2_INFUSION_MGR_Functional"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "is_c2_INFUSION_MGR_Functional"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "is_Infusion_Manager"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Infusion_Manager"\
+    }\
+    ChartData {\
+      Name         "is_THERAPY"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY"\
+    }\
+    ChartData {\
+      Name         "is_Arbiter"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.PAUSED.Arbiter"\
+    }\
+    ChartData {\
+      Name         "is_active_Arbiter"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.PAUSED.Arbiter"\
+    }\
+    ChartData {\
+      Name         "is_Alarm_Paused"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.PAUSED.Alarm_Paused"\
+    }\
+    ChartData {\
+      Name         "is_active_Alarm_Paused"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.PAUSED.Alarm_Paused"\
+    }\
+    ChartData {\
+      Name         "is_Manual_Paused"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.PAUSED.Manual_Paused"\
+    }\
+    ChartData {\
+      Name         "is_active_Manual_Paused"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.PAUSED.Manual_Paused"\
+    }\
+    ChartData {\
+      Name         "is_BASAL"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.ACTIVE.BASAL"\
+    }\
+    ChartData {\
+      Name         "is_active_BASAL"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.ACTIVE.BASAL"\
+    }\
+    ChartData {\
+      Name         "is_Arbiter"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.ACTIVE.Arbiter"\
+    }\
+    ChartData {\
+      Name         "is_active_Arbiter"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.ACTIVE.Arbiter"\
+    }\
+    ChartData {\
+      Name         "is_PATIENT"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.ACTIVE.PATIENT"\
+    }\
+    ChartData {\
+      Name         "is_active_PATIENT"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.ACTIVE.PATIENT"\
+    }\
+    ChartData {\
+      Name         "is_INTERMITTENT"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.ACTIVE.INTERMITTENT"\
+    }\
+    ChartData {\
+      Name         "is_active_INTERMITTENT"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         "Infusion_Manager.THERAPY.ACTIVE.INTERMITTENT"\
+    }\
+    ChartData {\
+      Name         "sbolus_req"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "sbolus_req"\
+    }\
+    ChartData {\
+      Name         "sbolus_timer"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "sbolus_timer"\
+    }\
+    ChartData {\
+      Name         "pbolus_timer"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "pbolus_timer"\
+    }\
+    ChartData {\
+      Name         "lock_timer"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "lock_timer"\
+    }\
+    ChartData {\
+      Name         "number_pbolus"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "number_pbolus"\
+    }\
+    ChartData {\
+      Name         "inPatientBolus"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "inPatientBolus"\
+    }\
+    ChartData {\
+      Name         "sbolusInter_timer"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "sbolusInter_timer"\
+    }\
+  }
+  %return ChartDataElements
+%endfunction

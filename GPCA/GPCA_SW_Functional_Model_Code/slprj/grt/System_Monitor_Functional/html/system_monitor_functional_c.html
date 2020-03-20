@@ -1,0 +1,129 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - System_Monitor_Functional.c</title>
+<style> .LN { font-style: italic; color: #888888 } </style>
+<style> .CT { font-style: italic; color: #117755 } </style>
+<style> .PP { font-style: bold;   color: #992211 } </style>
+<style> .KW { font-style: bold;   color: #112266 } </style>
+<style> .DT { font-style: bold;   color: #112266 } </style>
+<link rel="stylesheet" type="text/css" href="rtwreport.css"></link><script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<SCRIPT type="text/javascript" src="rtwannotate.js"></SCRIPT>
+</head>
+<body bgcolor="#eeeeee" text="#1122aa" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};if (typeof rtwannotate === 'function') {rtwannotate('System_Monitor_Functional_c_cov.xml');}">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../System_Monitor_Functional.c" target="rtwreport_document_frame" id="linkToText_plain">System_Monitor_Functional.c</a></h4>
+<pre id="RTWcode">
+<span><a class="LN" name="1">    1   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="2">    2   </a><span class="CT"> * Code generation for system model 'System_Monitor_Functional'</span>
+</span><span><a class="LN" name="3">    3   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="4">    4   </a><span class="CT"> * Model                      : System_Monitor_Functional</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> * Model version              : 1.1157</span>
+</span><span><a class="LN" name="6">    6   </a><span class="CT"> * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013</span>
+</span><span><a class="LN" name="7">    7   </a><span class="CT"> * C source code generated on : Thu Sep 12 09:50:24 2013</span>
+</span><span><a class="LN" name="8">    8   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="9">    9   </a><span class="CT"> * Note that the functions contained in this file are part of a Simulink</span>
+</span><span><a class="LN" name="10">   10   </a><span class="CT"> * model, and are not self-contained algorithms.</span>
+</span><span><a class="LN" name="11">   11   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="12">   12   </a>
+</span><span><a class="LN" name="13">   13   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;System_Monitor_Functional.h&quot;</font>
+</span><span><a class="LN" name="14">   14   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;System_Monitor_Functional_private.h&quot;</font>
+</span><span><a class="LN" name="15">   15   </a>
+</span><span><a class="LN" name="16">   16   </a><span class="CT">/* Named constants for Chart: '&lt;Root&gt;/System Monitor Sub-System' */</span>
+</span><span><a class="LN" name="17">   17   </a><font color="#992211">#</font><span class="PP">define</span> System_Monitor_Functional_IN_NOT_ON ((uint8_T)1U)
+</span><span><a class="LN" name="18">   18   </a><font color="#992211">#</font><span class="PP">define</span> System_Monitor_Functional_IN_NO_ACTIVE_CHILD ((uint8_T)0U)
+</span><span><a class="LN" name="19">   19   </a><font color="#992211">#</font><span class="PP">define</span> System_Monitor_Functional_IN_System_Monitor ((uint8_T)2U)
+</span><span><a class="LN" name="20">   20   </a>
+</span><span><a class="LN" name="21">   21   </a><span class="CT">/* Initial conditions for referenced model: 'System_Monitor_Functional' */</span>
+</span><span><a class="LN" name="22">   22   </a><span class="DT">void</span> <a name="fcn_System_Monitor_Functional_Init">System_Monitor_Functional_Init</a>(<a href="System_Monitor_Functional_h.html#type_B_System_Monitor_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_System_Monitor_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_System_Monitor_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="23">   23   </a>  <a href="System_Monitor_Functional_h.html#type_DW_System_Monitor_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_System_Monitor_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_System_Monitor_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="24">   24   </a><b>{</b>
+</span><span><a class="LN" name="25">   25   </a>  <span class="CT">/* InitializeConditions for Chart: '&lt;Root&gt;/System Monitor Sub-System' */</span>
+</span><span><a class="LN" name="26">   26   </a>  localDW-&gt;is_active_c1_System_Monitor_Functional = 0U;
+</span><span><a class="LN" name="27">   27   </a>  localDW-&gt;is_c1_System_Monitor_Functional =
+</span><span><a class="LN" name="28">   28   </a>    System_Monitor_Functional_IN_NO_ACTIVE_CHILD;
+</span><span><a class="LN" name="29">   29   </a>  localB-&gt;SYS_MON_OUT_System_Monitor_Failed = FALSE;
+</span><span><a class="LN" name="30">   30   </a><b>}</b>
+</span><span><a class="LN" name="31">   31   </a>
+</span><span><a class="LN" name="32">   32   </a><span class="CT">/* Output and update for referenced model: 'System_Monitor_Functional' */</span>
+</span><span><a class="LN" name="33">   33   </a><span class="DT">void</span> <a name="fcn_System_Monitor_Functional">System_Monitor_Functional</a>(<span class="DT">const</span> <a href="System_Monitor_Functional_types_h.html#type_Top_Level_Mode_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Top_Level_Mode_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Top_Level_Mode_Outputs</font></a> *rtu_TLM_MODE_IN,
+</span><span><a class="LN" name="34">   34   </a>  <a href="System_Monitor_Functional_types_h.html#type_System_Monitor_Output" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_System_Monitor_Output');" target="rtwreport_document_frame"><font color="#1122aa">System_Monitor_Output</font></a> *rty_SYS_MON_OUT, <a href="System_Monitor_Functional_h.html#type_B_System_Monitor_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_System_Monitor_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_System_Monitor_Functional_c_T</font></a>
+</span><span><a class="LN" name="35">   35   </a>  *localB, <a href="System_Monitor_Functional_h.html#type_DW_System_Monitor_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_System_Monitor_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_System_Monitor_Functional_f_T</font></a> *localDW)
+</span><span><a class="LN" name="36">   36   </a><b>{</b>
+</span><span><a class="LN" name="37">   37   </a>  <span class="CT">/* Chart: '&lt;Root&gt;/System Monitor Sub-System' */</span>
+</span><span><a class="LN" name="38">   38   </a>  <span class="CT">/* Gateway: System Monitor Sub-System */</span>
+</span><span><a class="LN" name="39">   39   </a>  <span class="CT">/* During: System Monitor Sub-System */</span>
+</span><span><a class="LN" name="40">   40   </a>  <span class="KW">if</span> (localDW-&gt;is_active_c1_System_Monitor_Functional == 0U) <b>{</b>
+</span><span><a class="LN" name="41">   41   </a>    <span class="CT">/* Entry: System Monitor Sub-System */</span>
+</span><span><a class="LN" name="42">   42   </a>    localDW-&gt;is_active_c1_System_Monitor_Functional = 1U;
+</span><span><a class="LN" name="43">   43   </a>
+</span><span><a class="LN" name="44">   44   </a>    <span class="CT">/* Entry Internal: System Monitor Sub-System */</span>
+</span><span><a class="LN" name="45">   45   </a>    <span class="KW">if</span> (rtu_TLM_MODE_IN-&gt;System_On) <b>{</b>
+</span><span><a class="LN" name="46">   46   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:1' */</span>
+</span><span><a class="LN" name="47">   47   </a>      localDW-&gt;is_c1_System_Monitor_Functional =
+</span><span><a class="LN" name="48">   48   </a>        System_Monitor_Functional_IN_System_Monitor;
+</span><span><a class="LN" name="49">   49   </a>
+</span><span><a class="LN" name="50">   50   </a>      <span class="CT">/* Entry 'System_Monitor': '&lt;S1&gt;:6' */</span>
+</span><span><a class="LN" name="51">   51   </a>      localB-&gt;SYS_MON_OUT_System_Monitor_Failed = FALSE;
+</span><span><a class="LN" name="52">   52   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="53">   53   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:5' */</span>
+</span><span><a class="LN" name="54">   54   </a>      localDW-&gt;is_c1_System_Monitor_Functional =
+</span><span><a class="LN" name="55">   55   </a>        System_Monitor_Functional_IN_NOT_ON;
+</span><span><a class="LN" name="56">   56   </a>    <b>}</b>
+</span><span><a class="LN" name="57">   57   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (localDW-&gt;is_c1_System_Monitor_Functional ==
+</span><span><a class="LN" name="58">   58   </a>             System_Monitor_Functional_IN_NOT_ON) <b>{</b>
+</span><span><a class="LN" name="59">   59   </a>    <span class="CT">/* During 'NOT_ON': '&lt;S1&gt;:3' */</span>
+</span><span><a class="LN" name="60">   60   </a>    <span class="KW">if</span> (rtu_TLM_MODE_IN-&gt;System_On) <b>{</b>
+</span><span><a class="LN" name="61">   61   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:2' */</span>
+</span><span><a class="LN" name="62">   62   </a>      localDW-&gt;is_c1_System_Monitor_Functional =
+</span><span><a class="LN" name="63">   63   </a>        System_Monitor_Functional_IN_System_Monitor;
+</span><span><a class="LN" name="64">   64   </a>
+</span><span><a class="LN" name="65">   65   </a>      <span class="CT">/* Entry 'System_Monitor': '&lt;S1&gt;:6' */</span>
+</span><span><a class="LN" name="66">   66   </a>      localB-&gt;SYS_MON_OUT_System_Monitor_Failed = FALSE;
+</span><span><a class="LN" name="67">   67   </a>    <b>}</b>
+</span><span><a class="LN" name="68">   68   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="69">   69   </a>    <span class="CT">/* During 'System_Monitor': '&lt;S1&gt;:6' */</span>
+</span><span><a class="LN" name="70">   70   </a>    <span class="KW">if</span> (!rtu_TLM_MODE_IN-&gt;System_On) <b>{</b>
+</span><span><a class="LN" name="71">   71   </a>      <span class="CT">/* Transition: '&lt;S1&gt;:4' */</span>
+</span><span><a class="LN" name="72">   72   </a>      <span class="CT">/* Exit 'System_Monitor': '&lt;S1&gt;:6' */</span>
+</span><span><a class="LN" name="73">   73   </a>      localB-&gt;SYS_MON_OUT_System_Monitor_Failed = FALSE;
+</span><span><a class="LN" name="74">   74   </a>      localDW-&gt;is_c1_System_Monitor_Functional =
+</span><span><a class="LN" name="75">   75   </a>        System_Monitor_Functional_IN_NOT_ON;
+</span><span><a class="LN" name="76">   76   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="77">   77   </a>      localB-&gt;SYS_MON_OUT_System_Monitor_Failed = FALSE;
+</span><span><a class="LN" name="78">   78   </a>    <b>}</b>
+</span><span><a class="LN" name="79">   79   </a>  <b>}</b>
+</span><span><a class="LN" name="80">   80   </a>
+</span><span><a class="LN" name="81">   81   </a>  <span class="CT">/* End of Chart: '&lt;Root&gt;/System Monitor Sub-System' */</span>
+</span><span><a class="LN" name="82">   82   </a>
+</span><span><a class="LN" name="83">   83   </a>  <span class="CT">/* BusCreator: '&lt;Root&gt;/BusConversion_InsertedFor_SYS_MON_OUT_at_inport_0' */</span>
+</span><span><a class="LN" name="84">   84   </a>  rty_SYS_MON_OUT-&gt;System_Monitor_Failed =
+</span><span><a class="LN" name="85">   85   </a>    localB-&gt;SYS_MON_OUT_System_Monitor_Failed;
+</span><span><a class="LN" name="86">   86   </a><b>}</b>
+</span><span><a class="LN" name="87">   87   </a>
+</span><span><a class="LN" name="88">   88   </a><span class="CT">/* Model initialize function */</span>
+</span><span><a class="LN" name="89">   89   </a><span class="DT">void</span> <a name="fcn_System_Monitor_Functional_initialize">System_Monitor_Functional_initialize</a>(<span class="DT">const</span> char_T **rt_errorStatus,
+</span><span><a class="LN" name="90">   90   </a>  <a href="System_Monitor_Functional_types_h.html#type_RT_MODEL_System_Monitor_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_System_Monitor_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">RT_MODEL_System_Monitor_Functional_T</font></a> *<span class="DT">const</span> System_Monitor_Functional_M,
+</span><span><a class="LN" name="91">   91   </a>  <a href="System_Monitor_Functional_h.html#type_B_System_Monitor_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_System_Monitor_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_System_Monitor_Functional_c_T</font></a> *localB, <a href="System_Monitor_Functional_h.html#type_DW_System_Monitor_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_System_Monitor_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_System_Monitor_Functional_f_T</font></a>
+</span><span><a class="LN" name="92">   92   </a>  *localDW)
+</span><span><a class="LN" name="93">   93   </a><b>{</b>
+</span><span><a class="LN" name="94">   94   </a>  <span class="CT">/* Registration code */</span>
+</span><span><a class="LN" name="95">   95   </a>
+</span><span><a class="LN" name="96">   96   </a>  <span class="CT">/* initialize error status */</span>
+</span><span><a class="LN" name="97">   97   </a>  rtmSetErrorStatusPointer(System_Monitor_Functional_M, rt_errorStatus);
+</span><span><a class="LN" name="98">   98   </a>
+</span><span><a class="LN" name="99">   99   </a>  <span class="CT">/* block I/O */</span>
+</span><span><a class="LN" name="100">  100   </a>  (<span class="DT">void</span>) memset(((<span class="DT">void</span> *) localB), 0,
+</span><span><a class="LN" name="101">  101   </a>                <span class="KW">sizeof</span>(<a href="System_Monitor_Functional_h.html#type_B_System_Monitor_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_System_Monitor_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_System_Monitor_Functional_c_T</font></a>));
+</span><span><a class="LN" name="102">  102   </a>
+</span><span><a class="LN" name="103">  103   </a>  <span class="CT">/* states (dwork) */</span>
+</span><span><a class="LN" name="104">  104   </a>  (<span class="DT">void</span>) memset((<span class="DT">void</span> *)localDW, 0,
+</span><span><a class="LN" name="105">  105   </a>                <span class="KW">sizeof</span>(<a href="System_Monitor_Functional_h.html#type_DW_System_Monitor_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_System_Monitor_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_System_Monitor_Functional_f_T</font></a>));
+</span><span><a class="LN" name="106">  106   </a><b>}</b>
+</span><span><a class="LN" name="107">  107   </a>
+</span></pre>
+</td></tr></table>
+</p>
+</body>
+</html>

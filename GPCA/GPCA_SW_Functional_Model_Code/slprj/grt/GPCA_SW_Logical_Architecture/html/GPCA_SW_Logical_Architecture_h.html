@@ -1,0 +1,186 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - GPCA_SW_Logical_Architecture.h</title>
+<style> .LN { font-style: italic; color: #888888 } </style>
+<style> .CT { font-style: italic; color: #117755 } </style>
+<style> .PP { font-style: bold;   color: #992211 } </style>
+<style> .KW { font-style: bold;   color: #112266 } </style>
+<style> .DT { font-style: bold;   color: #112266 } </style>
+<link rel="stylesheet" type="text/css" href="rtwreport.css"></link><script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<SCRIPT type="text/javascript" src="rtwannotate.js"></SCRIPT>
+</head>
+<body bgcolor="#eeeeee" text="#1122aa" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};if (typeof rtwannotate === 'function') {rtwannotate('GPCA_SW_Logical_Architecture_h_cov.xml');}">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../GPCA_SW_Logical_Architecture.h" target="rtwreport_document_frame" id="linkToText_plain">GPCA_SW_Logical_Architecture.h</a></h4>
+<pre id="RTWcode">
+<span><a class="LN" name="1">    1   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="2">    2   </a><span class="CT"> * Code generation for system model 'GPCA_SW_Logical_Architecture'</span>
+</span><span><a class="LN" name="3">    3   </a><span class="CT"> * For more details, see corresponding source file GPCA_SW_Logical_Architecture.c</span>
+</span><span><a class="LN" name="4">    4   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="6">    6   </a><font color="#992211">#</font><span class="PP">ifndef</span> RTW_HEADER_GPCA_SW_Logical_Architecture_h_
+</span><span><a class="LN" name="7">    7   </a><font color="#992211">#</font><span class="PP">define</span> RTW_HEADER_GPCA_SW_Logical_Architecture_h_
+</span><span><a class="LN" name="8">    8   </a><font color="#992211">#</font><span class="PP">ifndef</span> GPCA_SW_Logical_Architecture_COMMON_INCLUDES_
+</span><span><a class="LN" name="9">    9   </a><font color="#992211">#</font> <span class="PP">define</span> GPCA_SW_Logical_Architecture_COMMON_INCLUDES_
+</span><span><a class="LN" name="10">   10   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&lt;string.h&gt;</font>
+</span><span><a class="LN" name="11">   11   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;rtwtypes.h&quot;</font>
+</span><span><a class="LN" name="12">   12   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;rtw_continuous.h&quot;</font>
+</span><span><a class="LN" name="13">   13   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;rtw_solver.h&quot;</font>
+</span><span><a class="LN" name="14">   14   </a><font color="#992211">#</font><span class="PP">endif</span>                                 <span class="CT">/* GPCA_SW_Logical_Architecture_COMMON_INCLUDES_ */</span>
+</span><span><a class="LN" name="15">   15   </a>
+</span><span><a class="LN" name="16">   16   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;GPCA_SW_Logical_Architecture_types.h&quot;</font>
+</span><span><a class="LN" name="17">   17   </a>
+</span><span><a class="LN" name="18">   18   </a><span class="CT">/* Child system includes */</span>
+</span><span><a class="LN" name="19">   19   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;Top_Level_Mode_Functional.h&quot;</font>
+</span><span><a class="LN" name="20">   20   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;System_Monitor_Functional.h&quot;</font>
+</span><span><a class="LN" name="21">   21   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;SYS_STATS_Functional.h&quot;</font>
+</span><span><a class="LN" name="22">   22   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;Logging_Functional.h&quot;</font>
+</span><span><a class="LN" name="23">   23   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;INFUSION_MGR_Functional.h&quot;</font>
+</span><span><a class="LN" name="24">   24   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;CONFIG_Functional.h&quot;</font>
+</span><span><a class="LN" name="25">   25   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;ALARM_Functional.h&quot;</font>
+</span><span><a class="LN" name="26">   26   </a>
+</span><span><a class="LN" name="27">   27   </a><span class="CT">/* Block signals for model 'GPCA_SW_Logical_Architecture' */</span>
+</span><span><a class="LN" name="28">   28   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="29">   29   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Config_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Config_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Config_Outputs</font></a> BusConversion_InsertedFor_SYSTEM_STATUS_at_inport_;
+</span><span><a class="LN" name="30">   30   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Config_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Config_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Config_Outputs</font></a> CONFIGURATION;        <span class="CT">/* '&lt;Root&gt;/CONFIGURATION' */</span>
+</span><span><a class="LN" name="31">   31   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Device_Sensor_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Device_Sensor_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Device_Sensor_Inputs</font></a> BusConversion_InsertedFor_SYSTEM_STATUS_at_inpor_a;
+</span><span><a class="LN" name="32">   32   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Device_Configuration_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Device_Configuration_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Device_Configuration_Inputs</font></a> BusConversion_InsertedFor_SYSTEM_STATUS_at_inpor_l;
+</span><span><a class="LN" name="33">   33   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Infusion_Manager_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Infusion_Manager_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Infusion_Manager_Outputs</font></a> BusConversion_InsertedFor_SYSTEM_STATUS_at_inpor_i;
+</span><span><a class="LN" name="34">   34   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Infusion_Manager_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Infusion_Manager_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Infusion_Manager_Outputs</font></a> INFUSION_MANAGER;<span class="CT">/* '&lt;Root&gt;/INFUSION_MANAGER' */</span>
+</span><span><a class="LN" name="35">   35   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Top_Level_Mode_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Top_Level_Mode_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Top_Level_Mode_Outputs</font></a> TOP_LEVEL_MODE;<span class="CT">/* '&lt;Root&gt;/TOP_LEVEL_MODE' */</span>
+</span><span><a class="LN" name="36">   36   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Top_Level_Mode_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Top_Level_Mode_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Top_Level_Mode_Outputs</font></a> BusConversion_InsertedFor_SYSTEM_STATUS_at_inpor_d;
+</span><span><a class="LN" name="37">   37   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_System_Monitor_Output" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_System_Monitor_Output');" target="rtwreport_document_frame"><font color="#1122aa">System_Monitor_Output</font></a> SYSTEM_MONITOR;<span class="CT">/* '&lt;Root&gt;/SYSTEM_MONITOR' */</span>
+</span><span><a class="LN" name="38">   38   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Log_Output" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Log_Output');" target="rtwreport_document_frame"><font color="#1122aa">Log_Output</font></a> LOGGING;                  <span class="CT">/* '&lt;Root&gt;/LOGGING' */</span>
+</span><span><a class="LN" name="39">   39   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Alarm_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Alarm_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Alarm_Outputs</font></a> ALARM;                 <span class="CT">/* '&lt;Root&gt;/ALARM' */</span>
+</span><span><a class="LN" name="40">   40   </a>  uint8_T Patient_ID;
+</span><span><a class="LN" name="41">   41   </a>  uint8_T Drug_Name;
+</span><span><a class="LN" name="42">   42   </a>  uint8_T Drug_Concentration;
+</span><span><a class="LN" name="43">   43   </a>  uint8_T Infusion_Total_Duration;
+</span><span><a class="LN" name="44">   44   </a>  uint8_T VTBI_Total;
+</span><span><a class="LN" name="45">   45   </a>  uint8_T Flow_Rate_Basal;
+</span><span><a class="LN" name="46">   46   </a>  uint8_T Flow_Rate_Intermittent_Bolus;
+</span><span><a class="LN" name="47">   47   </a>  uint8_T Duration_Intermittent_Bolus;
+</span><span><a class="LN" name="48">   48   </a>  uint8_T Interval_Intermittent_Bolus;
+</span><span><a class="LN" name="49">   49   </a>  uint8_T Flow_Rate_Patient_Bolus;
+</span><span><a class="LN" name="50">   50   </a>  uint8_T Duration_Patient_Bolus;
+</span><span><a class="LN" name="51">   51   </a>  uint8_T Lockout_Period_Patient_Bolus;
+</span><span><a class="LN" name="52">   52   </a>  uint8_T Max_Number_of_Patient_Bolus;
+</span><span><a class="LN" name="53">   53   </a>  uint8_T Flow_Rate_KVO;
+</span><span><a class="LN" name="54">   54   </a>  uint8_T Entered_Reservoir_Volume;
+</span><span><a class="LN" name="55">   55   </a>  uint8_T Reservoir_Volume;
+</span><span><a class="LN" name="56">   56   </a>  uint8_T Configured;
+</span><span><a class="LN" name="57">   57   </a>  uint8_T Error_Message_ID;
+</span><span><a class="LN" name="58">   58   </a>  uint8_T Log_Message_ID;
+</span><span><a class="LN" name="59">   59   </a>  uint8_T Config_Timer;
+</span><span><a class="LN" name="60">   60   </a>  uint8_T Config_Mode;
+</span><span><a class="LN" name="61">   61   </a>  uint8_T Commanded_Flow_Rate;
+</span><span><a class="LN" name="62">   62   </a>  uint8_T Current_System_Mode;
+</span><span><a class="LN" name="63">   63   </a>  uint8_T Log_Message_ID_e;
+</span><span><a class="LN" name="64">   64   </a>  uint8_T Actual_Infusion_Duration;
+</span><span><a class="LN" name="65">   65   </a>  uint8_T Log;
+</span><span><a class="LN" name="66">   66   </a>  boolean_T Request_Config_Type;
+</span><span><a class="LN" name="67">   67   </a>  boolean_T Request_Confirm_Infusion_Initiate;
+</span><span><a class="LN" name="68">   68   </a>  boolean_T Request_Patient_Drug_Info;
+</span><span><a class="LN" name="69">   69   </a>  boolean_T Request_Infusion_Info;
+</span><span><a class="LN" name="70">   70   </a>  boolean_T New_Infusion;
+</span><span><a class="LN" name="71">   71   </a>  boolean_T Logging_Failed;
+</span><span><a class="LN" name="72">   72   </a>  boolean_T System_Monitor_Failed;
+</span><span><a class="LN" name="73">   73   </a><b>}</b> <a name="type_B_GPCA_SW_Logical_Architecture_c_T">B_GPCA_SW_Logical_Architecture_c_T</a>;
+</span><span><a class="LN" name="74">   74   </a>
+</span><span><a class="LN" name="75">   75   </a><span class="CT">/* Block states (auto storage) for model 'GPCA_SW_Logical_Architecture' */</span>
+</span><span><a class="LN" name="76">   76   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="77">   77   </a>  uint8_T UnitDelay_1_DSTATE;          <span class="CT">/* '&lt;Root&gt;/Unit Delay' */</span>
+</span><span><a class="LN" name="78">   78   </a>  uint8_T UnitDelay_2_DSTATE;          <span class="CT">/* '&lt;Root&gt;/Unit Delay' */</span>
+</span><span><a class="LN" name="79">   79   </a>  uint8_T UnitDelay_4_DSTATE;          <span class="CT">/* '&lt;Root&gt;/Unit Delay' */</span>
+</span><span><a class="LN" name="80">   80   </a>  uint8_T UnitDelay_5_DSTATE;          <span class="CT">/* '&lt;Root&gt;/Unit Delay' */</span>
+</span><span><a class="LN" name="81">   81   </a>  uint8_T UnitDelay3_1_DSTATE;         <span class="CT">/* '&lt;Root&gt;/Unit Delay3' */</span>
+</span><span><a class="LN" name="82">   82   </a>  uint8_T UnitDelay1_1_DSTATE;         <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="83">   83   </a>  uint8_T UnitDelay1_2_DSTATE;         <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="84">   84   </a>  uint8_T UnitDelay1_3_DSTATE;         <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="85">   85   </a>  uint8_T UnitDelay1_4_DSTATE;         <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="86">   86   </a>  uint8_T UnitDelay1_5_DSTATE;         <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="87">   87   </a>  uint8_T UnitDelay1_6_DSTATE;         <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="88">   88   </a>  uint8_T UnitDelay1_7_DSTATE;         <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="89">   89   </a>  uint8_T UnitDelay1_8_DSTATE;         <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="90">   90   </a>  uint8_T UnitDelay1_9_DSTATE;         <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="91">   91   </a>  uint8_T UnitDelay1_10_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="92">   92   </a>  uint8_T UnitDelay1_11_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="93">   93   </a>  uint8_T UnitDelay1_12_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="94">   94   </a>  uint8_T UnitDelay1_13_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="95">   95   </a>  uint8_T UnitDelay1_14_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="96">   96   </a>  uint8_T UnitDelay1_15_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="97">   97   </a>  uint8_T UnitDelay1_16_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="98">   98   </a>  uint8_T UnitDelay1_17_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="99">   99   </a>  uint8_T UnitDelay1_18_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="100">  100   </a>  uint8_T UnitDelay1_23_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="101">  101   </a>  uint8_T UnitDelay1_24_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="102">  102   </a>  uint8_T UnitDelay1_25_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="103">  103   </a>  boolean_T UnitDelay_3_DSTATE;        <span class="CT">/* '&lt;Root&gt;/Unit Delay' */</span>
+</span><span><a class="LN" name="104">  104   </a>  boolean_T UnitDelay2_1_DSTATE;       <span class="CT">/* '&lt;Root&gt;/Unit Delay2' */</span>
+</span><span><a class="LN" name="105">  105   </a>  boolean_T UnitDelay3_2_DSTATE;       <span class="CT">/* '&lt;Root&gt;/Unit Delay3' */</span>
+</span><span><a class="LN" name="106">  106   </a>  boolean_T UnitDelay1_19_DSTATE;      <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="107">  107   </a>  boolean_T UnitDelay1_20_DSTATE;      <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="108">  108   </a>  boolean_T UnitDelay1_21_DSTATE;      <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="109">  109   </a>  boolean_T UnitDelay1_22_DSTATE;      <span class="CT">/* '&lt;Root&gt;/Unit Delay1' */</span>
+</span><span><a class="LN" name="110">  110   </a>  MdlrefDW_Top_Level_Mode_Functional_T TOP_LEVEL_MODE_DWORK1;<span class="CT">/* '&lt;Root&gt;/TOP_LEVEL_MODE' */</span>
+</span><span><a class="LN" name="111">  111   </a>  MdlrefDW_SYS_STATS_Functional_T SYSTEM_STATUS_DWORK1;<span class="CT">/* '&lt;Root&gt;/SYSTEM_STATUS' */</span>
+</span><span><a class="LN" name="112">  112   </a>  MdlrefDW_ALARM_Functional_T ALARM_DWORK1;<span class="CT">/* '&lt;Root&gt;/ALARM' */</span>
+</span><span><a class="LN" name="113">  113   </a>  MdlrefDW_CONFIG_Functional_T CONFIGURATION_DWORK1;<span class="CT">/* '&lt;Root&gt;/CONFIGURATION' */</span>
+</span><span><a class="LN" name="114">  114   </a>  MdlrefDW_INFUSION_MGR_Functional_T INFUSION_MANAGER_DWORK1;<span class="CT">/* '&lt;Root&gt;/INFUSION_MANAGER' */</span>
+</span><span><a class="LN" name="115">  115   </a>  MdlrefDW_Logging_Functional_T LOGGING_DWORK1;<span class="CT">/* '&lt;Root&gt;/LOGGING' */</span>
+</span><span><a class="LN" name="116">  116   </a>  MdlrefDW_System_Monitor_Functional_T SYSTEM_MONITOR_DWORK1;<span class="CT">/* '&lt;Root&gt;/SYSTEM_MONITOR' */</span>
+</span><span><a class="LN" name="117">  117   </a><b>}</b> <a name="type_DW_GPCA_SW_Logical_Architecture_f_T">DW_GPCA_SW_Logical_Architecture_f_T</a>;
+</span><span><a class="LN" name="118">  118   </a>
+</span><span><a class="LN" name="119">  119   </a><span class="CT">/* Real-time Model Data Structure */</span>
+</span><span><a class="LN" name="120">  120   </a><span class="KW">struct</span> tag_RTM_GPCA_SW_Logical_Architecture_T <b>{</b>
+</span><span><a class="LN" name="121">  121   </a>  <span class="DT">const</span> char_T **errorStatus;
+</span><span><a class="LN" name="122">  122   </a><b>}</b>;
+</span><span><a class="LN" name="123">  123   </a>
+</span><span><a class="LN" name="124">  124   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="125">  125   </a>  <a href="#type_B_GPCA_SW_Logical_Architecture_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_GPCA_SW_Logical_Architecture_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_GPCA_SW_Logical_Architecture_c_T</font></a> rtb;
+</span><span><a class="LN" name="126">  126   </a>  <a href="#type_DW_GPCA_SW_Logical_Architecture_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_GPCA_SW_Logical_Architecture_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_GPCA_SW_Logical_Architecture_f_T</font></a> rtdw;
+</span><span><a class="LN" name="127">  127   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_RT_MODEL_GPCA_SW_Logical_Architecture_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_GPCA_SW_Logical_Architecture_T');" target="rtwreport_document_frame"><font color="#1122aa">RT_MODEL_GPCA_SW_Logical_Architecture_T</font></a> rtm;
+</span><span><a class="LN" name="128">  128   </a><b>}</b> <a name="type_MdlrefDW_GPCA_SW_Logical_Architecture_T">MdlrefDW_GPCA_SW_Logical_Architecture_T</a>;
+</span><span><a class="LN" name="129">  129   </a>
+</span><span><a class="LN" name="130">  130   </a><span class="CT">/* Model reference registration function */</span>
+</span><span><a class="LN" name="131">  131   </a><span class="DT">extern</span> <span class="DT">void</span> <a href="GPCA_SW_Logical_Architecture_c.html#fcn_GPCA_SW_Logical_Architecture_initialize" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_GPCA_SW_Logical_Architecture_initialize');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Logical_Architecture_initialize</font></a>(<span class="DT">const</span> char_T
+</span><span><a class="LN" name="132">  132   </a>  **rt_errorStatus, <a href="GPCA_SW_Logical_Architecture_types_h.html#type_RT_MODEL_GPCA_SW_Logical_Architecture_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_GPCA_SW_Logical_Architecture_T');" target="rtwreport_document_frame"><font color="#1122aa">RT_MODEL_GPCA_SW_Logical_Architecture_T</font></a> *<span class="DT">const</span>
+</span><span><a class="LN" name="133">  133   </a>  GPCA_SW_Logical_Architecture_M, <a href="#type_B_GPCA_SW_Logical_Architecture_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_GPCA_SW_Logical_Architecture_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_GPCA_SW_Logical_Architecture_c_T</font></a> *localB,
+</span><span><a class="LN" name="134">  134   </a>  <a href="#type_DW_GPCA_SW_Logical_Architecture_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_GPCA_SW_Logical_Architecture_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_GPCA_SW_Logical_Architecture_f_T</font></a> *localDW);
+</span><span><a class="LN" name="135">  135   </a><span class="DT">extern</span> <span class="DT">void</span> <a href="GPCA_SW_Logical_Architecture_c.html#fcn_GPCA_SW_Logical_Architecture_Init" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_GPCA_SW_Logical_Architecture_Init');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Logical_Architecture_Init</font></a>
+</span><span><a class="LN" name="136">  136   </a>  (<a href="#type_DW_GPCA_SW_Logical_Architecture_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_GPCA_SW_Logical_Architecture_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_GPCA_SW_Logical_Architecture_f_T</font></a> *localDW);
+</span><span><a class="LN" name="137">  137   </a><span class="DT">extern</span> <span class="DT">void</span> <a href="GPCA_SW_Logical_Architecture_c.html#fcn_GPCA_SW_Logical_Architecture_Update" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_GPCA_SW_Logical_Architecture_Update');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Logical_Architecture_Update</font></a>
+</span><span><a class="LN" name="138">  138   </a>  (<a href="#type_B_GPCA_SW_Logical_Architecture_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_GPCA_SW_Logical_Architecture_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_GPCA_SW_Logical_Architecture_c_T</font></a> *localB,
+</span><span><a class="LN" name="139">  139   </a>   <a href="#type_DW_GPCA_SW_Logical_Architecture_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_GPCA_SW_Logical_Architecture_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_GPCA_SW_Logical_Architecture_f_T</font></a> *localDW);
+</span><span><a class="LN" name="140">  140   </a><span class="DT">extern</span> <span class="DT">void</span> <a href="GPCA_SW_Logical_Architecture_c.html#fcn_GPCA_SW_Logical_Architecture" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_GPCA_SW_Logical_Architecture');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Logical_Architecture</font></a>(<span class="DT">const</span> <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Device_Sensor_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Device_Sensor_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Device_Sensor_Inputs</font></a>
+</span><span><a class="LN" name="141">  141   </a>  *rtu_SENSOR_IN, <span class="DT">const</span> <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Device_Configuration_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Device_Configuration_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Device_Configuration_Inputs</font></a> *rtu_CONST_IN, <span class="DT">const</span>
+</span><span><a class="LN" name="142">  142   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Operator_Commands" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Operator_Commands');" target="rtwreport_document_frame"><font color="#1122aa">Operator_Commands</font></a> *rtu_OP_CMD_IN, <span class="DT">const</span> <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Drug_Database_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Drug_Database_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Drug_Database_Inputs</font></a> *rtu_DB_IN, <span class="DT">const</span>
+</span><span><a class="LN" name="143">  143   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Prescription_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Prescription_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Prescription_Inputs</font></a> *rtu_PRES_IN, <span class="DT">const</span> <a href="GPCA_SW_Logical_Architecture_types_h.html#type_Patient_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Patient_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Patient_Inputs</font></a> *rtu_PATIENT_IN,
+</span><span><a class="LN" name="144">  144   </a>  <a href="GPCA_SW_Logical_Architecture_types_h.html#type_GPCA_SW_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_GPCA_SW_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Outputs</font></a> *rty_GPCA_SW_OUT, <a href="#type_B_GPCA_SW_Logical_Architecture_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_GPCA_SW_Logical_Architecture_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_GPCA_SW_Logical_Architecture_c_T</font></a> *localB,
+</span><span><a class="LN" name="145">  145   </a>  <a href="#type_DW_GPCA_SW_Logical_Architecture_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_GPCA_SW_Logical_Architecture_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_GPCA_SW_Logical_Architecture_f_T</font></a> *localDW);
+</span><span><a class="LN" name="146">  146   </a>
+</span><span><a class="LN" name="147">  147   </a><span class="CT">/*-</span>
+</span><span><a class="LN" name="148">  148   </a><span class="CT"> * The generated code includes comments that allow you to trace directly</span>
+</span><span><a class="LN" name="149">  149   </a><span class="CT"> * back to the appropriate location in the model.  The basic format</span>
+</span><span><a class="LN" name="150">  150   </a><span class="CT"> * is &lt;system&gt;/block_name, where system is the system number (uniquely</span>
+</span><span><a class="LN" name="151">  151   </a><span class="CT"> * assigned by Simulink) and block_name is the name of the block.</span>
+</span><span><a class="LN" name="152">  152   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="153">  153   </a><span class="CT"> * Use the MATLAB hilite_system command to trace the generated code back</span>
+</span><span><a class="LN" name="154">  154   </a><span class="CT"> * to the model.  For example,</span>
+</span><span><a class="LN" name="155">  155   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="156">  156   </a><span class="CT"> * hilite_system('&lt;S3&gt;')    - opens system 3</span>
+</span><span><a class="LN" name="157">  157   </a><span class="CT"> * hilite_system('&lt;S3&gt;/Kp') - opens and selects block Kp which resides in S3</span>
+</span><span><a class="LN" name="158">  158   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="159">  159   </a><span class="CT"> * Here is the system hierarchy for this model</span>
+</span><span><a class="LN" name="160">  160   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="161">  161   </a><span class="CT"> * '&lt;Root&gt;' : 'GPCA_SW_Logical_Architecture'</span>
+</span><span><a class="LN" name="162">  162   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="163">  163   </a><font color="#992211">#</font><span class="PP">endif</span>                                 <span class="CT">/* RTW_HEADER_GPCA_SW_Logical_Architecture_h_ */</span>
+</span><span><a class="LN" name="164">  164   </a>
+</span></pre>
+</td></tr></table>
+</p>
+</body>
+</html>

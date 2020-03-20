@@ -1,0 +1,48 @@
+%implements "chartSource" "C"
+%function ChartConfig(block, system) void
+  %createrecord chartConfiguration { ...
+          executeAtInitialization  0 ...
+  }
+  %return chartConfiguration
+%endfunction
+%function ChartDataMap(block, system) void
+  %createrecord ChartDataElements {\
+    NumChartData   5 \
+    ChartDataDefaults {\
+      RecordType   "ChartData"\
+      Dimensions   []\
+      IsTestPoint  0\
+    }\
+    ChartData {\
+      Name         "is_active_c2_Top_Level_Mode_Functional"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "is_c2_Top_Level_Mode_Functional"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "is_TOP_Level_Mode"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "TOP_Level_Mode"\
+    }\
+    ChartData {\
+      Name         "is_Confirm_Stop"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "TOP_Level_Mode.Confirm_Stop"\
+    }\
+    ChartData {\
+      Name         "confirmStopTimer"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "confirmStopTimer"\
+    }\
+  }
+  %return ChartDataElements
+%endfunction

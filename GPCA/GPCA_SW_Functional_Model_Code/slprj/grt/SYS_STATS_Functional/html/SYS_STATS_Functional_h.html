@@ -1,0 +1,96 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - SYS_STATS_Functional.h</title>
+<style> .LN { font-style: italic; color: #888888 } </style>
+<style> .CT { font-style: italic; color: #117755 } </style>
+<style> .PP { font-style: bold;   color: #992211 } </style>
+<style> .KW { font-style: bold;   color: #112266 } </style>
+<style> .DT { font-style: bold;   color: #112266 } </style>
+<link rel="stylesheet" type="text/css" href="rtwreport.css"></link><script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<SCRIPT type="text/javascript" src="rtwannotate.js"></SCRIPT>
+</head>
+<body bgcolor="#eeeeee" text="#1122aa" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};if (typeof rtwannotate === 'function') {rtwannotate('SYS_STATS_Functional_h_cov.xml');}">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../SYS_STATS_Functional.h" target="rtwreport_document_frame" id="linkToText_plain">SYS_STATS_Functional.h</a></h4>
+<pre id="RTWcode">
+<span><a class="LN" name="1">    1   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="2">    2   </a><span class="CT"> * Code generation for system model 'SYS_STATS_Functional'</span>
+</span><span><a class="LN" name="3">    3   </a><span class="CT"> * For more details, see corresponding source file SYS_STATS_Functional.c</span>
+</span><span><a class="LN" name="4">    4   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="6">    6   </a><font color="#992211">#</font><span class="PP">ifndef</span> RTW_HEADER_SYS_STATS_Functional_h_
+</span><span><a class="LN" name="7">    7   </a><font color="#992211">#</font><span class="PP">define</span> RTW_HEADER_SYS_STATS_Functional_h_
+</span><span><a class="LN" name="8">    8   </a><font color="#992211">#</font><span class="PP">ifndef</span> SYS_STATS_Functional_COMMON_INCLUDES_
+</span><span><a class="LN" name="9">    9   </a><font color="#992211">#</font> <span class="PP">define</span> SYS_STATS_Functional_COMMON_INCLUDES_
+</span><span><a class="LN" name="10">   10   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&lt;string.h&gt;</font>
+</span><span><a class="LN" name="11">   11   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;rtwtypes.h&quot;</font>
+</span><span><a class="LN" name="12">   12   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;rtw_continuous.h&quot;</font>
+</span><span><a class="LN" name="13">   13   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;rtw_solver.h&quot;</font>
+</span><span><a class="LN" name="14">   14   </a><font color="#992211">#</font><span class="PP">endif</span>                                 <span class="CT">/* SYS_STATS_Functional_COMMON_INCLUDES_ */</span>
+</span><span><a class="LN" name="15">   15   </a>
+</span><span><a class="LN" name="16">   16   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;SYS_STATS_Functional_types.h&quot;</font>
+</span><span><a class="LN" name="17">   17   </a>
+</span><span><a class="LN" name="18">   18   </a><span class="CT">/* Block signals for model 'SYS_STATS_Functional' */</span>
+</span><span><a class="LN" name="19">   19   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="20">   20   </a>  uint8_T Subtract1;                   <span class="CT">/* '&lt;S5&gt;/Subtract1' */</span>
+</span><span><a class="LN" name="21">   21   </a><b>}</b> <a name="type_B_SYS_STATS_Functional_c_T">B_SYS_STATS_Functional_c_T</a>;
+</span><span><a class="LN" name="22">   22   </a>
+</span><span><a class="LN" name="23">   23   </a><span class="CT">/* Block states (auto storage) for model 'SYS_STATS_Functional' */</span>
+</span><span><a class="LN" name="24">   24   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="25">   25   </a>  uint8_T UnitDelay_DSTATE;            <span class="CT">/* '&lt;S5&gt;/Unit Delay' */</span>
+</span><span><a class="LN" name="26">   26   </a><b>}</b> <a name="type_DW_SYS_STATS_Functional_f_T">DW_SYS_STATS_Functional_f_T</a>;
+</span><span><a class="LN" name="27">   27   </a>
+</span><span><a class="LN" name="28">   28   </a><span class="CT">/* Real-time Model Data Structure */</span>
+</span><span><a class="LN" name="29">   29   </a><span class="KW">struct</span> tag_RTM_SYS_STATS_Functional_T <b>{</b>
+</span><span><a class="LN" name="30">   30   </a>  <span class="DT">const</span> char_T **errorStatus;
+</span><span><a class="LN" name="31">   31   </a><b>}</b>;
+</span><span><a class="LN" name="32">   32   </a>
+</span><span><a class="LN" name="33">   33   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="34">   34   </a>  <a href="#type_B_SYS_STATS_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_SYS_STATS_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_SYS_STATS_Functional_c_T</font></a> rtb;
+</span><span><a class="LN" name="35">   35   </a>  <a href="#type_DW_SYS_STATS_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_SYS_STATS_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_SYS_STATS_Functional_f_T</font></a> rtdw;
+</span><span><a class="LN" name="36">   36   </a>  <a href="SYS_STATS_Functional_types_h.html#type_RT_MODEL_SYS_STATS_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_SYS_STATS_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">RT_MODEL_SYS_STATS_Functional_T</font></a> rtm;
+</span><span><a class="LN" name="37">   37   </a><b>}</b> <a name="type_MdlrefDW_SYS_STATS_Functional_T">MdlrefDW_SYS_STATS_Functional_T</a>;
+</span><span><a class="LN" name="38">   38   </a>
+</span><span><a class="LN" name="39">   39   </a><span class="CT">/* Model reference registration function */</span>
+</span><span><a class="LN" name="40">   40   </a><span class="DT">extern</span> <span class="DT">void</span> <a href="SYS_STATS_Functional_c.html#fcn_SYS_STATS_Functional_initialize" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_SYS_STATS_Functional_initialize');" target="rtwreport_document_frame"><font color="#1122aa">SYS_STATS_Functional_initialize</font></a>(<span class="DT">const</span> char_T **rt_errorStatus,
+</span><span><a class="LN" name="41">   41   </a>  <a href="SYS_STATS_Functional_types_h.html#type_RT_MODEL_SYS_STATS_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_SYS_STATS_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">RT_MODEL_SYS_STATS_Functional_T</font></a> *<span class="DT">const</span> SYS_STATS_Functional_M,
+</span><span><a class="LN" name="42">   42   </a>  <a href="#type_B_SYS_STATS_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_SYS_STATS_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_SYS_STATS_Functional_c_T</font></a> *localB, <a href="#type_DW_SYS_STATS_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_SYS_STATS_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_SYS_STATS_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="43">   43   </a><span class="DT">extern</span> <span class="DT">void</span> <a href="SYS_STATS_Functional_c.html#fcn_SYS_STATS_Functional_Init" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_SYS_STATS_Functional_Init');" target="rtwreport_document_frame"><font color="#1122aa">SYS_STATS_Functional_Init</font></a>(<a href="#type_DW_SYS_STATS_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_SYS_STATS_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_SYS_STATS_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="44">   44   </a><span class="DT">extern</span> <span class="DT">void</span> <a href="SYS_STATS_Functional_c.html#fcn_SYS_STATS_Functional_Update" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_SYS_STATS_Functional_Update');" target="rtwreport_document_frame"><font color="#1122aa">SYS_STATS_Functional_Update</font></a>(<a href="#type_B_SYS_STATS_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_SYS_STATS_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_SYS_STATS_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="45">   45   </a>  <a href="#type_DW_SYS_STATS_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_SYS_STATS_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_SYS_STATS_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="46">   46   </a><span class="DT">extern</span> <span class="DT">void</span> <a href="SYS_STATS_Functional_c.html#fcn_SYS_STATS_Functional" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_SYS_STATS_Functional');" target="rtwreport_document_frame"><font color="#1122aa">SYS_STATS_Functional</font></a>(<span class="DT">const</span> <a href="SYS_STATS_Functional_types_h.html#type_Infusion_Manager_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Infusion_Manager_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Infusion_Manager_Outputs</font></a> *rtu_IM_IN,
+</span><span><a class="LN" name="47">   47   </a>  <span class="DT">const</span> <a href="SYS_STATS_Functional_types_h.html#type_Top_Level_Mode_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Top_Level_Mode_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Top_Level_Mode_Outputs</font></a> *rtu_TLM_MODE_IN, <span class="DT">const</span> <a href="SYS_STATS_Functional_types_h.html#type_Device_Sensor_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Device_Sensor_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Device_Sensor_Inputs</font></a>
+</span><span><a class="LN" name="48">   48   </a>  *rtu_SENSOR_IN, <span class="DT">const</span> <a href="SYS_STATS_Functional_types_h.html#type_Device_Configuration_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Device_Configuration_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Device_Configuration_Inputs</font></a> *rtu_CONST_IN, <span class="DT">const</span>
+</span><span><a class="LN" name="49">   49   </a>  <a href="SYS_STATS_Functional_types_h.html#type_Config_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Config_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Config_Outputs</font></a> *rtu_CONFIG_IN, <a href="SYS_STATS_Functional_types_h.html#type_System_Status_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_System_Status_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">System_Status_Outputs</font></a> *rty_SYS_STAT_OUT,
+</span><span><a class="LN" name="50">   50   </a>  <a href="#type_B_SYS_STATS_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_SYS_STATS_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_SYS_STATS_Functional_c_T</font></a> *localB, <a href="#type_DW_SYS_STATS_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_SYS_STATS_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_SYS_STATS_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="51">   51   </a>
+</span><span><a class="LN" name="52">   52   </a><span class="CT">/*-</span>
+</span><span><a class="LN" name="53">   53   </a><span class="CT"> * The generated code includes comments that allow you to trace directly</span>
+</span><span><a class="LN" name="54">   54   </a><span class="CT"> * back to the appropriate location in the model.  The basic format</span>
+</span><span><a class="LN" name="55">   55   </a><span class="CT"> * is &lt;system&gt;/block_name, where system is the system number (uniquely</span>
+</span><span><a class="LN" name="56">   56   </a><span class="CT"> * assigned by Simulink) and block_name is the name of the block.</span>
+</span><span><a class="LN" name="57">   57   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="58">   58   </a><span class="CT"> * Use the MATLAB hilite_system command to trace the generated code back</span>
+</span><span><a class="LN" name="59">   59   </a><span class="CT"> * to the model.  For example,</span>
+</span><span><a class="LN" name="60">   60   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="61">   61   </a><span class="CT"> * hilite_system('&lt;S3&gt;')    - opens system 3</span>
+</span><span><a class="LN" name="62">   62   </a><span class="CT"> * hilite_system('&lt;S3&gt;/Kp') - opens and selects block Kp which resides in S3</span>
+</span><span><a class="LN" name="63">   63   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="64">   64   </a><span class="CT"> * Here is the system hierarchy for this model</span>
+</span><span><a class="LN" name="65">   65   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="66">   66   </a><span class="CT"> * '&lt;Root&gt;' : 'SYS_STATS_Functional'</span>
+</span><span><a class="LN" name="67">   67   </a><span class="CT"> * '&lt;S1&gt;'   : 'SYS_STATS_Functional/System Status  Sub-System'</span>
+</span><span><a class="LN" name="68">   68   </a><span class="CT"> * '&lt;S2&gt;'   : 'SYS_STATS_Functional/System Status  Sub-System/In_Therapy'</span>
+</span><span><a class="LN" name="69">   69   </a><span class="CT"> * '&lt;S3&gt;'   : 'SYS_STATS_Functional/System Status  Sub-System/Log'</span>
+</span><span><a class="LN" name="70">   70   </a><span class="CT"> * '&lt;S4&gt;'   : 'SYS_STATS_Functional/System Status  Sub-System/Reservoir_Status'</span>
+</span><span><a class="LN" name="71">   71   </a><span class="CT"> * '&lt;S5&gt;'   : 'SYS_STATS_Functional/System Status  Sub-System/Total_Volume_Infused'</span>
+</span><span><a class="LN" name="72">   72   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="73">   73   </a><font color="#992211">#</font><span class="PP">endif</span>                                 <span class="CT">/* RTW_HEADER_SYS_STATS_Functional_h_ */</span>
+</span><span><a class="LN" name="74">   74   </a>
+</span></pre>
+</td></tr></table>
+</p>
+</body>
+</html>

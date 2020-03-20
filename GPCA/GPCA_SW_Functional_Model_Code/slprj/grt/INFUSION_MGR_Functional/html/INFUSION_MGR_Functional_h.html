@@ -1,0 +1,139 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - INFUSION_MGR_Functional.h</title>
+<style> .LN { font-style: italic; color: #888888 } </style>
+<style> .CT { font-style: italic; color: #117755 } </style>
+<style> .PP { font-style: bold;   color: #992211 } </style>
+<style> .KW { font-style: bold;   color: #112266 } </style>
+<style> .DT { font-style: bold;   color: #112266 } </style>
+<link rel="stylesheet" type="text/css" href="rtwreport.css"></link><script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<SCRIPT type="text/javascript" src="rtwannotate.js"></SCRIPT>
+</head>
+<body bgcolor="#eeeeee" text="#1122aa" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};if (typeof rtwannotate === 'function') {rtwannotate('INFUSION_MGR_Functional_h_cov.xml');}">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../INFUSION_MGR_Functional.h" target="rtwreport_document_frame" id="linkToText_plain">INFUSION_MGR_Functional.h</a></h4>
+<pre id="RTWcode">
+<span><a class="LN" name="1">    1   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="2">    2   </a><span class="CT"> * Code generation for system model 'INFUSION_MGR_Functional'</span>
+</span><span><a class="LN" name="3">    3   </a><span class="CT"> * For more details, see corresponding source file INFUSION_MGR_Functional.c</span>
+</span><span><a class="LN" name="4">    4   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="6">    6   </a><font color="#992211">#</font><span class="PP">ifndef</span> RTW_HEADER_INFUSION_MGR_Functional_h_
+</span><span><a class="LN" name="7">    7   </a><font color="#992211">#</font><span class="PP">define</span> RTW_HEADER_INFUSION_MGR_Functional_h_
+</span><span><a class="LN" name="8">    8   </a><font color="#992211">#</font><span class="PP">ifndef</span> INFUSION_MGR_Functional_COMMON_INCLUDES_
+</span><span><a class="LN" name="9">    9   </a><font color="#992211">#</font> <span class="PP">define</span> INFUSION_MGR_Functional_COMMON_INCLUDES_
+</span><span><a class="LN" name="10">   10   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&lt;string.h&gt;</font>
+</span><span><a class="LN" name="11">   11   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;rtwtypes.h&quot;</font>
+</span><span><a class="LN" name="12">   12   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;rtw_continuous.h&quot;</font>
+</span><span><a class="LN" name="13">   13   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;rtw_solver.h&quot;</font>
+</span><span><a class="LN" name="14">   14   </a><font color="#992211">#</font><span class="PP">endif</span>                                 <span class="CT">/* INFUSION_MGR_Functional_COMMON_INCLUDES_ */</span>
+</span><span><a class="LN" name="15">   15   </a>
+</span><span><a class="LN" name="16">   16   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;INFUSION_MGR_Functional_types.h&quot;</font>
+</span><span><a class="LN" name="17">   17   </a>
+</span><span><a class="LN" name="18">   18   </a><span class="CT">/* Block signals for model 'INFUSION_MGR_Functional' */</span>
+</span><span><a class="LN" name="19">   19   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="20">   20   </a>  uint8_T Highest_Level_Alarm;
+</span><span><a class="LN" name="21">   21   </a>  uint8_T Infusion_Total_Duration;
+</span><span><a class="LN" name="22">   22   </a>  uint8_T VTBI_Total;
+</span><span><a class="LN" name="23">   23   </a>  uint8_T Flow_Rate_Basal;
+</span><span><a class="LN" name="24">   24   </a>  uint8_T Flow_Rate_Intermittent_Bolus;
+</span><span><a class="LN" name="25">   25   </a>  uint8_T Duration_Intermittent_Bolus;
+</span><span><a class="LN" name="26">   26   </a>  uint8_T Interval_Intermittent_Bolus;
+</span><span><a class="LN" name="27">   27   </a>  uint8_T Flow_Rate_Patient_Bolus;
+</span><span><a class="LN" name="28">   28   </a>  uint8_T Duration_Patient_Bolus;
+</span><span><a class="LN" name="29">   29   </a>  uint8_T Lockout_Period_Patient_Bolus;
+</span><span><a class="LN" name="30">   30   </a>  uint8_T Max_Number_of_Patient_Bolus;
+</span><span><a class="LN" name="31">   31   </a>  uint8_T Flow_Rate_KVO;
+</span><span><a class="LN" name="32">   32   </a>  uint8_T Configured;
+</span><span><a class="LN" name="33">   33   </a>  uint8_T Volume_Infused;
+</span><span><a class="LN" name="34">   34   </a>  uint8_T IM_OUT_Flow_Rate_Commanded;  <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="35">   35   </a>  uint8_T IM_OUT_Current_System_Mode;  <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="36">   36   </a>  uint8_T IM_OUT_Log_Message_ID;       <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="37">   37   </a>  uint8_T IM_OUT_Actual_Infusion_Duration;<span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="38">   38   </a>  boolean_T Infusion_Initiate;
+</span><span><a class="LN" name="39">   39   </a>  boolean_T Infusion_Inhibit;
+</span><span><a class="LN" name="40">   40   </a>  boolean_T Infusion_Cancel;
+</span><span><a class="LN" name="41">   41   </a>  boolean_T Patient_Bolus_Request;
+</span><span><a class="LN" name="42">   42   </a>  boolean_T Reservoir_Empty;
+</span><span><a class="LN" name="43">   43   </a>  boolean_T IM_OUT_New_Infusion;       <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="44">   44   </a><b>}</b> <a name="type_B_INFUSION_MGR_Functional_c_T">B_INFUSION_MGR_Functional_c_T</a>;
+</span><span><a class="LN" name="45">   45   </a>
+</span><span><a class="LN" name="46">   46   </a><span class="CT">/* Block states (auto storage) for model 'INFUSION_MGR_Functional' */</span>
+</span><span><a class="LN" name="47">   47   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="48">   48   </a>  uint8_T is_active_c2_INFUSION_MGR_Functional;<span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="49">   49   </a>  uint8_T is_c2_INFUSION_MGR_Functional;<span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="50">   50   </a>  uint8_T is_Infusion_Manager;         <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="51">   51   </a>  uint8_T is_THERAPY;                  <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="52">   52   </a>  uint8_T is_Arbiter;                  <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="53">   53   </a>  uint8_T is_active_Arbiter;           <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="54">   54   </a>  uint8_T is_Alarm_Paused;             <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="55">   55   </a>  uint8_T is_active_Alarm_Paused;      <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="56">   56   </a>  uint8_T is_Manual_Paused;            <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="57">   57   </a>  uint8_T is_active_Manual_Paused;     <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="58">   58   </a>  uint8_T is_BASAL;                    <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="59">   59   </a>  uint8_T is_active_BASAL;             <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="60">   60   </a>  uint8_T is_Arbiter_d;                <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="61">   61   </a>  uint8_T is_active_Arbiter_c;         <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="62">   62   </a>  uint8_T is_PATIENT;                  <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="63">   63   </a>  uint8_T is_active_PATIENT;           <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="64">   64   </a>  uint8_T is_INTERMITTENT;             <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="65">   65   </a>  uint8_T is_active_INTERMITTENT;      <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="66">   66   </a>  uint8_T sbolus_timer;                <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="67">   67   </a>  uint8_T pbolus_timer;                <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="68">   68   </a>  uint8_T lock_timer;                  <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="69">   69   </a>  uint8_T number_pbolus;               <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="70">   70   </a>  uint8_T sbolusInter_timer;           <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="71">   71   </a>  boolean_T sbolus_req;                <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="72">   72   </a>  boolean_T inPatientBolus;            <span class="CT">/* '&lt;Root&gt;/Infusion Manager Sub-System' */</span>
+</span><span><a class="LN" name="73">   73   </a><b>}</b> <a name="type_DW_INFUSION_MGR_Functional_f_T">DW_INFUSION_MGR_Functional_f_T</a>;
+</span><span><a class="LN" name="74">   74   </a>
+</span><span><a class="LN" name="75">   75   </a><span class="CT">/* Real-time Model Data Structure */</span>
+</span><span><a class="LN" name="76">   76   </a><span class="KW">struct</span> tag_RTM_INFUSION_MGR_Functional_T <b>{</b>
+</span><span><a class="LN" name="77">   77   </a>  <span class="DT">const</span> char_T **errorStatus;
+</span><span><a class="LN" name="78">   78   </a><b>}</b>;
+</span><span><a class="LN" name="79">   79   </a>
+</span><span><a class="LN" name="80">   80   </a><span class="KW">typedef</span> <span class="KW">struct</span> <b>{</b>
+</span><span><a class="LN" name="81">   81   </a>  <a href="#type_B_INFUSION_MGR_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_INFUSION_MGR_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_INFUSION_MGR_Functional_c_T</font></a> rtb;
+</span><span><a class="LN" name="82">   82   </a>  <a href="#type_DW_INFUSION_MGR_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_INFUSION_MGR_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_INFUSION_MGR_Functional_f_T</font></a> rtdw;
+</span><span><a class="LN" name="83">   83   </a>  <a href="INFUSION_MGR_Functional_types_h.html#type_RT_MODEL_INFUSION_MGR_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_INFUSION_MGR_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">RT_MODEL_INFUSION_MGR_Functional_T</font></a> rtm;
+</span><span><a class="LN" name="84">   84   </a><b>}</b> <a name="type_MdlrefDW_INFUSION_MGR_Functional_T">MdlrefDW_INFUSION_MGR_Functional_T</a>;
+</span><span><a class="LN" name="85">   85   </a>
+</span><span><a class="LN" name="86">   86   </a><span class="CT">/* Model reference registration function */</span>
+</span><span><a class="LN" name="87">   87   </a><span class="DT">extern</span> <span class="DT">void</span> <a href="INFUSION_MGR_Functional_c.html#fcn_INFUSION_MGR_Functional_initialize" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_INFUSION_MGR_Functional_initialize');" target="rtwreport_document_frame"><font color="#1122aa">INFUSION_MGR_Functional_initialize</font></a>(<span class="DT">const</span> char_T **rt_errorStatus,
+</span><span><a class="LN" name="88">   88   </a>  <a href="INFUSION_MGR_Functional_types_h.html#type_RT_MODEL_INFUSION_MGR_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_INFUSION_MGR_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">RT_MODEL_INFUSION_MGR_Functional_T</font></a> *<span class="DT">const</span> INFUSION_MGR_Functional_M,
+</span><span><a class="LN" name="89">   89   </a>  <a href="#type_B_INFUSION_MGR_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_INFUSION_MGR_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_INFUSION_MGR_Functional_c_T</font></a> *localB, <a href="#type_DW_INFUSION_MGR_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_INFUSION_MGR_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_INFUSION_MGR_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="90">   90   </a><span class="DT">extern</span> <span class="DT">void</span> <a href="INFUSION_MGR_Functional_c.html#fcn_INFUSION_MGR_Functional_Init" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_INFUSION_MGR_Functional_Init');" target="rtwreport_document_frame"><font color="#1122aa">INFUSION_MGR_Functional_Init</font></a>(<a href="#type_B_INFUSION_MGR_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_INFUSION_MGR_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_INFUSION_MGR_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="91">   91   </a>  <a href="#type_DW_INFUSION_MGR_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_INFUSION_MGR_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_INFUSION_MGR_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="92">   92   </a><span class="DT">extern</span> <span class="DT">void</span> <a href="INFUSION_MGR_Functional_c.html#fcn_INFUSION_MGR_Functional" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_INFUSION_MGR_Functional');" target="rtwreport_document_frame"><font color="#1122aa">INFUSION_MGR_Functional</font></a>(<span class="DT">const</span> <a href="INFUSION_MGR_Functional_types_h.html#type_Top_Level_Mode_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Top_Level_Mode_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Top_Level_Mode_Outputs</font></a>
+</span><span><a class="LN" name="93">   93   </a>  *rtu_TLM_MODE_IN, <span class="DT">const</span> <a href="INFUSION_MGR_Functional_types_h.html#type_Operator_Commands" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Operator_Commands');" target="rtwreport_document_frame"><font color="#1122aa">Operator_Commands</font></a> *rtu_OP_CMD_IN, <span class="DT">const</span> <a href="INFUSION_MGR_Functional_types_h.html#type_Patient_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Patient_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Patient_Inputs</font></a>
+</span><span><a class="LN" name="94">   94   </a>  *rtu_PATIENT_IN, <span class="DT">const</span> <a href="INFUSION_MGR_Functional_types_h.html#type_Config_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Config_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Config_Outputs</font></a> *rtu_CONFIG_IN, <span class="DT">const</span> <a href="INFUSION_MGR_Functional_types_h.html#type_Alarm_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Alarm_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Alarm_Outputs</font></a>
+</span><span><a class="LN" name="95">   95   </a>  *rtu_ALARM_IN, <span class="DT">const</span> <a href="INFUSION_MGR_Functional_types_h.html#type_System_Status_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_System_Status_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">System_Status_Outputs</font></a> *rtu_SYS_STAT_IN,
+</span><span><a class="LN" name="96">   96   </a>  <a href="INFUSION_MGR_Functional_types_h.html#type_Infusion_Manager_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Infusion_Manager_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">Infusion_Manager_Outputs</font></a> *rty_IM_OUT, <a href="#type_B_INFUSION_MGR_Functional_c_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_INFUSION_MGR_Functional_c_T');" target="rtwreport_document_frame"><font color="#1122aa">B_INFUSION_MGR_Functional_c_T</font></a> *localB,
+</span><span><a class="LN" name="97">   97   </a>  <a href="#type_DW_INFUSION_MGR_Functional_f_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_INFUSION_MGR_Functional_f_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_INFUSION_MGR_Functional_f_T</font></a> *localDW);
+</span><span><a class="LN" name="98">   98   </a>
+</span><span><a class="LN" name="99">   99   </a><span class="CT">/*-</span>
+</span><span><a class="LN" name="100">  100   </a><span class="CT"> * The generated code includes comments that allow you to trace directly</span>
+</span><span><a class="LN" name="101">  101   </a><span class="CT"> * back to the appropriate location in the model.  The basic format</span>
+</span><span><a class="LN" name="102">  102   </a><span class="CT"> * is &lt;system&gt;/block_name, where system is the system number (uniquely</span>
+</span><span><a class="LN" name="103">  103   </a><span class="CT"> * assigned by Simulink) and block_name is the name of the block.</span>
+</span><span><a class="LN" name="104">  104   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="105">  105   </a><span class="CT"> * Use the MATLAB hilite_system command to trace the generated code back</span>
+</span><span><a class="LN" name="106">  106   </a><span class="CT"> * to the model.  For example,</span>
+</span><span><a class="LN" name="107">  107   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="108">  108   </a><span class="CT"> * hilite_system('&lt;S3&gt;')    - opens system 3</span>
+</span><span><a class="LN" name="109">  109   </a><span class="CT"> * hilite_system('&lt;S3&gt;/Kp') - opens and selects block Kp which resides in S3</span>
+</span><span><a class="LN" name="110">  110   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="111">  111   </a><span class="CT"> * Here is the system hierarchy for this model</span>
+</span><span><a class="LN" name="112">  112   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="113">  113   </a><span class="CT"> * '&lt;Root&gt;' : 'INFUSION_MGR_Functional'</span>
+</span><span><a class="LN" name="114">  114   </a><span class="CT"> * '&lt;S1&gt;'   : 'INFUSION_MGR_Functional/Infusion Manager Sub-System'</span>
+</span><span><a class="LN" name="115">  115   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="116">  116   </a><font color="#992211">#</font><span class="PP">endif</span>                                 <span class="CT">/* RTW_HEADER_INFUSION_MGR_Functional_h_ */</span>
+</span><span><a class="LN" name="117">  117   </a>
+</span></pre>
+</td></tr></table>
+</p>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - GPCA_SW_Functional.c</title>
+<style> .LN { font-style: italic; color: #888888 } </style>
+<style> .CT { font-style: italic; color: #117755 } </style>
+<style> .PP { font-style: bold;   color: #992211 } </style>
+<style> .KW { font-style: bold;   color: #112266 } </style>
+<style> .DT { font-style: bold;   color: #112266 } </style>
+<link rel="stylesheet" type="text/css" href="rtwreport.css"></link><script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<SCRIPT type="text/javascript" src="rtwannotate.js"></SCRIPT>
+</head>
+<body bgcolor="#eeeeee" text="#1122aa" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};if (typeof rtwannotate === 'function') {rtwannotate('GPCA_SW_Functional_c_cov.xml');}">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../GPCA_SW_Functional.c" target="rtwreport_document_frame" id="linkToText_plain">GPCA_SW_Functional.c</a></h4>
+<pre id="RTWcode">
+<span><a class="LN" name="1">    1   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="2">    2   </a><span class="CT"> * GPCA_SW_Functional.c</span>
+</span><span><a class="LN" name="3">    3   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="4">    4   </a><span class="CT"> * Code generation for model "GPCA_SW_Functional".</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="6">    6   </a><span class="CT"> * Model version              : 1.1238</span>
+</span><span><a class="LN" name="7">    7   </a><span class="CT"> * Simulink Coder version : 8.4 (R2013a) 13-Feb-2013</span>
+</span><span><a class="LN" name="8">    8   </a><span class="CT"> * C source code generated on : Tue Aug 20 14:29:47 2013</span>
+</span><span><a class="LN" name="9">    9   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="10">   10   </a><span class="CT"> * Target selection: grt.tlc</span>
+</span><span><a class="LN" name="11">   11   </a><span class="CT"> * Note: GRT includes extra infrastructure and instrumentation for prototyping</span>
+</span><span><a class="LN" name="12">   12   </a><span class="CT"> * Embedded hardware selection: 32-bit Generic</span>
+</span><span><a class="LN" name="13">   13   </a><span class="CT"> * Code generation objectives: Unspecified</span>
+</span><span><a class="LN" name="14">   14   </a><span class="CT"> * Validation result: Not run</span>
+</span><span><a class="LN" name="15">   15   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="16">   16   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;GPCA_SW_Functional.h&quot;</font>
+</span><span><a class="LN" name="17">   17   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;GPCA_SW_Functional_private.h&quot;</font>
+</span><span><a class="LN" name="18">   18   </a>
+</span><span><a class="LN" name="19">   19   </a><span class="DT">const</span> <a href="GPCA_SW_Functional_types_h.html#type_GPCA_SW_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_GPCA_SW_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Outputs</font></a> <a name="var_GPCA_SW_Functional_rtZGPCA_SW_Outputs">GPCA_SW_Functional_rtZGPCA_SW_Outputs</a> = <b>{</b>
+</span><span><a class="LN" name="20">   20   </a>  FALSE,                               <span class="CT">/* Request_Confirm_Stop */</span>
+</span><span><a class="LN" name="21">   21   </a>  0U,                                  <span class="CT">/* Log */</span>
+</span><span><a class="LN" name="22">   22   </a>  0U,                                  <span class="CT">/* Current_System_Mode */</span>
+</span><span><a class="LN" name="23">   23   </a>  0U,                                  <span class="CT">/* Actual_Infusion_Duration */</span>
+</span><span><a class="LN" name="24">   24   </a>  0U,                                  <span class="CT">/* Commanded_Flow_Rate */</span>
+</span><span><a class="LN" name="25">   25   </a>  0U,                                  <span class="CT">/* Volume_Infused */</span>
+</span><span><a class="LN" name="26">   26   </a>  0U,                                  <span class="CT">/* Reservoir_Volume */</span>
+</span><span><a class="LN" name="27">   27   </a>  0U,                                  <span class="CT">/* Is_Audio_Disabled */</span>
+</span><span><a class="LN" name="28">   28   </a>  0U,                                  <span class="CT">/* Notification_Message */</span>
+</span><span><a class="LN" name="29">   29   </a>  0U,                                  <span class="CT">/* Audio_Notification_Command */</span>
+</span><span><a class="LN" name="30">   30   </a>  0U,                                  <span class="CT">/* Patient_ID */</span>
+</span><span><a class="LN" name="31">   31   </a>  0U,                                  <span class="CT">/* Drug_Name */</span>
+</span><span><a class="LN" name="32">   32   </a>  0U,                                  <span class="CT">/* Drug_Concentration */</span>
+</span><span><a class="LN" name="33">   33   </a>  0U,                                  <span class="CT">/* Infusion_Total_Duration */</span>
+</span><span><a class="LN" name="34">   34   </a>  0U,                                  <span class="CT">/* VTBI_Total */</span>
+</span><span><a class="LN" name="35">   35   </a>  0U,                                  <span class="CT">/* Flow_Rate_Basal */</span>
+</span><span><a class="LN" name="36">   36   </a>  0U,                                  <span class="CT">/* Flow_Rate_Intermittent_Bolus */</span>
+</span><span><a class="LN" name="37">   37   </a>  0U,                                  <span class="CT">/* Duration_Intermittent_Bolus */</span>
+</span><span><a class="LN" name="38">   38   </a>  0U,                                  <span class="CT">/* Interval_Intermittent_Bolus */</span>
+</span><span><a class="LN" name="39">   39   </a>  0U,                                  <span class="CT">/* Flow_Rate_Patient_Bolus */</span>
+</span><span><a class="LN" name="40">   40   </a>  0U,                                  <span class="CT">/* Duration_Patient_Bolus */</span>
+</span><span><a class="LN" name="41">   41   </a>  0U,                                  <span class="CT">/* Lockout_Period_Patient_Bolus */</span>
+</span><span><a class="LN" name="42">   42   </a>  0U,                                  <span class="CT">/* Max_Number_of_Patient_Bolus */</span>
+</span><span><a class="LN" name="43">   43   </a>  0U,                                  <span class="CT">/* Flow_Rate_KVO */</span>
+</span><span><a class="LN" name="44">   44   </a>  0U,                                  <span class="CT">/* Entered_Reservoir_Volume */</span>
+</span><span><a class="LN" name="45">   45   </a>  0U,                                  <span class="CT">/* Configured */</span>
+</span><span><a class="LN" name="46">   46   </a>  0U,                                  <span class="CT">/* Error_Message_ID */</span>
+</span><span><a class="LN" name="47">   47   </a>  FALSE,                               <span class="CT">/* Request_Config_Type */</span>
+</span><span><a class="LN" name="48">   48   </a>  FALSE,                               <span class="CT">/* Request_Confirm_Infusion_Initiate */</span>
+</span><span><a class="LN" name="49">   49   </a>  FALSE,                               <span class="CT">/* Request_Patient_Drug_Info */</span>
+</span><span><a class="LN" name="50">   50   </a>  FALSE                                <span class="CT">/* Request_Infusion_Info */</span>
+</span><span><a class="LN" name="51">   51   </a><b>}</b> ;                                    <span class="CT">/* GPCA_SW_Outputs ground */</span>
+</span><span><a class="LN" name="52">   52   </a>
+</span><span><a class="LN" name="53">   53   </a><span class="CT">/* Block signals (auto storage) */</span>
+</span><span><a class="LN" name="54">   54   </a><a href="GPCA_SW_Functional_h.html#type_B_GPCA_SW_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_GPCA_SW_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">B_GPCA_SW_Functional_T</font></a> <a name="var_GPCA_SW_Functional_B">GPCA_SW_Functional_B</a>;
+</span><span><a class="LN" name="55">   55   </a>
+</span><span><a class="LN" name="56">   56   </a><span class="CT">/* Block states (auto storage) */</span>
+</span><span><a class="LN" name="57">   57   </a><a href="GPCA_SW_Functional_h.html#type_DW_GPCA_SW_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_GPCA_SW_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_GPCA_SW_Functional_T</font></a> <a name="var_GPCA_SW_Functional_DW">GPCA_SW_Functional_DW</a>;
+</span><span><a class="LN" name="58">   58   </a>
+</span><span><a class="LN" name="59">   59   </a><span class="CT">/* External inputs (root inport signals with auto storage) */</span>
+</span><span><a class="LN" name="60">   60   </a><a href="GPCA_SW_Functional_h.html#type_ExtU_GPCA_SW_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ExtU_GPCA_SW_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">ExtU_GPCA_SW_Functional_T</font></a> <a name="var_GPCA_SW_Functional_U">GPCA_SW_Functional_U</a>;
+</span><span><a class="LN" name="61">   61   </a>
+</span><span><a class="LN" name="62">   62   </a><span class="CT">/* External outputs (root outports fed by signals with auto storage) */</span>
+</span><span><a class="LN" name="63">   63   </a><a href="GPCA_SW_Functional_h.html#type_ExtY_GPCA_SW_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ExtY_GPCA_SW_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">ExtY_GPCA_SW_Functional_T</font></a> <a name="var_GPCA_SW_Functional_Y">GPCA_SW_Functional_Y</a>;
+</span><span><a class="LN" name="64">   64   </a>
+</span><span><a class="LN" name="65">   65   </a><span class="CT">/* Real-time model */</span>
+</span><span><a class="LN" name="66">   66   </a><a href="GPCA_SW_Functional_types_h.html#type_RT_MODEL_GPCA_SW_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_GPCA_SW_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">RT_MODEL_GPCA_SW_Functional_T</font></a> <a name="var_GPCA_SW_Functional_M_">GPCA_SW_Functional_M_</a>;
+</span><span><a class="LN" name="67">   67   </a><a href="GPCA_SW_Functional_types_h.html#type_RT_MODEL_GPCA_SW_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_GPCA_SW_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">RT_MODEL_GPCA_SW_Functional_T</font></a> *<span class="DT">const</span> <a name="var_GPCA_SW_Functional_M">GPCA_SW_Functional_M</a> =
+</span><span><a class="LN" name="68">   68   </a>  &amp;<a href="#var_GPCA_SW_Functional_M_" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M_');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M_</font></a>;
+</span><span><a class="LN" name="69">   69   </a>
+</span><span><a class="LN" name="70">   70   </a><span class="CT">/* Model step function */</span>
+</span><span><a class="LN" name="71">   71   </a><span class="DT">void</span> <a name="fcn_GPCA_SW_Functional_step">GPCA_SW_Functional_step</a>(<span class="DT">void</span>)
+</span><span><a class="LN" name="72">   72   </a><b>{</b>
+</span><span><a class="LN" name="73">   73   </a>  <span class="CT">/* local block i/o variables */</span>
+</span><span><a class="LN" name="74">   74   </a>  <a href="GPCA_SW_Functional_types_h.html#type_Device_Sensor_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Device_Sensor_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Device_Sensor_Inputs</font></a> rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_inpo;
+</span><span><a class="LN" name="75">   75   </a>  <a href="GPCA_SW_Functional_types_h.html#type_Device_Configuration_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Device_Configuration_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Device_Configuration_Inputs</font></a> rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_in_b;
+</span><span><a class="LN" name="76">   76   </a>  <a href="GPCA_SW_Functional_types_h.html#type_Operator_Commands" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Operator_Commands');" target="rtwreport_document_frame"><font color="#1122aa">Operator_Commands</font></a> rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_in_i;
+</span><span><a class="LN" name="77">   77   </a>  <a href="GPCA_SW_Functional_types_h.html#type_Drug_Database_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Drug_Database_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Drug_Database_Inputs</font></a> rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_in_m;
+</span><span><a class="LN" name="78">   78   </a>  <a href="GPCA_SW_Functional_types_h.html#type_Prescription_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Prescription_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Prescription_Inputs</font></a> rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_in_c;
+</span><span><a class="LN" name="79">   79   </a>  <a href="GPCA_SW_Functional_types_h.html#type_Patient_Inputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_Patient_Inputs');" target="rtwreport_document_frame"><font color="#1122aa">Patient_Inputs</font></a> rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_i_bo;
+</span><span><a class="LN" name="80">   80   </a>
+</span><span><a class="LN" name="81">   81   </a>  <span class="CT">/* BusCreator: '&lt;Root&gt;/BusConversion_InsertedFor_GPCA SOFTWARE_at_inport_0' incorporates:</span>
+</span><span><a class="LN" name="82">   82   </a><span class="CT">   *  Inport: '&lt;Root&gt;/SENSOR_IN'</span>
+</span><span><a class="LN" name="83">   83   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="84">   84   </a>  rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_inpo =
+</span><span><a class="LN" name="85">   85   </a>    <a href="#var_GPCA_SW_Functional_U" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_U');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_U</font></a>.SENSOR_IN;
+</span><span><a class="LN" name="86">   86   </a>
+</span><span><a class="LN" name="87">   87   </a>  <span class="CT">/* BusCreator: '&lt;Root&gt;/BusConversion_InsertedFor_GPCA SOFTWARE_at_inport_1' incorporates:</span>
+</span><span><a class="LN" name="88">   88   </a><span class="CT">   *  Inport: '&lt;Root&gt;/CONST_IN'</span>
+</span><span><a class="LN" name="89">   89   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="90">   90   </a>  rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_in_b =
+</span><span><a class="LN" name="91">   91   </a>    <a href="#var_GPCA_SW_Functional_U" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_U');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_U</font></a>.CONST_IN;
+</span><span><a class="LN" name="92">   92   </a>
+</span><span><a class="LN" name="93">   93   </a>  <span class="CT">/* BusCreator: '&lt;Root&gt;/BusConversion_InsertedFor_GPCA SOFTWARE_at_inport_2' incorporates:</span>
+</span><span><a class="LN" name="94">   94   </a><span class="CT">   *  Inport: '&lt;Root&gt;/OP_CMD_IN'</span>
+</span><span><a class="LN" name="95">   95   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="96">   96   </a>  rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_in_i =
+</span><span><a class="LN" name="97">   97   </a>    <a href="#var_GPCA_SW_Functional_U" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_U');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_U</font></a>.OP_CMD_IN;
+</span><span><a class="LN" name="98">   98   </a>
+</span><span><a class="LN" name="99">   99   </a>  <span class="CT">/* BusCreator: '&lt;Root&gt;/BusConversion_InsertedFor_GPCA SOFTWARE_at_inport_3' incorporates:</span>
+</span><span><a class="LN" name="100">  100   </a><span class="CT">   *  Inport: '&lt;Root&gt;/DB_IN'</span>
+</span><span><a class="LN" name="101">  101   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="102">  102   </a>  rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_in_m =
+</span><span><a class="LN" name="103">  103   </a>    <a href="#var_GPCA_SW_Functional_U" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_U');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_U</font></a>.DB_IN;
+</span><span><a class="LN" name="104">  104   </a>
+</span><span><a class="LN" name="105">  105   </a>  <span class="CT">/* BusCreator: '&lt;Root&gt;/BusConversion_InsertedFor_GPCA SOFTWARE_at_inport_4' incorporates:</span>
+</span><span><a class="LN" name="106">  106   </a><span class="CT">   *  Inport: '&lt;Root&gt;/PRES_IN'</span>
+</span><span><a class="LN" name="107">  107   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="108">  108   </a>  rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_in_c =
+</span><span><a class="LN" name="109">  109   </a>    <a href="#var_GPCA_SW_Functional_U" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_U');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_U</font></a>.PRES_IN;
+</span><span><a class="LN" name="110">  110   </a>
+</span><span><a class="LN" name="111">  111   </a>  <span class="CT">/* BusCreator: '&lt;Root&gt;/BusConversion_InsertedFor_GPCA SOFTWARE_at_inport_5' incorporates:</span>
+</span><span><a class="LN" name="112">  112   </a><span class="CT">   *  Inport: '&lt;Root&gt;/PATIENT_IN'</span>
+</span><span><a class="LN" name="113">  113   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="114">  114   </a>  rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_i_bo =
+</span><span><a class="LN" name="115">  115   </a>    <a href="#var_GPCA_SW_Functional_U" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_U');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_U</font></a>.PATIENT_IN;
+</span><span><a class="LN" name="116">  116   </a>
+</span><span><a class="LN" name="117">  117   </a>  <span class="CT">/* ModelReference: '&lt;Root&gt;/GPCA SOFTWARE' */</span>
+</span><span><a class="LN" name="118">  118   </a>  GPCA_SW_Logical_Architecture
+</span><span><a class="LN" name="119">  119   </a>    (&amp;rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_inpo,
+</span><span><a class="LN" name="120">  120   </a>     &amp;rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_in_b,
+</span><span><a class="LN" name="121">  121   </a>     &amp;rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_in_i,
+</span><span><a class="LN" name="122">  122   </a>     &amp;rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_in_m,
+</span><span><a class="LN" name="123">  123   </a>     &amp;rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_in_c,
+</span><span><a class="LN" name="124">  124   </a>     &amp;rtb_BusConversion_InsertedFor_GPCASOFTWARE_at_i_bo,
+</span><span><a class="LN" name="125">  125   </a>     &amp;<a href="#var_GPCA_SW_Functional_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_B');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_B</font></a>.GPCASOFTWARE,
+</span><span><a class="LN" name="126">  126   </a>     &amp;(<a href="#var_GPCA_SW_Functional_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_DW');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_DW</font></a>.GPCASOFTWARE_DWORK1.rtb),
+</span><span><a class="LN" name="127">  127   </a>     &amp;(<a href="#var_GPCA_SW_Functional_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_DW');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_DW</font></a>.GPCASOFTWARE_DWORK1.rtdw));
+</span><span><a class="LN" name="128">  128   </a>
+</span><span><a class="LN" name="129">  129   </a>  <span class="CT">/* Outport: '&lt;Root&gt;/GPCA_SW_OUT' incorporates:</span>
+</span><span><a class="LN" name="130">  130   </a><span class="CT">   *  BusCreator: '&lt;Root&gt;/BusConversion_InsertedFor_GPCA_SW_OUT_at_inport_0'</span>
+</span><span><a class="LN" name="131">  131   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="132">  132   </a>  <a href="#var_GPCA_SW_Functional_Y" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_Y');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_Y</font></a>.GPCA_SW_OUT = <a href="#var_GPCA_SW_Functional_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_B');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_B</font></a>.GPCASOFTWARE;
+</span><span><a class="LN" name="133">  133   </a>
+</span><span><a class="LN" name="134">  134   </a>  <span class="CT">/* Update for ModelReference: '&lt;Root&gt;/GPCA SOFTWARE' */</span>
+</span><span><a class="LN" name="135">  135   </a>  GPCA_SW_Logical_Architecture_Update
+</span><span><a class="LN" name="136">  136   </a>    (&amp;(<a href="#var_GPCA_SW_Functional_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_DW');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_DW</font></a>.GPCASOFTWARE_DWORK1.rtb),
+</span><span><a class="LN" name="137">  137   </a>     &amp;(<a href="#var_GPCA_SW_Functional_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_DW');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_DW</font></a>.GPCASOFTWARE_DWORK1.rtdw));
+</span><span><a class="LN" name="138">  138   </a>
+</span><span><a class="LN" name="139">  139   </a>  <span class="CT">/* Matfile logging */</span>
+</span><span><a class="LN" name="140">  140   </a>  <a href="rt_logging_c.html#fcn_rt_UpdateTXYLogVars" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_UpdateTXYLogVars');" target="rtwreport_document_frame"><font color="#1122aa">rt_UpdateTXYLogVars</font></a>(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo,
+</span><span><a class="LN" name="141">  141   </a>                      (&amp;<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;Timing.taskTime0));
+</span><span><a class="LN" name="142">  142   </a>
+</span><span><a class="LN" name="143">  143   </a>  <span class="CT">/* signal main to stop simulation */</span>
+</span><span><a class="LN" name="144">  144   </a>  <b>{</b>                                    <span class="CT">/* Sample time: [1.0s, 0.0s] */</span>
+</span><span><a class="LN" name="145">  145   </a>    <span class="KW">if</span> ((rtmGetTFinal(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>)!=-1) &amp;&amp;
+</span><span><a class="LN" name="146">  146   </a>        !((rtmGetTFinal(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>)-
+</span><span><a class="LN" name="147">  147   </a>           <a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;Timing.taskTime0) &gt;
+</span><span><a class="LN" name="148">  148   </a>          <a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;Timing.taskTime0 * (DBL_EPSILON))) <b>{</b>
+</span><span><a class="LN" name="149">  149   </a>      rtmSetErrorStatus(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>, <font color="#1122ff">&quot;Simulation finished&quot;</font>);
+</span><span><a class="LN" name="150">  150   </a>    <b>}</b>
+</span><span><a class="LN" name="151">  151   </a>  <b>}</b>
+</span><span><a class="LN" name="152">  152   </a>
+</span><span><a class="LN" name="153">  153   </a>  <span class="CT">/* Update absolute time for base rate */</span>
+</span><span><a class="LN" name="154">  154   </a>  <span class="CT">/* The "clockTick0" counts the number of times the code of this task has</span>
+</span><span><a class="LN" name="155">  155   </a><span class="CT">   * been executed. The absolute time is the multiplication of "clockTick0"</span>
+</span><span><a class="LN" name="156">  156   </a><span class="CT">   * and "Timing.stepSize0". Size of "clockTick0" ensures timer will not</span>
+</span><span><a class="LN" name="157">  157   </a><span class="CT">   * overflow during the application lifespan selected.</span>
+</span><span><a class="LN" name="158">  158   </a><span class="CT">   * Timer of this task consists of two 32 bit unsigned integers.</span>
+</span><span><a class="LN" name="159">  159   </a><span class="CT">   * The two integers represent the low bits Timing.clockTick0 and the high bits</span>
+</span><span><a class="LN" name="160">  160   </a><span class="CT">   * Timing.clockTickH0. When the low bit overflows to 0, the high bits increment.</span>
+</span><span><a class="LN" name="161">  161   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="162">  162   </a>  <span class="KW">if</span> (!(++<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;Timing.clockTick0)) <b>{</b>
+</span><span><a class="LN" name="163">  163   </a>    ++<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;Timing.clockTickH0;
+</span><span><a class="LN" name="164">  164   </a>  <b>}</b>
+</span><span><a class="LN" name="165">  165   </a>
+</span><span><a class="LN" name="166">  166   </a>  <a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;Timing.taskTime0 =
+</span><span><a class="LN" name="167">  167   </a>    <a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;Timing.clockTick0 *
+</span><span><a class="LN" name="168">  168   </a>    <a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;Timing.stepSize0 +
+</span><span><a class="LN" name="169">  169   </a>    <a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;Timing.clockTickH0 *
+</span><span><a class="LN" name="170">  170   </a>    <a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;Timing.stepSize0 * 4294967296.0;
+</span><span><a class="LN" name="171">  171   </a><b>}</b>
+</span><span><a class="LN" name="172">  172   </a>
+</span><span><a class="LN" name="173">  173   </a><span class="CT">/* Model initialize function */</span>
+</span><span><a class="LN" name="174">  174   </a><span class="DT">void</span> <a name="fcn_GPCA_SW_Functional_initialize">GPCA_SW_Functional_initialize</a>(<span class="DT">void</span>)
+</span><span><a class="LN" name="175">  175   </a><b>{</b>
+</span><span><a class="LN" name="176">  176   </a>  <span class="CT">/* Registration code */</span>
+</span><span><a class="LN" name="177">  177   </a>
+</span><span><a class="LN" name="178">  178   </a>  <span class="CT">/* initialize non-finites */</span>
+</span><span><a class="LN" name="179">  179   </a>  <a href="../../slprj/grt/_sharedutils/html/rt_nonfinite_c.html#fcn_rt_InitInfAndNaN" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_InitInfAndNaN');" target="rtwreport_document_frame"><font color="#1122aa">rt_InitInfAndNaN</font></a>(<span class="KW">sizeof</span>(real_T));
+</span><span><a class="LN" name="180">  180   </a>
+</span><span><a class="LN" name="181">  181   </a>  <span class="CT">/* initialize real-time model */</span>
+</span><span><a class="LN" name="182">  182   </a>  (<span class="DT">void</span>) memset((<span class="DT">void</span> *)<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>, 0,
+</span><span><a class="LN" name="183">  183   </a>                <span class="KW">sizeof</span>(<a href="GPCA_SW_Functional_types_h.html#type_RT_MODEL_GPCA_SW_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_GPCA_SW_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">RT_MODEL_GPCA_SW_Functional_T</font></a>));
+</span><span><a class="LN" name="184">  184   </a>  rtmSetTFinal(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>, 500.0);
+</span><span><a class="LN" name="185">  185   </a>  <a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;Timing.stepSize0 = 1.0;
+</span><span><a class="LN" name="186">  186   </a>
+</span><span><a class="LN" name="187">  187   </a>  <span class="CT">/* Setup for data logging */</span>
+</span><span><a class="LN" name="188">  188   </a>  <b>{</b>
+</span><span><a class="LN" name="189">  189   </a>    <span class="DT">static</span> RTWLogInfo rt_DataLoggingInfo;
+</span><span><a class="LN" name="190">  190   </a>    <a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo = &amp;rt_DataLoggingInfo;
+</span><span><a class="LN" name="191">  191   </a>  <b>}</b>
+</span><span><a class="LN" name="192">  192   </a>
+</span><span><a class="LN" name="193">  193   </a>  <span class="CT">/* Setup for data logging */</span>
+</span><span><a class="LN" name="194">  194   </a>  <b>{</b>
+</span><span><a class="LN" name="195">  195   </a>    rtliSetLogXSignalInfo(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, (NULL));
+</span><span><a class="LN" name="196">  196   </a>    rtliSetLogXSignalPtrs(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, (NULL));
+</span><span><a class="LN" name="197">  197   </a>    rtliSetLogT(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, <font color="#1122ff">&quot;tout&quot;</font>);
+</span><span><a class="LN" name="198">  198   </a>    rtliSetLogX(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, <font color="#1122ff">&quot;&quot;</font>);
+</span><span><a class="LN" name="199">  199   </a>    rtliSetLogXFinal(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, <font color="#1122ff">&quot;&quot;</font>);
+</span><span><a class="LN" name="200">  200   </a>    rtliSetSigLog(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, <font color="#1122ff">&quot;&quot;</font>);
+</span><span><a class="LN" name="201">  201   </a>    rtliSetLogVarNameModifier(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, <font color="#1122ff">&quot;rt_&quot;</font>);
+</span><span><a class="LN" name="202">  202   </a>    rtliSetLogFormat(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, 2);
+</span><span><a class="LN" name="203">  203   </a>    rtliSetLogMaxRows(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, 1000);
+</span><span><a class="LN" name="204">  204   </a>    rtliSetLogDecimation(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, 1);
+</span><span><a class="LN" name="205">  205   </a>    rtliSetLogY(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, <font color="#1122ff">&quot;&quot;</font>);
+</span><span><a class="LN" name="206">  206   </a>    rtliSetLogYSignalInfo(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, (NULL));
+</span><span><a class="LN" name="207">  207   </a>    rtliSetLogYSignalPtrs(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, (NULL));
+</span><span><a class="LN" name="208">  208   </a>  <b>}</b>
+</span><span><a class="LN" name="209">  209   </a>
+</span><span><a class="LN" name="210">  210   </a>  <span class="CT">/* block I/O */</span>
+</span><span><a class="LN" name="211">  211   </a>  (<span class="DT">void</span>) memset(((<span class="DT">void</span> *) &amp;<a href="#var_GPCA_SW_Functional_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_B');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_B</font></a>), 0,
+</span><span><a class="LN" name="212">  212   </a>                <span class="KW">sizeof</span>(<a href="GPCA_SW_Functional_h.html#type_B_GPCA_SW_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_GPCA_SW_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">B_GPCA_SW_Functional_T</font></a>));
+</span><span><a class="LN" name="213">  213   </a>
+</span><span><a class="LN" name="214">  214   </a>  <span class="CT">/* states (dwork) */</span>
+</span><span><a class="LN" name="215">  215   </a>  (<span class="DT">void</span>) memset((<span class="DT">void</span> *)&amp;<a href="#var_GPCA_SW_Functional_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_DW');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_DW</font></a>, 0,
+</span><span><a class="LN" name="216">  216   </a>                <span class="KW">sizeof</span>(<a href="GPCA_SW_Functional_h.html#type_DW_GPCA_SW_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_GPCA_SW_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">DW_GPCA_SW_Functional_T</font></a>));
+</span><span><a class="LN" name="217">  217   </a>
+</span><span><a class="LN" name="218">  218   </a>  <span class="CT">/* external inputs */</span>
+</span><span><a class="LN" name="219">  219   </a>  (<span class="DT">void</span>) memset((<span class="DT">void</span> *)&amp;<a href="#var_GPCA_SW_Functional_U" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_U');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_U</font></a>, 0,
+</span><span><a class="LN" name="220">  220   </a>                <span class="KW">sizeof</span>(<a href="GPCA_SW_Functional_h.html#type_ExtU_GPCA_SW_Functional_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ExtU_GPCA_SW_Functional_T');" target="rtwreport_document_frame"><font color="#1122aa">ExtU_GPCA_SW_Functional_T</font></a>));
+</span><span><a class="LN" name="221">  221   </a>
+</span><span><a class="LN" name="222">  222   </a>  <span class="CT">/* external outputs */</span>
+</span><span><a class="LN" name="223">  223   </a>  <a href="#var_GPCA_SW_Functional_Y" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_Y');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_Y</font></a>.GPCA_SW_OUT = <a href="#var_GPCA_SW_Functional_rtZGPCA_SW_Outputs" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_rtZGPCA_SW_Outputs');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_rtZGPCA_SW_Outputs</font></a>;
+</span><span><a class="LN" name="224">  224   </a>
+</span><span><a class="LN" name="225">  225   </a>  <span class="CT">/* Model Initialize fcn for ModelReference Block: '&lt;Root&gt;/GPCA SOFTWARE' */</span>
+</span><span><a class="LN" name="226">  226   </a>  GPCA_SW_Logical_Architecture_initialize(rtmGetErrorStatusPointer
+</span><span><a class="LN" name="227">  227   </a>    (<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>), &amp;(<a href="#var_GPCA_SW_Functional_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_DW');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_DW</font></a>.GPCASOFTWARE_DWORK1.rtm),
+</span><span><a class="LN" name="228">  228   </a>    &amp;(<a href="#var_GPCA_SW_Functional_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_DW');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_DW</font></a>.GPCASOFTWARE_DWORK1.rtb),
+</span><span><a class="LN" name="229">  229   </a>    &amp;(<a href="#var_GPCA_SW_Functional_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_DW');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_DW</font></a>.GPCASOFTWARE_DWORK1.rtdw));
+</span><span><a class="LN" name="230">  230   </a>
+</span><span><a class="LN" name="231">  231   </a>  <span class="CT">/* Matfile logging */</span>
+</span><span><a class="LN" name="232">  232   </a>  <a href="rt_logging_c.html#fcn_rt_StartDataLoggingWithStartTime" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_StartDataLoggingWithStartTime');" target="rtwreport_document_frame"><font color="#1122aa">rt_StartDataLoggingWithStartTime</font></a>(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;rtwLogInfo, 0.0,
+</span><span><a class="LN" name="233">  233   </a>    rtmGetTFinal(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>), <a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>-&gt;Timing.stepSize0,
+</span><span><a class="LN" name="234">  234   </a>                                   (&amp;rtmGetErrorStatus(<a href="#var_GPCA_SW_Functional_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_M');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_M</font></a>)));
+</span><span><a class="LN" name="235">  235   </a>
+</span><span><a class="LN" name="236">  236   </a>  <span class="CT">/* InitializeConditions for ModelReference: '&lt;Root&gt;/GPCA SOFTWARE' */</span>
+</span><span><a class="LN" name="237">  237   </a>  GPCA_SW_Logical_Architecture_Init
+</span><span><a class="LN" name="238">  238   </a>    (&amp;(<a href="#var_GPCA_SW_Functional_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_GPCA_SW_Functional_DW');" target="rtwreport_document_frame"><font color="#1122aa">GPCA_SW_Functional_DW</font></a>.GPCASOFTWARE_DWORK1.rtdw));
+</span><span><a class="LN" name="239">  239   </a><b>}</b>
+</span><span><a class="LN" name="240">  240   </a>
+</span><span><a class="LN" name="241">  241   </a><span class="CT">/* Model terminate function */</span>
+</span><span><a class="LN" name="242">  242   </a><span class="DT">void</span> <a name="fcn_GPCA_SW_Functional_terminate">GPCA_SW_Functional_terminate</a>(<span class="DT">void</span>)
+</span><span><a class="LN" name="243">  243   </a><b>{</b>
+</span><span><a class="LN" name="244">  244   </a>  <span class="CT">/* (no terminate code required) */</span>
+</span><span><a class="LN" name="245">  245   </a><b>}</b>
+</span><span><a class="LN" name="246">  246   </a>
+</span></pre>
+</td></tr></table>
+</p>
+</body>
+</html>
