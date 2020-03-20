@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class VeritestingPerf {
 
     public int count = 0;
@@ -174,10 +178,129 @@ public class VeritestingPerf {
 //        list.add(Debug.makeSymbolicInteger("a2"));
 //        (new VeritestingPerf()).countArrayList(list);
         //(new VeritestingPerf()).wrapper(true, 1);
-       // (new VeritestingPerf()).wbsConditions(1, 1);
+        // (new VeritestingPerf()).wbsConditions(1, 1);
 
-        (new VeritestingPerf()).testWhileProblem3(1, 1);
+        //(new VeritestingPerf()).testWhileProblem3(1, 1);
+        //int[] i = (new VeritestingPerf()).paperExampleNumCases2(1, 0, 1, 0, 1, 0, 1);
+        int[] i = (new VeritestingPerf()).FSE2020(1, 0, 1, 0, 1, 0, 1);
+        System.out.println("i=" + Arrays.toString(i));
 
+    }
+
+    public static int[] FSE2020(int x1, int x2, int x3, int x4, int x5, int x6, int x7) {
+        List<Integer> list = new ArrayList<>(Arrays.asList(x1, x2, x3, x4, x5, x6, x7));
+        int[] fstWrdIndexArr = new int[(list.size() / 2)]; //stores the last index of the word
+        int wordCount = 0, element = 0, i = 0;
+        boolean inWord = false, done = false;
+        System.out.println(fstWrdIndexArr.length);
+        if (list.size() > 0) {
+            while (i < list.size() && !done) { // while we have not ran out of size
+                element = list.get(i);
+                if (element == -1) { // like string terminator
+                    done = true;
+                } else {
+                    element = list.get(i);
+                    if (element == 0) {
+                        inWord = false;
+                    } else if (!inWord) {
+                        fstWrdIndexArr[wordCount] = i;
+                        ++wordCount;
+                        inWord = true;
+                    }
+                }
+                ++i;
+            }
+        }
+        return fstWrdIndexArr;
+    }
+
+
+    public static int[] paperExampleNumCases1(int x1, int x2, int x3, int x4, int x5, int x6, int x7) {
+        List<Integer> list = new ArrayList<>(Arrays.asList(x1, x2, x3, x4, x5, x6, x7));
+        int[] outputArray = new int[list.size() / 2]; //stores the last index of the word
+        //ArrayList<Integer> list = new ArrayList<>(200);
+        int wordCount = -1, element = 0, i = 0;
+        boolean inWord = true;
+        if (list.size() > 0) {
+            while (i < list.size()) { // while we have not ran out of size
+                if (list.get(i) == -1) { // like string terminator
+                    if (inWord) {
+                        outputArray[++wordCount] = i - 1;
+                        return outputArray;
+                    } else
+                        return outputArray;
+                } else {
+                    element = list.get(i);
+                    if (inWord) {
+                        if (element == 0) {
+                            ++wordCount;
+                            outputArray[wordCount] = i - 1;
+                            inWord = false;
+                        }
+                    } else if (element != 0)
+                        inWord = true;
+                }
+                ++i;
+            }
+        }
+        return outputArray;
+    }
+
+
+    public static int[] paperExampleNumCases2(int x1, int x2, int x3, int x4, int x5, int x6, int x7) {
+        List<Integer> list = new ArrayList<>(Arrays.asList(x1, x2, x3, x4, x5, x6, x7));
+        int[] outputArray = new int[(list.size() / 2)]; //stores the last index of the word
+        //ArrayList<Integer> list = new ArrayList<>(200);
+        int wordCount = 0, element = 0, i = 0;
+        boolean inWord = false;
+        if (list.size() > 0) {
+            while (i < list.size()) { // while we have not ran out of size
+                element = list.get(i);
+                /*if (element == -1) { // like string terminator
+                    return outputArray;
+                } else {*/
+                if (element == 0) {
+                    inWord = false;
+                } else if (!inWord) {
+                    outputArray[wordCount] = i;
+                    ++wordCount;
+                    inWord = true;
+                }
+//                }
+                ++i;
+            }
+        }
+        return outputArray;
+    }
+
+
+
+
+    public int paperExampleNumCases(int x1, int x2, int x3, int x4, int x5, int x6) {
+        List<Integer> list = new ArrayList<>(Arrays.asList(x1, x2, x3, x4, x5, x6));
+        //ArrayList<Integer> list = new ArrayList<>(200);
+        int wordCount = 0, element = 0, i = 0;
+
+        boolean inWord = false;
+        if (list.size() > 0) {
+            while (i <= list.size()) { // while we have not ran out of size
+                if (list.get(i) == -1) { // like string terminator
+                    if (inWord) return ++wordCount;
+                    return wordCount;
+                } else {
+                    element = list.get(i);
+                    if (inWord) {
+                        if (element == 0) {
+                            ++wordCount;
+                            inWord = false;
+                        }
+                    } else if (element != 0)
+                        inWord = true;
+                }
+                ++i;
+            }
+        }
+        return wordCount;
     }
 
 
@@ -859,8 +982,8 @@ public class VeritestingPerf {
 
 
 */
-/*
-*/
+    /*
+     */
 
     public static int staticMethod2(int x) {
         int myCount = 0;

@@ -18,10 +18,28 @@ public class TestingJavaShift {
                 i = i >> 1;
             }
         }
-
         System.out.println(Integer.toBinaryString(j));
         return j;
+    }
 
+    public int sheepAndGoat(int i) {
+        int j = 0;
+
+        System.out.println(Integer.toBinaryString(i));
+
+        while (i != 0) {
+            int hasZeroTrail = (i & 1);
+            if (hasZeroTrail == 0) {
+                int numberOfTrailingZeros = Integer.numberOfTrailingZeros(i);
+                i = i >> numberOfTrailingZeros;
+            } else {
+                j = j >>> 1;
+                j = j ^ (Integer.reverse(1));
+                i = i >> 1;
+            }
+        }
+        System.out.println(Integer.toBinaryString(j));
+        return j;
     }
 
     public int sheepAndGoatRight(int i) {
@@ -74,5 +92,9 @@ public class TestingJavaShift {
 
         System.out.println("left Sheep and Goat No Trail");
         (new TestingJavaShift()).sheepAndGoatLeftNoTrail(214);
+
+        System.out.println("Left Sheep and Goat bitwise-and check");
+        (new TestingJavaShift()).sheepAndGoat(214);
+
     }
 }
