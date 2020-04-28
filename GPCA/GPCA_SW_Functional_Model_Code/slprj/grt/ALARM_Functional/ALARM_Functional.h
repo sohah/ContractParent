@@ -55,6 +55,8 @@ typedef struct {
   boolean_T Door_Open;
   boolean_T Temp;
   boolean_T Air_Pressure;
+
+
   boolean_T Humidity;
   boolean_T Battery_Depleted;
   boolean_T Battery_Low;

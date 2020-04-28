@@ -1,0 +1,26 @@
+!SESSION 2019-09-11 07:44:02.884 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_151
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -keyring /Users/sohahussein/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/sohahussein/.eclipse_keyring
+
+!ENTRY org.eclipse.core.net 1 0 2019-09-11 07:51:29.665
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.egit.core 1 0 2019-09-11 07:51:29.703
+!MESSAGE Using Apache MINA sshd as ssh client.
+
+!ENTRY org.eclipse.equinox.p2.director 4 10053 2019-09-11 08:22:25.142
+!MESSAGE Cannot complete the install because one or more required items could not be found.
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 0 2019-09-11 08:22:25.142
+!MESSAGE Software currently installed: Resolute 1.0.0.201706281359 (com.rockwellcollins.atc.resolute.feature.feature.group 1.0.0.201706281359)
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 0 2019-09-11 08:22:25.142
+!MESSAGE Missing requirement: Resolute back-end 1.0.0.201706281359 (com.rockwellcollins.atc.resolute 1.0.0.201706281359) requires 'osgi.ee; (&(osgi.ee=JavaSE)(version=1.8))' but it could not be found
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 1 2019-09-11 08:22:25.142
+!MESSAGE Cannot satisfy dependency:
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2019-09-11 08:22:25.142
+!MESSAGE From: Resolute 1.0.0.201706281359 (com.rockwellcollins.atc.resolute.feature.feature.group 1.0.0.201706281359)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2019-09-11 08:22:25.143
+!MESSAGE To: org.eclipse.equinox.p2.iu; com.rockwellcollins.atc.resolute [1.0.0.201706281359,1.0.0.201706281359]
