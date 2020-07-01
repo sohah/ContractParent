@@ -120,7 +120,37 @@ Their third contribution is that they provide a repair core, which is a locally 
 - Does not repair everything by definition of gamma-sat.
 - Redundancy in spec after repair: “although given the suggested repair, some assumptions that appear already in the original specification may become unnecessary for realizability, we choose not to remove any assumptions but only to suggest new ones to add.”
 - Addition of free unconstrained free variables have quiet overhead.
-Q: still not sure if both JVTS is incomplete besides losing on repairs that yields gamma-unsat.?
+Q: still not sure if both JVTS is incomplete besides losing on repairs that yields gamma-unsat.
+
+
+## AutoTap: Synthesizing and Repairing Trigger-Action Programs Using LTL Properties - ICSE'19
+
+This paper is talking about TAP programs and how to automate generating rules for none technical users. TAP programs are programs that are use to program IoT devices. Users can though writing conflicting and incorrect rules. The paper suggest a way to enable users to write LTL formulas that would describe their intended properties, then using their tool they can synthesize rules that satisfy these rules. 
+
+The paper starts with a user study where they asked users to express properties they would want their IoT to do. Using this study, they came up with 7 types of templates that they can use to express various users properties and they under the hood translate these templates into LTL formulas.
+
+Now to allow their tool (AutoTAP) to synthesize the corresponding rules they did the following
+(1) they translated the devices specifications into a transition system. They also in this step translated existing TAP rules to the same transition system.
+(2) using the desired user's property \phi, they negated it.
+(3) they combined both (1) and (2) and generated the Buchi Automaton. Thus the product would show all allowable executions that can go to the accepteing state of \not \phi, which would represent all edges that they would want to remove from the transition system.
+
+(4) they removed these transitions by adding rules that by pass the undesriable transitions whenever they are about to occur. This is their way to synthesize rules that would satisfy the user's desried added property \phi. 
+
+Note that these added rules are both property compliant in terms of the added property, and also they are accomedating, in terms of not disabling any device behaviour that originally satisfy the proerpties.
+
+# Main Take Away
+
+The arguement that I tried to make is to, say we can use their model to where we can express the implementation as the transition system and the unmatching property as their safety property. Thus if we negated the safety property we will identify all edges that exists in the implemenation that would lead to the invalid accepting state. We can use some technique the correpsonds to their technique of generating rules to append changes on the property that they wish to fix.
+
+The main takeaway is to realize that their model is using finite state machine, whereas in our model because we wanted to present the implementation that can present large finite state (due to arithemtics) it will be difficult to use their technique basically to generate the Buchi automaton.
+
+Nice reference/follow up paper to read is their reference #25.
+
+
+## Automated Repair of Feature Interaction Failures in Autmomated Driving Systems - ISSTA'20
+
+
+
 
 # Question of Measuring Quality
 Combinatorial Sketch for finite programs addressed that by showing on case study AES cipher implementation using sketch. They showed that sketch was able to synthesis the most difficult part of AES implementation and they showed why it is an efficient implementation by comparing its run against and open SSL implementation.
