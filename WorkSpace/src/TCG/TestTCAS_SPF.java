@@ -11,7 +11,6 @@ public class TestTCAS_SPF {
 
     }
 
-
     @Test
     public void test0() {
         tcas tcas;

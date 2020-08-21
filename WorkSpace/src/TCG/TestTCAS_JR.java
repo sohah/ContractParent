@@ -3,6 +3,7 @@ package TCG;
 import org.junit.Test;
 
 public class TestTCAS_JR {
+
     @Test
     public void test0() {
         tcas tcas;
@@ -623,7 +624,7 @@ public class TestTCAS_JR {
     public void test88() {
         tcas tcas;
         tcas = new tcas();
-        tcas.sym1(601,-1,0,0,0,-1,0,399,740,-2147483648,0,0);
+        tcas.sym1(601,-1,0,1,0,0,0,399,740,-2147483648,0,0);
     }
 
     @Test
@@ -658,14 +659,14 @@ public class TestTCAS_JR {
     public void test93() {
         tcas tcas;
         tcas = new tcas();
-        tcas.sym1(601,-1,0,1,0,0,1,500,740,-2147483648,0,0);
+        tcas.sym1(601,-1,0,0,0,-1,1,500,740,-2147483648,0,0);
     }
 
     @Test
     public void test94() {
         tcas tcas;
         tcas = new tcas();
-        tcas.sym1(601,-1,0,1,0,0,2,500,740,-2147483648,0,0);
+        tcas.sym1(601,-1,0,0,0,-1,2,500,740,-2147483648,0,0);
     }
 
     @Test
@@ -686,7 +687,7 @@ public class TestTCAS_JR {
     public void test97() {
         tcas tcas;
         tcas = new tcas();
-        tcas.sym1(601,-1,0,0,0,-1,3,640,740,-2147483648,0,0);
+        tcas.sym1(601,-1,0,1,0,0,3,640,740,-2147483648,0,0);
     }
 
     @Test
@@ -700,7 +701,7 @@ public class TestTCAS_JR {
     public void test99() {
         tcas tcas;
         tcas = new tcas();
-        tcas.sym1(601,-1,0,1,0,0,3,740,740,-2147483648,0,0);
+        tcas.sym1(601,-1,0,0,0,-1,3,740,740,-2147483648,0,0);
     }
 
     @Test
@@ -716,4 +717,5 @@ public class TestTCAS_JR {
         tcas = new tcas();
         tcas.sym1(601,0,0,-2147483648,601,-2147483648,-2147483648,-2147483648,-2147483648,-2147483648,-2147483648,-2147483648);
     }
+
 }
