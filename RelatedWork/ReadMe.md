@@ -82,6 +82,13 @@ The main advantage of this paper, is that they are able to produce non-linear in
 We can think of what we are doing is some sort of capture of ths symbolic state, but it is not for the whole program/method instead of a portion of it.
 
 
+
+## SymInfer: inferring program invariants using symbolic states - ASE 2017
+
+NumInv also uses DIG to infer invariants, but it invokes KLEE as a blackbox verifier for candidate invariants. Since KLEE is unaware of the goals of its verification it will attempt to explore the entire program state space and must recompute that state space for each candidate invariant. In contrast, SymInfer
+constructs a fragment of the state space that generates a set of symbolic states that is sufficiently diverse for invariant verification and it reuses symbolic states for all invariants
+
+
 ## Data-Driven Precondition Inference with Learned Features - (Invariant Discovery) PLDI'16
 
 This paper presents PIE that uses test cases and a program to find preconditions. PIE learns features automatically as opposed to other systems taht needs to have the features to be manually entered. PIE can also be used to infer loop invariants. 
@@ -146,9 +153,13 @@ The main takeaway is to realize that their model is using finite state machine, 
 
 Nice reference/follow up paper to read is their reference #25.
 
+## ICE: A Robust Framework for Learning Invariants - CAV'14
+This is a main paper in invariant generation for loop, thus it is addressing inductive invariant generation. It uses machine learning, and it presents a new model that is able to handle implication counter examples. As usually in machine learning a point is either +ve (needs to be included in the next invarient being generated) of -ve(needs to be excluded from the next generated invariant). The model proposes how to deal with a test case that is inductive, for example in obtaining loop invariant H, strongest H => original H, where H is the hypothesized H. The paper proposes a learning model in which the teacher imposes p => p' relation, that is either give an invariant that does not include p, but if the learner gives an invariant that includes p then it must include p' as well. 
+
+## Learning invariants using decision trees and implication counterexamples - POPL'16
+This paper is about generating *inductive invariants* like invariants for loops, using machine learning. It tried to use ICE  (inductive counter example) learning model using decision trees. 
 
 ## Automated Repair of Feature Interaction Failures in Autmomated Driving Systems - ISSTA'20
-
 
 
 
